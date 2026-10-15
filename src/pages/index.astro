@@ -1,0 +1,518 @@
+---
+import Base from "../layouts/Base.astro";
+import Faq from "../components/Faq.astro";
+import CtaSky from "../components/CtaSky.astro";
+const title = "CartPilot - Smart AI Sales Agent for eCommerce Stores";
+const description = "CartPilot is a smart AI sales agent for WooCommerce and Shopify. Let shoppers talk or text to find products, compare options, add to cart, and track orders.";
+
+const faq = {
+  chip: "CartPilot FAQ",
+  title: "Frequently Asked Questions",
+  lead: "Find answers to common questions and learn how to get the most out of CartPilot.",
+  button: { href: "/faq/", label: "Read All FAQs" },
+  items: [
+    { q: "Which platforms does CartPilot support?",
+      a: "<p>CartPilot works with WooCommerce and Shopify, with more platforms on the way. On WooCommerce, install the WordPress plugin and connect your CartPilot account. On Shopify, install the app, and your account is set up automatically. Either way, you don’t need any custom development.</p>" },
+    { q: "Can shoppers actually talk to the agent with their voice?",
+      a: "<p>Yes. Shoppers can type or hold to speak, and CartPilot replies in a natural voice. You can pick from 30+ voices in your dashboard. Voice is included on all paid plans.</p>" },
+    { q: "Will it actually add things to the cart, or just show products?",
+      a: "<p>CartPilot actually manipulates your store’s cart. When a shopper says “add the blue one in size M,” CartPilot adds the correct product variant to their real cart. It can also update quantities and remove items – all without the shopper leaving the conversation or navigating anywhere.</p>" },
+    { q: "How long does setup take? Do I need a developer?",
+      a: "<p>No, you don’t need a developer. On WooCommerce, install the CartPilot plugin and connect your account. On Shopify, install the app, and your store connects automatically. CartPilot then syncs your products, prices, and stock on its own. Add your agent’s name, greeting, and colors, and you can go live within minutes.</p>" },
+    { q: "Is my customer conversation data private and secure?",
+      a: "<p>All CartPilot API calls between your store and our platform are authenticated using HMAC-SHA256 signature verification. Conversation logs are stored securely in your merchant dashboard. We take data privacy seriously and are building toward full GDPR compliance.</p>" }
+  ],
+};
+
+const cta = {
+  title: "Start Free. Upgrade When You’re Ready.",
+  text: "CartPilot is the AI agent that talks, types, and closes – right from the chat window of your WooCommerce or Shopify store.",
+};
+---
+<Base title={title} description={description} bodyClass="home theme-dark-hero" fontWeights="400;500;600;700">
+<Fragment slot="head">
+  <style is:inline>
+    /* ---------- Home (copy v2) ---------- */
+    .home { --bg-hero: #dbeafe; }
+    /* Dark hero: animated "mist" WebGL gradient (assets/js/hero-gradient.js) behind the floating header */
+    .hero { position: relative; isolation: isolate; background: #000; padding-top: calc(109px + 100px); overflow: hidden; color: #fff; }
+    .hero__bg { position: absolute; inset: 0; z-index: -1; background: #000; }
+    .hero__bg canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+    .hero .pill { background: rgb(255 255 255 / .08); border: 1px solid rgb(255 255 255 / .16); color: #e4e4e7; -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+    .hero h1 { color: #fff; }
+    .hero .hero__lead { color: #a1a1aa; }
+    .hero .btn:not(.btn--secondary) { --bg-c: var(--blue); --fg: #fff; }   /* dark hero: primary-blue pill, white badge with blue chevrons */
+    .hero .btn:not(.btn--secondary):hover { --bg-c: #0046d4; }
+    .hero .btn--secondary { --fg: #fff; --bd: rgb(255 255 255 / .32); }
+    .hero .btn--secondary:hover { --bg-c: #fff; --fg: #101014; --bd: #fff; }
+    .hero .btn--secondary img { filter: invert(1); }
+    .hero .btn--secondary:hover img { filter: none; }
+    .hero .works { color: #a1a1aa; }
+    .hero .works a { color: #fff; }
+    .hero .works a:hover { color: #fff; opacity: .85; }
+    .hero__media > img { filter: drop-shadow(0 -20px 60px rgb(0 84 255 / .22)); }  /* pink version: rgb(255 102 184 / .18) */
+    .hero__in { display: flex; flex-direction: column; align-items: center; text-align: center; }
+    /* "Now live" tag + animated CartPilot orb (cropped from the reference recording; black bg drops out via screen blend) */
+    .hero__tag { display: flex; align-items: center; justify-content: center; gap: 8px; }
+    .pill__logo { width: 1.1em; height: 1.1em; margin: -.12em -1px 0; flex: none; }  /* the pill is a flex row (gap 6px), so the icon sits evenly between "on" and "Shopify" */
+    .hero__orb { --h: 54px; position: relative; flex: none; width: var(--h); height: var(--h); margin-block: -7px; }  /* larger than the 41px pill; negative margin keeps the row height */
+    .hero__orb video { position: absolute; left: 50%; top: 50%; width: 120%; height: 120%; translate: -50% -50%; }
+    .hero__orb video { display: block; object-fit: cover; mix-blend-mode: screen; pointer-events: none;
+      -webkit-mask-image: radial-gradient(circle closest-side, #000 86%, transparent); mask-image: radial-gradient(circle closest-side, #000 86%, transparent); }
+    .hero h1 { margin-top: 20px; max-width: 1120px; text-wrap: balance; }
+    .hero__lead { margin-top: 28px; max-width: 760px; }
+    .hero .btn-row { margin-top: 56px; gap: 15px; }
+    .hero .btn--secondary img { width: 15px; height: 18px; transition: transform .25s var(--ease); }
+    .hero .btn--secondary:hover img { transform: scale(1.12); }
+    .works { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 6px 20px; margin-top: 22px; font-size: 16px; color: var(--subtle); }
+    .works a { display: inline-flex; align-items: center; gap: 7px; padding: 4px 0; color: var(--ink); font-weight: 500; transition: color .2s, transform .2s var(--ease); }
+    .works a:hover { color: var(--blue-2); transform: translateY(-1px); }
+    .works img { width: 22px; height: 22px; }
+    .works img.works__woo { width: auto; height: 11px; margin-right: 2px; }
+    /* Browser-frame screenshot sits flush on the hero's bottom edge */
+    .hero__media { position: relative; width: 100%; margin-top: 130px; container-type: inline-size; }
+    .hero__media > img { width: 100%; height: auto; display: block; }
+    /* The screenshot's black device bezel was stripped (hero-browser.png = header image.png minus the 30px bezel);
+       a 3px primary stroke now hugs the browser edge instead. Browser rect in the 2826×1694 image: inset 30, radius 46. */
+    .hero__media::before { content: ""; position: absolute; z-index: 1; pointer-events: none; left: calc(30 / 2826 * 100% - 3px); right: calc(30 / 2826 * 100% - 3px); top: calc(30 / 1694 * 100% - 3px); bottom: 0;
+      border: 3px solid var(--blue); border-bottom: 0; border-radius: calc(46 / 2826 * 100cqw + 3px) calc(46 / 2826 * 100cqw + 3px) 0 0; }
+    .cart-chip {
+      position: absolute; left: 46.8%; top: 27.6%;
+      display: flex; align-items: center; gap: clamp(10px, 1.1cqw, 16px);
+      padding: clamp(6px, .65cqw, 9px) clamp(18px, 2.4cqw, 34px) clamp(6px, .65cqw, 9px) clamp(6px, .65cqw, 9px);
+      background: #fff; border-radius: 999px; box-shadow: 0 18px 40px -16px rgb(15 23 42 / .28), 0 2px 6px rgb(15 23 42 / .06);
+      text-align: left; animation: chip-float 5s ease-in-out infinite;
+    }
+    .cart-chip__ico { width: clamp(40px, 4.6cqw, 64px); aspect-ratio: 1; border-radius: 50%; background: #dfeafe; color: var(--blue-2); display: grid; place-items: center; flex: none; }
+    .cart-chip__ico svg { width: 46%; height: 46%; }
+    .cart-chip small { display: block; font-size: clamp(12px, 1.18cqw, 16.5px); line-height: 1.3; color: var(--muted); }
+    .cart-chip b { display: block; font-size: clamp(15px, 1.58cqw, 22px); line-height: 1.3; font-weight: 500; color: var(--ink); white-space: nowrap; }
+    @keyframes chip-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+
+    /* ---------- Problem: staggered stat cards on a faint grid ---------- */
+    .problem { position: relative; overflow: hidden; }
+    .problem__grid {
+      --card: clamp(280px, 23.6vw, 340px); position: relative;
+      display: grid; grid-template-columns: minmax(0, 1fr) repeat(3, var(--card)); column-gap: 24px; row-gap: 120px;
+      grid-template-areas: "head head t1 t2" ". b1 b2 .";
+    }
+    .problem__grid::before {
+      content: ""; position: absolute; inset: -144px -10% -144px -6%; z-index: -1; pointer-events: none;
+      background-image: linear-gradient(to right, rgb(37 99 235 / .09) 1px, transparent 1px), linear-gradient(to bottom, rgb(37 99 235 / .09) 1px, transparent 1px);
+      background-size: 116px 116px; background-position: -1px -1px;
+      -webkit-mask-image: radial-gradient(ellipse 55% 60% at 32% 52%, #000 25%, transparent 78%);
+              mask-image: radial-gradient(ellipse 55% 60% at 32% 52%, #000 25%, transparent 78%);
+    }
+    .problem__head { grid-area: head; align-self: start; max-width: 640px; }
+    .problem__title { font-size: var(--fs-h3); line-height: 1.12; font-weight: var(--fw-heading); letter-spacing: -.02em; color: var(--ink); }
+    .problem__title span { display: block; }
+    .problem__title .hl { color: var(--blue-2); }
+    .problem__title .dim { color: #a3acb9; }
+    .problem__lead { margin-top: 24px; max-width: 540px; font-size: var(--fs-lead); color: var(--text); }
+    .pcards { display: contents; }
+    .pcard {
+      position: relative; aspect-ratio: 1; border-radius: 10px; padding: 32px; container-type: inline-size;
+      display: flex; flex-direction: column; justify-content: space-between; gap: 24px; overflow: hidden;
+      transition: transform .35s var(--ease), opacity .7s var(--ease);
+    }
+    .pcard:nth-child(1) { grid-area: t1; }
+    .pcard:nth-child(2) { grid-area: t2; }
+    .pcard:nth-child(3) { grid-area: b1; }
+    .pcard:nth-child(4) { grid-area: b2; }
+    .pcard::before { content: ""; position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 1px 0 rgb(255 255 255 / .7); pointer-events: none; }
+    .pcard:hover { transform: translateY(-6px); }
+    .pcard__num { font-size: min(20cqi, 64px); line-height: 1.05; letter-spacing: -.035em; font-weight: 500; color: #0b1220; }
+    .pcard__num span { color: var(--dim); }
+    .pcard__txt { font-size: 18px; line-height: 1.45; color: var(--txt); max-width: 250px; }
+    .pcard--blue { --dim: #1e3a8a99; --txt: #0b1220; background: linear-gradient(180deg, #4f8ef7 0%, #93c2ff 100%); }
+    .pcard--light { --dim: #7e9ccb; --txt: #4b5563; background: linear-gradient(180deg, #eef4ff 0%, #a9c8ff 100%); }
+    .pcard--gray { --dim: #b8bcc4; --txt: #6b7280; background: linear-gradient(180deg, #fafafa 0%, #eeeff1 100%); border: 1px solid #e7e8eb; }
+
+    /* ---------- Journey: ruled index list ---------- */
+    .journey-sec { --rule: #e6e8ec; }
+    /* 144px section padding above + 96px here = 240px from the stat cards to the heading */
+    .jlist-head { text-align: center; padding: 96px 24px 52px; border-bottom: 1px solid var(--rule); }
+    .jlist-title { max-width: 1200px; margin-inline: auto; font-family: var(--font); font-size: var(--fs-h3); line-height: 1.2; font-weight: var(--fw-heading); color: var(--ink); text-wrap: balance; }
+    .jlist-title span { display: block; }
+    .jlist-sub { max-width: 860px; margin: 24px auto 0; font-size: var(--fs-lead); line-height: 1.5; color: #6b7280; }
+    .jlist { list-style: none; }
+    .jrow { display: grid; grid-template-columns: 140px minmax(0, 1fr) auto; border-bottom: 1px solid var(--rule); transition: background-color .3s var(--ease); }
+    .jrow > * { padding: 18px 40px; }
+    .jrow__num { font-family: var(--font); font-size: clamp(26px, calc(12px + 1.6vw), 36px); line-height: 1.2; font-weight: 400; color: var(--ink); transition: color .3s var(--ease); }
+    .jrow__body { display: flex; flex-direction: column; justify-content: space-between; gap: 16px; padding-inline: 40px; border-inline: 1px solid var(--rule); }
+    .jrow__title { font-family: var(--font); font-size: var(--fs-card); line-height: 1.3; font-weight: var(--fw-heading); color: var(--ink); }
+    .jrow__desc { max-width: 560px; font-size: 16px; line-height: 1.5; color: #6b7280; }
+    .jrow__media { display: flex; justify-content: flex-end; align-items: flex-start; }
+    .jrow__media { padding-left: 64px !important; }
+    /* art sits on #F3F3F3; the row's colourful ground fades in on hover (same UI, two renders) */
+    .jrow__art { position: relative; display: block; width: 160px; border-radius: 10px; overflow: hidden; background: #f3f3f3; transition: transform .5s var(--ease); }
+    .jrow__art img { display: block; width: 100%; height: auto; }
+    .jrow__art img + img { position: absolute; inset: 0; opacity: 0; transition: opacity .45s var(--ease); }
+    .jrow:hover .jrow__art img + img { opacity: 1; }
+    .jrow:hover { background: #fafbff; }
+    .jrow:hover .jrow__num { color: var(--blue-2); }
+    .jrow:hover .jrow__art { transform: scale(1.04); }
+    .jlist-foot { max-width: 640px; margin: 40px auto 0; text-align: center; font-size: 16px; line-height: 1.5; color: #6b7280; }
+
+    /* ---------- Capabilities (Figma frame: #F4F4F5, 144px padding, 56px gap, 8px card gutters) ---------- */
+    .caps { background: #f4f4f5; padding: var(--section) var(--gutter); }
+    .caps__in { max-width: 1401px; margin-inline: auto; display: flex; flex-direction: column; gap: 56px; }
+    .caps__head { display: flex; flex-direction: column; align-items: center; gap: 24px; text-align: center; }
+    .caps__title { font-size: var(--fs-h3); line-height: 1.2; font-weight: var(--fw-heading); color: #000; }
+    .caps__title span { display: block; }
+    .caps__lead { max-width: 1010px; font-size: var(--fs-lead); line-height: 1.5; color: #6b7280; }
+    .caps__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .cap { position: relative; isolation: isolate; overflow: hidden; min-height: 285px; padding: 32px; border-radius: 10px; background: #fff; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; gap: 32px; }
+    .cap__ico { width: 80px; height: 80px; border-radius: 50%; display: grid; place-items: center; flex: none; }
+    .cap__ico svg { width: 40px; height: 40px; }
+    .cap__text { display: flex; flex-direction: column; gap: 16px; position: relative; z-index: 1; }
+    .cap__title { font-size: var(--fs-h6); line-height: 1.3; font-weight: var(--fw-heading); color: #18181b; }
+    .cap__desc { font-size: var(--fs-body); line-height: 1.5; color: #828282; }
+
+    /* ---------- Why CartPilot: sticky horizontal gallery (same motion as the Dokan "Whatever you want to sell" row) ----------
+       Desktop: the stage sticks for (track width − content width) px of scroll and the copy + cards travel right → left.
+       Below 1024px or with reduced motion it is a normal block: copy on top, cards in a swipe row. */
+    .dc { position: relative; padding-block: 96px; }
+    /* default (no pin: small screens, reduced motion, no JS): copy on top, cards in a swipe row */
+    .dc__track { display: flex; flex-direction: column; gap: 40px; }
+    .dc__title br { display: none; }
+    .dc__title span { white-space: nowrap; }
+    .dc__row { display: flex; gap: 17px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; margin-inline: calc(var(--gutter) * -1); padding-inline: var(--gutter); scroll-padding-inline: var(--gutter); }
+    .dc__row::-webkit-scrollbar { display: none; }
+    /* pinned (desktop, motion allowed): the stage sticks and the whole row travels sideways */
+    .dc.is-pinned { padding-block: 0; }
+    .dc.is-pinned .dc__stage { position: sticky; top: 0; height: 100vh; min-height: 640px; display: flex; align-items: center; overflow: hidden; }
+    .dc.is-pinned .dc__track { flex-direction: row; align-items: center; gap: 0; width: max-content; will-change: transform; }
+    .dc.is-pinned .dc__copy { flex: 0 0 520px; padding-right: 64px; }
+    .dc.is-pinned .dc__title br { display: inline; }
+    .dc.is-pinned .dc__lead { max-width: 360px; margin-top: 32px; }
+    .dc.is-pinned .dc__row { overflow: visible; margin: 0; padding: 0; }
+    .dc__title { font-size: var(--fs-h3); line-height: 1.19; font-weight: 600; letter-spacing: -.02em; color: var(--ink); }
+    .dc__lead { margin-top: 20px; max-width: 600px; font-size: var(--fs-lead); line-height: 1.6; color: #475569; }
+    .dc__cta { margin: 24px 0 0 -8px; }
+    .dc-card { position: relative; flex: 0 0 min(481px, 86%); height: 480px; scroll-snap-align: start; border-radius: 10px; overflow: hidden; display: flex; background-size: cover; background-position: center; transition: transform .4s var(--ease); }
+    .dc.is-pinned .dc-card { flex: 0 0 481px; height: clamp(460px, calc(100vh - 150px), 564px); }
+    .dc-card:hover { transform: translateY(-6px); }
+    .dc-card__in { display: flex; flex-direction: column; align-items: flex-start; width: 100%; padding: 52px 48px; }
+    .dc-card__title { max-width: 340px; font-size: clamp(28px, 2.4vw, 34px); line-height: 1.2; font-weight: 600; letter-spacing: -.02em; color: var(--ink); }
+    .dc-card__body { margin-top: 18px; max-width: 370px; font-size: 18px; line-height: 1.55; color: #475569; }
+    .dc-card__tag { margin-top: 18px; font-size: 15px; line-height: 1.4; font-weight: 600; color: var(--ink); }
+    .dc-card__icon { margin-top: auto; width: 76px; height: 76px; color: var(--icon); transition: transform .4s var(--ease); }
+    .dc-card__icon svg { width: 100%; height: 100%; }
+    .dc-card:hover .dc-card__icon { transform: translateY(-4px); }
+    .dc-card--sand { background-color: #f8e8c8; --icon: #8a4b0f; }
+    .dc-card--rose { background-color: #eae1e1; --icon: #7a2e3f; }
+    .dc-card--sky { background-color: #dfe9fb; --icon: #1e3a8a; }
+    .dc-card--mint { background-color: #ddf1e5; --icon: #14532d; }
+    .dc-card--photo::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(to top, rgb(10 10 16 / .78) 0%, rgb(10 10 16 / .45) 34%, rgb(10 10 16 / 0) 62%); }
+    .dc-card--photo .dc-card__in { position: relative; z-index: 1; justify-content: flex-end; }
+    .dc-card--photo .dc-card__title, .dc-card--photo .dc-card__tag { color: #fff; }
+    .dc-card--photo .dc-card__body { color: rgb(255 255 255 / .9); }
+
+
+    @media (max-width: 1023px) {
+      .dc-card__in { padding: 40px 34px; }
+    }
+    @media (max-width: 1024px) {
+      .hero { padding-top: calc(84px + 72px); }
+    }
+    @media (max-width: 1100px) {
+      .jrow { grid-template-columns: 96px minmax(0, 1fr) auto; }
+      .jrow__body { padding-inline: 28px; }
+      .jrow__media { padding-left: 28px !important; }
+      .jrow__art { width: 150px; }
+      .jrow > * { padding: 16px 28px; }
+      .jrow__desc { max-width: 420px; }
+      .problem__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-areas: "head head" "t1 t2" "b1 b2"; row-gap: 24px; }
+      .problem__head { align-self: start; margin-bottom: 32px; }
+      .pcard { aspect-ratio: auto; min-height: 280px; }
+      .pcard:nth-child(even) { translate: 0 48px; }
+      .problem__grid { padding-bottom: 48px; }
+    }
+    @media (max-width: 600px) {
+      .caps__grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .dc { padding-block: 64px; }
+      .dc-card { height: 460px; }
+      .dc-card__in { padding: 32px 26px; }
+      .dc-card__body { font-size: 16px; }
+      .jlist-head { padding: 36px 16px 40px; }
+      .jrow { grid-template-columns: minmax(0, 1fr); grid-template-areas: "num" "body" "media"; padding: 24px 0 28px; }
+      .jrow > * { padding: 0; }
+      .jrow__num { grid-area: num; font-size: 20px; color: var(--blue-2); }
+      .jrow__body { grid-area: body; border: 0; padding: 10px 0 0; justify-content: flex-start; gap: 8px; }
+      .jrow__title { font-size: 22px; }
+      .jrow__desc { font-size: 14px; }
+      .jrow__media { grid-area: media; }
+      .jrow__media { padding: 16px 0 0 !important; justify-content: flex-start; }
+      .jrow__art { width: 100%; max-width: none; }
+      .jlist-foot { margin-top: 28px; }
+      .hero { padding-top: calc(84px + 32px); }
+      .hero__orb { --h: 46px; margin-block: -4px; }
+      .hero__lead { margin-top: 20px; }
+      .hero .btn-row { margin-top: 36px; }
+      .hero__media { margin-top: 48px; }
+      .cart-chip { display: none; }
+      .problem__grid { grid-template-columns: 1fr; grid-template-areas: "head" "t1" "t2" "b1" "b2"; row-gap: 16px; padding-bottom: 0; }
+      .pcard:nth-child(even) { translate: none; }
+      .pcard { min-height: 220px; padding: 26px; }
+      .pcard__num { font-size: min(16cqi, 52px); }
+      .cap { min-height: 0; padding: 28px 22px; gap: 24px; }
+      .cap__ico { width: 64px; height: 64px; }
+      .cap__ico svg { width: 32px; height: 32px; }
+      .caps__in { gap: 40px; }
+    }
+  </style>
+</Fragment>
+
+<main id="main">
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero__bg" data-mist data-speed="0.6" data-opacity="0.8" data-color="#0054ff" data-highlight="#5b8cff" data-glow="#8db8ff" aria-hidden="true"><canvas></canvas></div>
+    <div class="container hero__in">
+      <div class="hero__tag">
+        <p class="pill">Now live on <img class="pill__logo" src="/assets/icons/shopify.svg" alt="" width="18" height="18">Shopify</p>
+        <span class="hero__orb" aria-hidden="true"><video src="/assets/video/cartpilot-orb.mp4" poster="/assets/img/cartpilot-orb.jpg" autoplay muted loop playsinline preload="auto" disablepictureinpicture></video></span>
+      </div>
+      <h1 class="h1">Your Store’s AI Salesperson That Never Clocks Out</h1>
+      <p class="lead hero__lead">Shoppers ask in their own words, by voice or text. CartPilot finds the right product, answers their questions, and puts it straight into their cart.</p>
+      <div class="btn-row btn-row--center">
+        <a class="btn btn--lg" href="https://app.cartpilot.ai/register">Try CartPilot Free</a>
+        <button class="btn btn--secondary btn--lg" type="button" data-modal-src="https://www.youtube.com/embed/tH1m-FmcM3g"><img src="/assets/img/play.svg" alt="" width="17" height="20"> Watch demo</button>
+      </div>
+      <p class="works">Works with
+        <a href="/woocommerce/"><img class="works__woo" src="/assets/img/woo-logo.png" alt="" width="43" height="11">WooCommerce</a>
+        <a href="/shopify/"><img src="/assets/icons/shopify.svg" alt="" width="22" height="22">Shopify</a>
+      </p>
+      <div class="hero__media">
+        <img src="/assets/img/hero-browser.png?v=1" alt="A store page in a browser with the CartPilot chat widget open, recommending a black T-shirt under $20 with an Add to Cart button" width="2826" height="1694" fetchpriority="high">
+        <div class="cart-chip" aria-hidden="true">
+          <span class="cart-chip__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 3.5h2.2l2.4 11.2h10.6l2.3-7.7H6"/><circle cx="9" cy="19" r="1.6"/><circle cx="17" cy="19" r="1.6"/><path d="M10.5 10.6h5.5"/></svg></span>
+          <span><small>Products</small><b>3 items in cart</b></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Problem -->
+  <section class="section problem">
+    <div class="container">
+      <div class="problem__grid">
+        <div class="problem__head" data-reveal>
+          <h2 class="problem__title"><span>Your Store Is</span> <span class="hl">Losing Sales</span> <span class="dim">While You Sleep</span></h2>
+          <p class="problem__lead">Shoppers land on your store ready to buy, then a small question gets in the way. With no one there to answer it, they leave, and the sale leaves with them.</p>
+        </div>
+        <ul class="pcards" role="list">
+          <li class="pcard pcard--light" data-reveal><p class="pcard__num">1<span> question</span></p><p class="pcard__txt">Left unanswered, it can be enough to lose the sale.</p></li>
+          <li class="pcard pcard--gray" data-reveal style="transition-delay:.08s"><p class="pcard__num">Next<span> morning</span></p><p class="pcard__txt">That’s when a contact form gets its reply. The shopper is long gone.</p></li>
+          <li class="pcard pcard--blue" data-reveal style="transition-delay:.16s"><p class="pcard__num">24<span>/7</span></p><p class="pcard__txt">Your store never closes. Your team has to.</p></li>
+          <li class="pcard pcard--gray" data-reveal style="transition-delay:.24s"><p class="pcard__num">2<span> AM</span></p><p class="pcard__txt">A shopper is stuck between two sizes. No one is there to ask.</p></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Journey -->
+  <section class="section journey-sec" style="padding-top:0">
+    <div class="container">
+      <header class="jlist-head" data-reveal>
+        <h2 class="jlist-title">CartPilot handles <span>the entire shopping journey</span></h2>
+        <p class="jlist-sub">From product discovery to cart confirmation, CartPilot completes the full purchase path in a single conversation. No page redirects, no support tickets, no browsing dead ends.</p>
+      </header>
+      <ol class="jlist" role="list">
+        <li class="jrow" data-reveal>
+          <span class="jrow__num">01</span>
+          <div class="jrow__body"><h3 class="jrow__title">Talk or Type</h3><p class="jrow__desc">Customer asks a question by chatting or voice</p></div>
+          <div class="jrow__media"><span class="jrow__art"><img src="/assets/img/journey/journey-01-plain.jpg" alt="Chat bubble asking for black tees under $20 above a microphone button, with a Chat and Voice switch" width="160" height="99" loading="lazy"><img src="/assets/img/journey/journey-01.jpg" alt="" width="160" height="99" loading="lazy" aria-hidden="true"></span></div>
+        </li>
+        <li class="jrow" data-reveal>
+          <span class="jrow__num">02</span>
+          <div class="jrow__body"><h3 class="jrow__title">Live Search</h3><p class="jrow__desc">CartPilot searches the live catalog instantly</p></div>
+          <div class="jrow__media"><span class="jrow__art"><img src="/assets/img/journey/journey-02-plain.jpg" alt="Search field typing black tee above three matching products with prices from the live catalog" width="160" height="99" loading="lazy"><img src="/assets/img/journey/journey-02.jpg" alt="" width="160" height="99" loading="lazy" aria-hidden="true"></span></div>
+        </li>
+        <li class="jrow" data-reveal>
+          <span class="jrow__num">03</span>
+          <div class="jrow__body"><h3 class="jrow__title">Best Matches</h3><p class="jrow__desc">Surfaces matching products with details and pricing</p></div>
+          <div class="jrow__media"><span class="jrow__art"><img src="/assets/img/journey/journey-03-plain.jpg" alt="Two T-shirt product cards with prices, one marked Best match" width="160" height="99" loading="lazy"><img src="/assets/img/journey/journey-03.jpg" alt="" width="160" height="99" loading="lazy" aria-hidden="true"></span></div>
+        </li>
+        <li class="jrow" data-reveal>
+          <span class="jrow__num">04</span>
+          <div class="jrow__body"><h3 class="jrow__title">Side by Side</h3><p class="jrow__desc">Compares options side-by-side on request</p></div>
+          <div class="jrow__media"><span class="jrow__art"><img src="/assets/img/journey/journey-04-plain.jpg" alt="Comparison table of two T-shirts across cotton, price, fit and stock" width="160" height="99" loading="lazy"><img src="/assets/img/journey/journey-04.jpg" alt="" width="160" height="99" loading="lazy" aria-hidden="true"></span></div>
+        </li>
+        <li class="jrow" data-reveal>
+          <span class="jrow__num">05</span>
+          <div class="jrow__body"><h3 class="jrow__title">Add to Cart</h3><p class="jrow__desc">Adds selected items directly to the cart</p></div>
+          <div class="jrow__media"><span class="jrow__art"><img src="/assets/img/journey/journey-05-plain.jpg" alt="Cart icon with a plus-one badge and an Added to cart confirmation for a black T-shirt" width="160" height="99" loading="lazy"><img src="/assets/img/journey/journey-05.jpg" alt="" width="160" height="99" loading="lazy" aria-hidden="true"></span></div>
+        </li>
+        <li class="jrow" data-reveal>
+          <span class="jrow__num">06</span>
+          <div class="jrow__body"><h3 class="jrow__title">Apply Coupons</h3><p class="jrow__desc">Applies discount codes and coupons from chat</p></div>
+          <div class="jrow__media"><span class="jrow__art"><img src="/assets/img/journey/journey-06-plain.jpg" alt="SAVE10 coupon marked as applied, lowering the price from $19.00 to $17.10" width="160" height="99" loading="lazy"><img src="/assets/img/journey/journey-06.jpg" alt="" width="160" height="99" loading="lazy" aria-hidden="true"></span></div>
+        </li>
+        <li class="jrow" data-reveal>
+          <span class="jrow__num">07</span>
+          <div class="jrow__body"><h3 class="jrow__title">Policy Answers</h3><p class="jrow__desc">Answers return, shipping, and policy questions</p></div>
+          <div class="jrow__media"><span class="jrow__art"><img src="/assets/img/journey/journey-07-plain.jpg" alt="Shopper asks Can I return it and the agent replies Free returns within 30 days" width="160" height="99" loading="lazy"><img src="/assets/img/journey/journey-07.jpg" alt="" width="160" height="99" loading="lazy" aria-hidden="true"></span></div>
+        </li>
+        <li class="jrow" data-reveal>
+          <span class="jrow__num">08</span>
+          <div class="jrow__body"><h3 class="jrow__title">Order Status</h3><p class="jrow__desc">Lets logged-in customers check their order status</p></div>
+          <div class="jrow__media"><span class="jrow__art"><img src="/assets/img/journey/journey-08-plain.jpg" alt="Order 1042 tracking timeline showing ordered, shipped and arriving Friday, with the store team joining the chat" width="160" height="99" loading="lazy"><img src="/assets/img/journey/journey-08.jpg" alt="" width="160" height="99" loading="lazy" aria-hidden="true"></span></div>
+        </li>
+      </ol>
+      <p class="jlist-foot">Handles every step, from the first product question to post-purchase support. Shoppers who want a person reach your team in the same chat.</p>
+    </div>
+  </section>
+
+  <!-- Full-stack agent -->
+  <section class="caps">
+    <div class="caps__in">
+      <div class="caps__head" data-reveal>
+        <h2 class="caps__title">Not Just A Chatbot. <span>A Full-Stack AI Sales Agent</span></h2>
+        <p class="caps__lead">Most store chatbots just answer FAQs. CartPilot actually sells. It understands what your customers want, searches your catalog in plain English and adds items directly to their cart — all inside a conversation.</p>
+      </div>
+      <div class="caps__grid" data-reveal>
+        <div class="cap">
+          <span class="cap__ico" style="background:#eff6ff"><svg class="" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg></span>
+          <div class="cap__text"><h3 class="cap__title">Natural language product search</h3><p class="cap__desc" style="max-width:560px">Shoppers describe what they want in plain English. CartPilot suggests only what your store actually carries.</p></div>
+        </div>
+        <div class="cap">
+          <span class="cap__ico" style="background:#fff7e6"><svg class="" viewBox="0 0 24 24" fill="none" stroke="#eab308" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 2v2M12 20v2M20 12h2M2 12h2"/></svg></span>
+          <div class="cap__text"><h3 class="cap__title">Order tracking &amp; returns</h3><p class="cap__desc" style="max-width:480px">Answers order, shipping, and return questions, with real order data for logged-in customers.</p></div>
+        </div>
+        <div class="cap">
+          <span class="cap__ico" style="background:#fef2f2"><svg class="" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 4.7a.7.7 0 0 0-1.2-.5L6.4 7.6A1.4 1.4 0 0 1 5.4 8H4a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h1.4a1.4 1.4 0 0 1 1 .4l3.4 3.4a.7.7 0 0 0 1.2-.5z"/><path d="M15 8a5.6 5.6 0 0 1 0 8"/><path d="M17.7 5a9 9 0 0 1 0 14"/></svg></span>
+          <div class="cap__text"><h3 class="cap__title">Voice Sales Agent</h3><p class="cap__desc" style="max-width:480px">Your customers talk to the agent like a real salesperson. Helpful &amp; convenient</p></div>
+        </div>
+        <div class="cap">
+          <span class="cap__ico" style="background:#f0fdf4"><svg class="" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.2 8h11.6a1.5 1.5 0 0 1 1.5 1.4l.6 9.9a1.6 1.6 0 0 1-1.6 1.7H5.7a1.6 1.6 0 0 1-1.6-1.7l.6-9.9A1.5 1.5 0 0 1 6.2 8z"/><path d="M9 11V6a3 3 0 0 1 6 0v5"/></svg></span>
+          <div class="cap__text"><h3 class="cap__title">Adds items to the cart from chat</h3><p class="cap__desc" style="max-width:480px">No browsing, no clicking. Your customer says, “Add it.” and it’s in their cart. Frictionless.</p></div>
+        </div>
+        <div class="cap">
+          <span class="cap__ico" style="background:#f1eeff"><svg class="" viewBox="0 0 24 24" fill="none" stroke="#7047eb" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v12c0 1.66 3.58 3 8 3s8-1.34 8-3V6"/><path d="M4 12c0 1.66 3.58 3 8 3s8-1.34 8-3"/></svg></span>
+          <div class="cap__text"><h3 class="cap__title">Trained on your store data</h3><p class="cap__desc" style="max-width:632px">CartPilot learns from your store catalogue, policies, and uploaded documents to provide relevant answers.</p></div>
+        </div>
+        <div class="cap">
+          <span class="cap__ico" style="background:#eff6ff"><svg class="" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6h11M13 12h7M9 18h11"/><path d="m4 8 4 4-4 4"/></svg></span>
+          <div class="cap__text"><h3 class="cap__title">Customizable widget</h3><p class="cap__desc" style="max-width:480px">Match your brand with your own colors, fonts, avatar, and greeting. No code needed.</p></div>
+        </div>
+        <div class="cap">
+          <span class="cap__ico" style="background:#fff7ed"><svg class="" viewBox="0 0 24 24" fill="none" stroke="#ea580c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4h18"/><path d="M4 4v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4"/><path d="M12 16v4M9 20h6"/><path d="M9 8v4M15 10v2M12 11v1"/></svg></span>
+          <div class="cap__text"><h3 class="cap__title">Conversation Analytics</h3><p class="cap__desc" style="max-width:632px">Get in-depth analytics and conversational transcripts to know exactly what’s going on in every customer conversation.</p></div>
+        </div>
+        <div class="cap">
+          <span class="cap__ico" style="background:#f0fdf4"><svg class="" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v2.5a6 6 0 0 1-6 6.5 6 6 0 0 1-6-6.5z"/><path d="M6 21h12v-2.5a6 6 0 0 0-6-6.5 6 6 0 0 0-6 6.5z"/></svg></span>
+          <div class="cap__text"><h3 class="cap__title">Live in minutes</h3><p class="cap__desc" style="max-width:480px">Install CartPilot on your store, add your policies and FAQs, and you’re ready to sell.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why CartPilot: pinned horizontal gallery -->
+  <section class="dc" id="why" aria-labelledby="why-title">
+    <div class="dc__stage">
+      <div class="container">
+        <div class="dc__track">
+          <div class="dc__copy">
+            <h2 class="dc__title" id="why-title">Every Other <br>Chat Tool <br><span>Talks. CartPilot</span> <br>Actually Sells.</h2>
+            <p class="dc__lead">Plenty of chat tools can answer a question. Very few can act on it. CartPilot is built to do the four things that actually move a sale forward.</p>
+            <a class="btn btn--tertiary dc__cta" href="/features/">Explore all features →</a>
+          </div>
+          <div class="dc__row" aria-label="What sets CartPilot apart">
+            <article class="dc-card dc-card--sand"><div class="dc-card__in">
+              <h3 class="dc-card__title">Store-native integration</h3>
+              <p class="dc-card__body">Designed around how shoppers actually buy. CartPilot works with your real products, cart, orders, and policies on WooCommerce and Shopify.</p>
+              <p class="dc-card__tag">WooCommerce · Shopify</p>
+              <span class="dc-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5 4.6 4.8A1.2 1.2 0 0 1 5.7 4h12.6a1.2 1.2 0 0 1 1.1.8L21 9.5"/><path d="M3 9.5a3 3 0 0 0 6 0 3 3 0 0 0 6 0 3 3 0 0 0 6 0"/><path d="M4.5 12v7.5a.5.5 0 0 0 .5.5h14a.5.5 0 0 0 .5-.5V12"/><path d="M9.5 20v-4.5h5V20"/></svg></span>
+            </div></article>
+            <article class="dc-card dc-card--sky"><div class="dc-card__in">
+              <h3 class="dc-card__title">Autonomous cart manipulation</h3>
+              <p class="dc-card__body">Adds, removes, and updates items in the actual cart – not just linking to a product page.</p>
+              <p class="dc-card__tag">Real cart, real orders</p>
+              <span class="dc-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.4"/><circle cx="17" cy="20" r="1.4"/><path d="M2.5 3.5h2.2l2.4 11.2h10.6l2.3-7.7H6"/><path d="M13 8.3v4.4M10.8 10.5h4.4"/></svg></span>
+            </div></article>
+            <article class="dc-card dc-card--rose"><div class="dc-card__in">
+              <h3 class="dc-card__title">Per Conversation Pricing</h3>
+              <p class="dc-card__body">You pay for conversations, not seats. When a busy month needs more, extra credits are ready anytime.</p>
+              <p class="dc-card__tag">$0 per seat</p>
+              <span class="dc-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.4 8.4 0 0 1-12.3 7.4L3 20.5l1.7-5.4A8.4 8.4 0 1 1 21 11.5z"/><path d="M14.3 9c-.5-.6-1.3-.9-2.2-.9-1.3 0-2.3.7-2.3 1.7 0 2.3 4.8 1.2 4.8 3.6 0 1-1 1.8-2.5 1.8-1 0-1.9-.4-2.4-1M12 6.6v1.3M12 15.2v1.3"/></svg></span>
+            </div></article>
+            <article class="dc-card dc-card--mint"><div class="dc-card__in">
+              <h3 class="dc-card__title">Install in Minutes</h3>
+              <p class="dc-card__body">No developer and no coding. Install the plugin or app, connect your store, and go live in minutes.</p>
+              <p class="dc-card__tag">No developer needed</p>
+              <span class="dc-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13.5" r="7.5"/><path d="M12 9.5v4l2.6 1.6"/><path d="M9.5 2.5h5M12 2.5V6"/><path d="m18.6 6.6 1.4-1.4"/></svg></span>
+            </div></article>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <Faq {...faq} />
+
+  <!-- CTA -->
+  <CtaSky {...cta}>
+    <a class="btn" href="https://app.cartpilot.ai/register">Try CartPilot Free</a>
+    <a class="btn btn--white" href="/pricing/">View Pricing Plans</a>
+  </CtaSky>
+</main>
+
+<Fragment slot="scripts">
+<script is:inline>
+  /* Hero orb: hold on the poster frame for reduced-motion users. */
+  (() => {
+    const v = document.querySelector(".hero__orb video");
+    if (v && matchMedia("(prefers-reduced-motion: reduce)").matches) { v.removeAttribute("autoplay"); v.pause(); v.currentTime = 0; }
+  })();
+
+  /* Why CartPilot: pin the stage and carry the copy + cards right → left while it is pinned.
+     The section is made exactly (stage height + travel) tall so the sticky stage releases
+     the moment the last card reaches the content's right edge. Smoothed like a scrubbed tween. */
+  (() => {
+    const sec = document.getElementById("why");
+    if (!sec) return;
+    const stage = sec.querySelector(".dc__stage"), wrap = sec.querySelector(".container"), track = sec.querySelector(".dc__track");
+    const mq = matchMedia("(min-width: 1024px) and (prefers-reduced-motion: no-preference)");
+    let travel = 0, cur = 0, raf = 0, on = false;
+    if (mq.matches) sec.classList.add("is-pinned");
+    const dist = () => {
+      const cs = getComputedStyle(wrap);
+      return Math.max(0, track.offsetWidth - (wrap.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight)));
+    };
+    const off = () => { on = false; sec.classList.remove("is-pinned"); sec.style.height = ""; track.style.transform = ""; cur = 0; };
+    const goal = () => Math.min(travel, Math.max(0, -sec.getBoundingClientRect().top));
+    const tick = () => {
+      cancelAnimationFrame(raf);
+      const step = () => {
+        if (!on) return;
+        const t = goal();
+        cur += (t - cur) * 0.14;
+        if (Math.abs(t - cur) < 0.3) cur = t;
+        track.style.transform = `translate3d(${-cur}px, 0, 0)`;
+        if (cur !== t) raf = requestAnimationFrame(step);
+      };
+      raf = requestAnimationFrame(step);
+    };
+    const measure = () => {
+      if (!mq.matches) return off();
+      on = true;
+      sec.classList.add("is-pinned");
+      travel = dist();
+      sec.style.height = stage.offsetHeight + travel + "px";
+      cur = goal();
+      tick();
+    };
+    addEventListener("scroll", () => on && tick(), { passive: true });
+    addEventListener("resize", measure);
+    mq.addEventListener("change", measure);
+    (document.fonts ? document.fonts.ready : Promise.resolve()).then(measure);
+    addEventListener("load", measure);
+  })();
+</script>
+<script is:inline src="/assets/js/hero-gradient.js?v=2" defer></script>
+</Fragment>
+</Base>

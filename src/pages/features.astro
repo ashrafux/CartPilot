@@ -1,0 +1,498 @@
+---
+import Base from "../layouts/Base.astro";
+import Faq from "../components/Faq.astro";
+import CtaSky from "../components/CtaSky.astro";
+const title = "CartPilot Features - Your Smart AI Sales Agent for eCommerce";
+const description = "Explore every CartPilot feature: natural-language product search, cart control from chat, a voice sales agent, WooCommerce and Shopify integration, quick setup and conversation analytics.";
+
+const faq = {
+  chip: "CartPilot FAQ",
+  title: "Frequently Asked Questions",
+  lead: "Find answers to common questions and learn how to get the most out of CartPilot.",
+  button: { href: "/faq/", label: "Read All FAQs" },
+  items: [
+    { q: "Do these features work the same on WooCommerce and Shopify?",
+      a: "<p>Yes. Every feature on this page works the same way on both platforms. The only differences are how you install CartPilot and how you pay for it. Shopify plans are billed through your Shopify account, and Lifetime plans are available for WooCommerce stores.</p>" },
+    { q: "Does CartPilot actually add products to the cart?",
+      a: "<p>CartPilot adds products directly to your real cart. When a shopper says “add the blue one in size M,” CartPilot injects the correct variant into the live cart session. No redirect, no hand-off, no clicking required.</p>" },
+    { q: "Do I need a developer to install CartPilot?",
+      a: "<p>No. On WooCommerce, install the plugin from WordPress.org and connect your CartPilot account. On Shopify, install the app, and your store connects automatically. CartPilot then syncs your catalog on its own, and most stores go live within minutes without writing any code.</p>" },
+    { q: "Will CartPilot work with my existing theme and plugins?",
+      a: "<p>Yes. CartPilot loads as an embedded widget that sits outside your theme layer. It does not modify your templates or conflict with page builders, checkout plugins, or existing live chat tools.</p>" },
+    { q: "How does the voice agent work on mobile?",
+      a: "<p>Shoppers tap and hold to speak. CartPilot processes the audio and responds in a natural voice. It works directly in the browser with no app download required, and everything shoppers can do by text, they can do by voice. Voice is available on all paid plans.</p>" },
+    { q: "What happens when CartPilot does not know the answer?",
+      a: "<p>CartPilot recognizes when a question falls outside its knowledge base and tells the shopper clearly, then redirects them to your support channel. It does not guess or fabricate answers.</p>" },
+    { q: "Is my customer conversation data private and secure?",
+      a: "<p>All communication between your store and CartPilot is authenticated using HMAC-SHA256 signature verification. Conversation logs are stored securely in your merchant dashboard and are not shared with third parties. CartPilot is built toward full GDPR compliance.</p>" },
+    { q: "What data does CartPilot sync and access?",
+      a: "<p>CartPilot syncs your products, categories, prices, stock levels, product options, and coupon codes. It also syncs brands on WooCommerce and collections on Shopify. For logged-in customers, it can look up their orders. You can upload policy documents and custom Q&amp;A pairs too. Syncing runs automatically, so you never have to update CartPilot by hand.</p>" },
+    { q: "Can shoppers talk to a real person through CartPilot?",
+      a: "<p>Yes. A shopper can request a real person at any point, and CartPilot hands the conversation to your team. Your team replies from the dashboard, and the shopper sees the response right inside the same chat window. You can also set trigger words like “refund” or “complaint” to route conversations automatically, or step into any active conversation yourself when you think a human touch would help close the sale. Human Handover is included on the Growth and Scale plans, and on Lifetime Professional and Agency for WooCommerce stores.</p>" },
+    { q: "What if no one on my team is available when a shopper asks for a person?",
+      a: "<p>CartPilot lets the shopper know your team will follow up, and the conversation can continue over email. When your team replies later, the response is sent to the shopper’s email automatically. You choose how you want to be notified: an instant email each time, a daily summary, or you can check the queue yourself.</p>" }
+  ],
+};
+
+const cta = {
+  title: "You’ve Seen What It Can Do. Let CartPilot Handle Your Conversations",
+  text: "CartPilot searches, sells, and supports your customers around the clock, starting the moment you add it to your WooCommerce or Shopify store.",
+};
+---
+<Base title={title} description={description}>
+<Fragment slot="head">
+  <style is:inline>
+    /* ---------- Features ---------- */
+    :root { --sp-wp50: clamp(36px, calc(36px + (1vw - 7.68px) * 1.442), 48px); }
+
+    /* Hero */
+    /* centred hero: pill, CartPilot mark in faint rings, H1, lead, buttons; three isometric glass tiles float on each side */
+    .f-hero { --hh: 109px; position: relative; overflow: hidden; isolation: isolate; min-height: calc(100vh - var(--hh)); min-height: calc(100svh - var(--hh)); display: flex; flex-direction: column; justify-content: center; padding-block: 64px 96px;
+      background: radial-gradient(46% 52% at 50% 48%, #fff 0%, rgb(255 255 255 / 0) 72%), var(--bg-hero); }
+    @media (max-width: 1024px) { .f-hero { --hh: 85px; } }
+    .f-hero__in { width: 100%; position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; text-align: center; }
+    .f-hero h1 { margin-top: 24px; max-width: 980px; text-wrap: balance; }
+    .f-hero__lead { margin-top: 24px; max-width: 720px; font-size: var(--fs-lead); line-height: 1.5; color: var(--slate); text-wrap: balance; }
+    .f-hero .btn-row { margin-top: 40px; }
+    .f-hero__notes { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 24px; margin-top: 24px; list-style: none; }
+    .f-hero__notes li { display: flex; align-items: center; gap: 6px; font-size: 14px; line-height: 1.5; color: rgb(63 63 70 / .7); }
+    .f-hero__notes img { width: 18px; height: 18px; flex: none; }
+    .f-hero__demo img { width: 15px; height: 18px; transition: transform .25s var(--ease); }
+    .f-hero__demo:hover img { transform: scale(1.15); }
+    .f-hero__art { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+    /* four gradient circles (user's Ellipse images) with a tiny stack of CartPilot rows inside; they drift up and down */
+    .orb { --s: clamp(124px, 11.4vw, 164px); position: absolute; width: var(--s); height: var(--s); border-radius: 50%; font-size: calc(var(--s) / 16.4);
+      background: center / cover no-repeat; display: grid; place-items: center; animation: orb-float 6.5s ease-in-out infinite; }
+    .orb--l1 { left: 13%; top: 20%; }
+    .orb--l2 { left: 6.5%; top: 52%; animation-delay: -2.4s; }
+    .orb--r1 { right: 13%; top: 20%; animation-delay: -1.2s; }
+    .orb--r2 { right: 6.5%; top: 52%; animation-delay: -3.6s; }
+    @keyframes orb-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+    @media (prefers-reduced-motion: reduce) { .orb { animation: none; } }
+    .orb { flex-direction: column; gap: .7em; display: flex; align-items: center; justify-content: center; }
+    .orb-icon { display: grid; place-items: center; color: #fff; filter: drop-shadow(0 .25em .6em rgb(15 23 42 / .35)); }
+    .orb-icon svg { width: 4.4em; height: 4.4em; }
+    @media (max-width: 1100px) { .f-hero__art { display: none; } }
+
+    /* Complete commerce agent: icon tab row + split cards (copy left on #f5f5f5, the 2x product panel right at its 1x size: 584×621).
+       ≥1024px with motion allowed and enough height: the stage pins and the cards travel right → left with scroll. */
+    .section-head--wide { max-width: 1240px; }
+    .fca { --cw: min(1394px, calc(100vw - 2 * var(--gutter))); }
+    .fca__head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 480px); align-items: end; gap: 24px 64px; }
+    .fca__head h2 { text-align: left; text-wrap: balance; }
+    .fca__lead { justify-self: end; max-width: 480px; font-size: var(--fs-lead); line-height: 1.5; color: var(--text); text-wrap: pretty; }
+    .fca__pin { margin-top: 96px; }
+    @media (max-width: 1199px) {  /* the split head needs room for the H2: stack it below desktop widths */
+      .fca__head { grid-template-columns: minmax(0, 1fr); }
+      .fca__lead { justify-self: start; max-width: 640px; }
+    }
+    .fca__tabs { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px 44px; }
+    .fca__tab { display: inline-flex; align-items: center; gap: 10px; padding: 8px 2px; font-size: 17px; line-height: 1.4; font-weight: 500; color: #374151; white-space: nowrap; transition: color .25s var(--ease); }
+    .fca__tab svg { width: 21px; height: 21px; flex: none; }
+    @media (max-width: 1199px) { .fca__tabs { gap: 8px 22px; } .fca__tab { font-size: 16px; } }   /* one row of tabs on tablets */
+    .fca__tab:hover { color: var(--ink); }
+    .fca__tab.is-active { color: var(--blue); }
+    .fca__tab:focus-visible { outline-offset: 2px; }
+    .fca__viewport { margin-top: 40px; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scrollbar-width: none; }
+    .fca__viewport::-webkit-scrollbar { display: none; }
+    .fca__track { display: flex; align-items: stretch; gap: 48px; width: max-content; padding-inline: calc((100vw - var(--cw)) / 2); }
+    .fcard { --mw: min(584px, 42vw); flex: 0 0 var(--cw); display: grid; grid-template-columns: minmax(0, 1fr) var(--mw); border-radius: 10px; overflow: hidden; scroll-snap-align: center; }
+    .fcard__text { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; padding: 48px clamp(32px, 6.25vw, 90px); background: #f5f5f5; }
+    .fcard__title { max-width: 620px; font-size: var(--fs-h5); line-height: 1.15; letter-spacing: -.02em; color: var(--ink); text-wrap: balance; }
+    .fcard__desc { margin-top: 28px; max-width: 560px; font-size: var(--fs-lead); line-height: 1.55; color: #4b5563; }
+    .fcard__points { list-style: none; margin-top: 36px; display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
+    .fcard__points li { display: inline-flex; max-width: 100%; align-items: center; gap: 12px; padding: 7px 22px 7px 7px; border-radius: 999px; background: #fff; font-size: 16px; line-height: 1.4; color: #374151; }
+    .fcard__chk { width: 28px; height: 28px; flex: none; border-radius: 50%; background: #10b981; color: #fff; display: grid; place-items: center; }
+    .fcard__chk svg { width: 14px; height: 14px; }
+    .tag-new { display: inline-block; margin-left: 6px; padding: 1px 7px; border-radius: 999px; background: #e6eeff; color: var(--blue); font-size: 11px; font-weight: 600; line-height: 1.4; vertical-align: 1px; }
+    .fcard__media { margin: 0; aspect-ratio: 1168 / 1242; background: var(--shot); }
+    .fcard__media img { display: block; width: 100%; height: 100%; object-fit: cover; }
+    /* dark mode: the whole section sits on black */
+    .fca { background: #000; color: #e4e4e7; padding-top: 192px; }
+    @media (max-width: 781px) { .fca { padding-top: 80px; } }
+    @media (max-width: 600px) { .fca { padding-top: 56px; } }
+    .fca__head h2 { color: #fff; }
+    .fca__lead { color: #a1a1aa; }
+    .fca__tab { color: #a1a1aa; }
+    .fca__tab:hover { color: #fff; }
+    .fca__tab.is-active { color: #6e9bff; }
+    .fcard { outline: 1px solid rgb(255 255 255 / .08); outline-offset: -1px; }
+    .fcard__text { background: #121214; }
+    .fcard__title { color: #fff; }
+    .fcard__desc { color: #a1a1aa; }
+    .fcard__points li { background: #1e1e22; color: #e4e4e7; }
+    .tag-new { background: rgb(91 140 255 / .18); color: #9db9ff; }
+    /* pinned */
+    .fca.is-pinned { padding-bottom: clamp(48px, 7vw, 112px); }
+    /* keep the whole stage inside one viewport: the panel (and so the card) shrinks on short screens */
+    .fca.is-pinned .fcard { --mw: min(584px, 42vw, calc((100vh - 170px) * .9404)); }
+    .fca.is-pinned .fca__stage { position: sticky; top: var(--st, 0px); overflow: hidden; padding-block: 8px; }
+    .fca.is-pinned .fca__viewport { overflow: visible; scroll-snap-type: none; }
+    .fca.is-pinned .fca__track { will-change: transform; }
+    /* shorter laptop screens: tighten the card so the pinned stage still fits one viewport */
+    @media (min-width: 1024px) and (max-height: 780px) {
+      .fca__viewport { margin-top: 24px; }
+      .fcard__text { padding: 32px 56px; }
+      .fcard__title { font-size: clamp(26px, 3.6vh, 34px); }
+      .fcard__desc { margin-top: 16px; font-size: 17px; line-height: 1.5; }
+      .fcard__points { margin-top: 20px; gap: 6px; }
+      .fcard__points li { padding: 5px 18px 5px 5px; font-size: 15px; }
+    }
+
+    /* Everything else */
+    .fx-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 19px; }
+    .section-head + .fx-grid { margin-top: 56px; }
+    .fx {
+      background: #fff; border-radius: 10px; padding: var(--sp-wp50);
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; text-align: center;
+      transition: transform .3s var(--ease), box-shadow .3s var(--ease);
+    }
+    .fx:hover { transform: translateY(-4px); box-shadow: 0 18px 40px -26px rgb(15 23 42 / .35); }
+    .fx__icon {
+      width: 76px; height: 76px; border-radius: 50%; display: grid; place-items: center; background: var(--c);
+      filter: drop-shadow(0 10px 35px rgb(0 0 0 / .06));
+    }
+    .fx__icon img { width: 32px; height: 32px; }
+    .fx h3 { margin-top: 18px; }
+    .fx-cta { margin-top: 55px; }
+
+    /* Platforms */
+    /* tall grey boxes: logo + heading on top, text + link at the bottom; the whole box takes the platform colour on hover */
+    .plat-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; max-width: 1160px; margin-inline: auto; }
+    /* tinted by default, full platform colour on hover (user swatches) */
+    .plat { --soft: #ddceee; --brand: #7231ec; --on: #fff; --on-2: rgb(255 255 255 / .82);
+      position: relative; min-height: 640px; display: flex; flex-direction: column; justify-content: space-between; gap: 40px; padding: clamp(28px, 4.4vw, 64px); background: var(--soft); border-radius: 10px; transition: background-color .45s var(--ease); }
+    .plat--shopify { --soft: #d9e8bd; --brand: #96bf46; --on: #0f172a; --on-2: rgb(15 23 42 / .78); }  /* light green: keep dark text for contrast */
+    .plat__top { display: flex; align-items: center; gap: 18px; }
+    .plat__logo { width: 72px; height: 72px; flex: none; border-radius: 50%; background: #fff; display: grid; place-items: center; box-shadow: 0 1px 2px rgb(15 23 42 / .06); }
+    .plat__logo img { width: 38px; height: 38px; }
+    .plat__logo img.plat__woo { width: 42px; height: auto; }
+    .plat__title { font-size: var(--fs-h5); line-height: 1.1; letter-spacing: -.02em; transition: color .45s var(--ease); }
+    .plat__lab { margin-top: 4px; font-size: var(--fs-sm); color: #6b7280; transition: color .45s var(--ease); }
+    .plat__body { display: flex; flex-direction: column; align-items: flex-start; }
+    .plat__text { max-width: 460px; font-size: var(--fs-lead); line-height: 1.55; color: #4b5563; transition: color .45s var(--ease); }
+    .plat .btn { margin: 20px 0 0 -8px; }
+    .plat__link::after { content: ""; position: absolute; inset: 0; border-radius: inherit; }  /* whole box is the link */
+    .plat:hover { background: var(--brand); }
+    .plat:hover .plat__title, .plat:hover .plat__link { color: var(--on); --fg: var(--on); }
+    .plat:hover .plat__lab, .plat:hover .plat__text { color: var(--on-2); }
+
+
+
+    @media (max-width: 1024px) {
+      .fx-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 900px) {
+      .fcard { grid-template-columns: minmax(0, 1fr); }
+      .fcard__media { aspect-ratio: auto; }
+      .fcard__media img { height: auto; aspect-ratio: 1168 / 1242; }
+    }
+    @media (max-width: 781px) {
+      .fca__tabs { flex-wrap: nowrap; justify-content: flex-start; gap: 28px; overflow-x: auto; scrollbar-width: none; margin-inline: calc(var(--gutter) * -1); padding-inline: var(--gutter); }
+      .fca__tabs::-webkit-scrollbar { display: none; }
+      .fca__tabs { -webkit-mask-image: linear-gradient(90deg, #000 82%, transparent); mask-image: linear-gradient(90deg, #000 82%, transparent); }
+      .fca__tab { font-size: 16px; }
+      .fca__pin { margin-top: 56px; }
+      .fca__viewport { margin-top: 24px; }
+      .fca { --cw: calc(100vw - 2 * var(--gutter) - 16px); }
+      .fca__track { gap: 16px; }
+      .fcard__points li { border-radius: 18px; align-items: flex-start; }
+      .f-hero { padding-block: 40px 72px; }
+      .f-hero h1 { margin-top: 20px; }
+      .br-d { display: none; }
+      .fx-cta { margin-top: 40px; }
+    }
+    @media (max-width: 600px) {
+      .fx-grid, .plat-grid { grid-template-columns: 1fr; }
+      .plat { min-height: 320px; padding: 28px 24px; }
+      .plat__top { gap: 14px; }
+      .plat__top > div { min-width: 0; }
+      .plat__logo { width: 56px; height: 56px; }
+      .plat__logo img { width: 30px; height: 30px; }
+      .plat__logo img.plat__woo { width: 34px; }
+      .f-hero .btn-row .btn { flex: 1 1 0; padding-inline: 12px; }
+      .f-hero__notes { gap: 8px 20px; }
+      .fx-cta .btn { flex: 1 1 0; padding-inline: 12px; }
+    }
+    @media (max-width: 360px) {
+      .plat__title { font-size: 20px; }
+    }
+  </style>
+</Fragment>
+
+<main id="main">
+  <!-- Hero -->
+  <section class="f-hero">
+    <div class="f-hero__art" aria-hidden="true">
+      <div class="orb orb--l1" style="background-image:url(/assets/img/features/orb-copper.png)"><span class="orb-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20.5l1.4-4.9A8 8 0 1 1 21 12z"/><path d="M8.5 10.5h7M8.5 14h4.5"/></svg></span></div>
+      <div class="orb orb--l2" style="background-image:url(/assets/img/features/orb-green.png)"><span class="orb-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21"/></svg></span></div>
+      <div class="orb orb--r1" style="background-image:url(/assets/img/features/orb-pink.png)"><span class="orb-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 8h13l-1 12.5h-11z"/><path d="M9 10.5V7a3 3 0 0 1 6 0v3.5"/></svg></span></div>
+      <div class="orb orb--r2" style="background-image:url(/assets/img/features/orb-purple.png)"><span class="orb-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 3.5h2.2l2.4 11.2h10.6l2.3-7.7H6"/><circle cx="9" cy="19" r="1.6"/><circle cx="17" cy="19" r="1.6"/></svg></span></div>
+    </div>
+    <div class="container f-hero__in">
+      <p class="pill">Your Smart AI Sales Agent 🔥</p>
+      <h1 class="h1">Every Feature Built to Close the Sale</h1>
+      <p class="f-hero__lead">CartPilot doesn’t just answer questions. It finds the product, adds it to the cart, and gets your customer to checkout – all inside a single conversation.</p>
+      <div class="btn-row btn-row--center">
+        <a class="btn" href="https://app.cartpilot.ai/register">Try CartPilot Free</a>
+        <button class="btn btn--secondary f-hero__demo" type="button" data-modal-src="https://www.youtube.com/embed/tH1m-FmcM3g"><img src="/assets/img/play.svg" alt="" width="15" height="18"> Watch demo</button>
+      </div>
+      <ul class="f-hero__notes" role="list">
+        <li><img src="/assets/icons/no-card.svg" alt="" width="18" height="18">Live in minutes</li>
+        <li><img src="/assets/icons/no-card.svg" alt="" width="18" height="18">Works with WooCommerce and Shopify</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Complete commerce agent: tab row + feature cards that travel right → left while you scroll -->
+  <section class="section fca" id="agent">
+    <div class="container">
+      <div class="fca__head" data-reveal>
+        <h2 class="h3">The Complete Commerce Agent. Built to Search, Sell, and Support</h2>
+        <p class="fca__lead">From product discovery to post-purchase support, CartPilot handles the entire shopping journey inside one conversation.</p>
+      </div>
+    </div>
+    <div class="fca__pin">
+      <div class="fca__stage">
+        <div class="container"><nav class="fca__tabs" aria-label="CartPilot features">
+        <button class="fca__tab is-active" type="button" aria-controls="fcard-search" aria-current="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>Product Search</button>
+        <button class="fca__tab" type="button" aria-controls="fcard-cart"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="20.5" r="1.3"/><circle cx="18" cy="20.5" r="1.3"/><path d="M2.5 3h2.3l2.6 12.2a1.8 1.8 0 0 0 1.8 1.4h8.9a1.8 1.8 0 0 0 1.8-1.4L21.5 7H5.6"/></svg>Cart Control</button>
+        <button class="fca__tab" type="button" aria-controls="fcard-voice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="2.5" width="6" height="11.5" rx="3"/><path d="M19 10.5v.5a7 7 0 0 1-14 0v-.5"/><path d="M12 18v3.5"/></svg>Voice Agent</button>
+        <button class="fca__tab" type="button" aria-controls="fcard-store"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22v-5"/><path d="M9 8V2.5"/><path d="M15 8V2.5"/><path d="M18 8v4.5a5 5 0 0 1-5 5h-2a5 5 0 0 1-5-5V8Z"/></svg>Store Integration</button>
+        <button class="fca__tab" type="button" aria-controls="fcard-setup"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2.5 4 13.5h7.5L11 21.5l9-11h-7.5z"/></svg>Easy Setup</button>
+        <button class="fca__tab" type="button" aria-controls="fcard-analytics"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 3.5v17h17"/><path d="M18 16.5V9"/><path d="M13.5 16.5V5.5"/><path d="M9 16.5v-4"/></svg>Analytics</button>
+        </nav></div>
+        <div class="fca__viewport">
+          <div class="fca__track">
+          <article class="fcard is-active" id="fcard-search" style="--shot:#0b0b0f" aria-label="Product Search">
+            <div class="fcard__text">
+              <h3 class="fcard__title">Shoppers Describe It.<br> CartPilot Finds It.</h3>
+              <p class="fcard__desc">Shoppers describe what they need in plain English. CartPilot knows what your store carries and suggests only products that fit, with prices, images, and options right in the chat.</p>
+              <ul class="fcard__points" role="list">
+              <li><span class="fcard__chk" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span>Understands intent, not just keywords</span></li>
+              <li><span class="fcard__chk" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span>Searches your live catalog in real time</span></li>
+              <li><span class="fcard__chk" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span>Recommends what fits, and what’s in stock <span class="tag-new">New</span></span></li>
+              <li><span class="fcard__chk" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span>Gives honest budget answers</span></li>
+              </ul>
+            </div>
+            <figure class="fcard__media"><img src="/assets/img/features/product-search.jpg?v=2" alt="CartPilot chat showing product cards with View Details and Add to Cart buttons" width="584" height="621" loading="eager"></figure>
+          </article>
+          <article class="fcard" id="fcard-cart" style="--shot:#0b0b0f" aria-label="Cart Control">
+            <div class="fcard__text">
+              <h3 class="fcard__title">It Doesn’t Just Show Products. It Adds Them to the Cart.</h3>
+              <p class="fcard__desc">CartPilot adds the correct product variant to your real cart when a shopper says so. No page redirect, no clicking, no friction. The sale happens inside the conversation.</p>
+              <ul class="fcard__points" role="list">
+              <li><span class="fcard__chk" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span>Adds specific product variants directly to cart</span></li>
+              <li><span class="fcard__chk" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span>Updates and removes items on request</span></li>
+              <li><span class="fcard__chk" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span>Applies coupon codes from chat</span></li>
+              <li><span class="fcard__chk" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span>No page redirects, no hand-offs</span></li>
+              </ul>
+            </div>
+            <figure class="fcard__media"><img src="/assets/img/features/cart-control.jpg?v=2" alt="CartPilot chat adding a product variant to the cart" width="584" height="621" loading="lazy"></figure>
+          </article>
+          <article class="fcard" id="fcard-voice" style="--shot:#0b0b0f" aria-label="Voice Agent">
+            <div class="fcard__text">
+              <h3 class="fcard__title">Your Store Now Has a Voice. A Real One.</h3>
+              <p class="fcard__desc">Shoppers hold to speak, and CartPilot listens and replies in a natural voice. Pick from 30+ voices to match your brand. Voice is available on all paid plans.</p>
+              <ul class="fcard__points" role="list">
+              <li><span class="fcard__chk" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span>Hold-to-speak voice input</span></li>
+              <li><span class="fcard__chk" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span>Natural voice responses</span></li>
+              <li><span class="fcard__chk" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span>Same capabilities as text mode</span></li>
+              <li><span class="fcard__chk" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span>Designed for mobile shoppers</span></li>
+              </ul>
+            </div>
+            <figure class="fcard__media"><img src="/assets/img/features/voice-agent.jpg?v=2" alt="CartPilot voice agent mode in the chat widget" width="584" height="621" loading="lazy"></figure>
+          </article>
+          <article class="fcard" id="fcard-store" style="--shot:#0b0b0f" aria-label="Store Integration">
+            <div class="fcard__text">
+              <h3 class="fcard__title">Built Into Your Store. Not Bolted On Top.</h3>
+              <p class="fcard__desc">CartPilot connects directly to your WooCommerce or Shopify store. It reads your live catalog, works with real cart sessions, checks stock levels, and looks up actual orders for logged-in customers.</p>
+              <ul class="fcard__points" role="list">
+              <li><span class="fcard__chk" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span>Direct cart access</span></li>
+              <li><span class="fcard__chk" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span>Live product catalog sync</span></li>
+              <li><span class="fcard__chk" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span>Real order data access</span></li>
+              <li><span class="fcard__chk" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span>Policy and document training</span></li>
+              </ul>
+            </div>
+            <figure class="fcard__media"><img src="/assets/img/features/store-integration.jpg?v=2" alt="CartPilot answering an order status question from live store data" width="584" height="621" loading="lazy"></figure>
+          </article>
+          <article class="fcard" id="fcard-setup" style="--shot:#0b0b0f" aria-label="Easy Setup">
+            <div class="fcard__text">
+              <h3 class="fcard__title">Live in Minutes. No Developer. No Code.</h3>
+              <p class="fcard__desc">Install CartPilot from WordPress.org or the Shopify App Store and connect your store. It syncs your catalog, coupons, and policies on its own. Customize your agent, preview it, and go live.</p>
+              <ul class="fcard__points" role="list">
+              <li><span class="fcard__chk" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span>Install the plugin or app</span></li>
+              <li><span class="fcard__chk" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span>Quick store connection</span></li>
+              <li><span class="fcard__chk" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span>Auto-syncs products, coupons, and policies</span></li>
+              <li><span class="fcard__chk" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span>Preview mode before going live</span></li>
+              </ul>
+            </div>
+            <figure class="fcard__media"><img src="/assets/img/features/easy-setup.jpg?v=2" alt="CartPilot dashboard setup and store connection" width="584" height="621" loading="lazy"></figure>
+          </article>
+          <article class="fcard" id="fcard-analytics" style="--shot:#0b0b0f" aria-label="Analytics">
+            <div class="fcard__text">
+              <h3 class="fcard__title">See Exactly What Your Shoppers Are Asking. And Where They Stop.</h3>
+              <p class="fcard__desc">Every conversation is logged in your dashboard. Full transcripts, search terms, cart actions, and drop-off points. Turn every shopper interaction into insight about your store.</p>
+              <ul class="fcard__points" role="list">
+              <li><span class="fcard__chk" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span>Full conversation transcripts</span></li>
+              <li><span class="fcard__chk" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span>Conversion metrics</span></li>
+              <li><span class="fcard__chk" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span>Knowledge gap detection</span></li>
+              <li><span class="fcard__chk" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span>Real-time sync</span></li>
+              </ul>
+            </div>
+            <figure class="fcard__media"><img src="/assets/img/features/analytics.jpg?v=2" alt="CartPilot conversation analytics dashboard" width="584" height="621" loading="lazy"></figure>
+          </article>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Everything else -->
+  <section class="section section--gray">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <h2 class="h3">Everything Else CartPilot Handles</h2>
+        <p class="lead">Built for real stores with real complexity.</p>
+      </div>
+      <div class="fx-grid">
+        <div class="fx" data-reveal><span class="fx__icon" style="--c:#d7d6ff"><img src="/assets/icons/f-compare.svg" alt=""></span><h3 class="h6">Product Comparison</h3><p>Compare options side-by-side on request. No page navigation, no back-and-forth.</p></div>
+        <div class="fx" data-reveal><span class="fx__icon" style="--c:#f6d9f5"><img src="/assets/icons/f-order.svg" alt=""></span><h3 class="h6">Order Tracking</h3><p>Logged-in customers can ask “where’s my order” and get a real answer – instantly.</p></div>
+        <div class="fx" data-reveal><span class="fx__icon" style="--c:#b6ffde"><img src="/assets/icons/f-policy.svg" alt=""></span><h3 class="h6">Policy &amp; FAQ Answers</h3><p>Return policy, shipping times, warranty questions – answered automatically.</p></div>
+        <div class="fx" data-reveal><span class="fx__icon" style="--c:#e2ffb0"><img src="/assets/icons/f-quick.svg" alt=""></span><h3 class="h6">Quick Action Buttons</h3><p>Suggested actions reduce typing friction. Especially powerful on mobile.</p></div>
+        <div class="fx" data-reveal><span class="fx__icon" style="--c:#fdecab"><img src="/assets/icons/f-mobile.svg" alt=""></span><h3 class="h6">Mobile-First Design</h3><p>The widget is built for small screens. Fast, clean, and thumb-friendly.</p></div>
+        <div class="fx" data-reveal><span class="fx__icon" style="--c:#b6e9ff"><img src="/assets/icons/f-custom.svg" alt=""></span><h3 class="h6">Widget Customization</h3><p>Match your brand. Choose colors, fonts, position, greeting message, and agent name.</p></div>
+        <div class="fx" data-reveal><span class="fx__icon" style="--c:#ffb6c9"><img src="/assets/icons/f-avatar.svg" alt=""></span><h3 class="h6">Custom Agent Avatar</h3><p>Give your AI agent a face. Upload any image and your agent greets shoppers as a recognizable brand character.</p></div>
+        <div class="fx" data-reveal><span class="fx__icon" style="--c:#f6e6d9"><img src="/assets/icons/f-fallback.svg" alt=""></span><h3 class="h6">Graceful Fallback</h3><p>When CartPilot doesn’t know the answer, it says so – and redirects to your support channel.</p></div>
+        <div class="fx" data-reveal><span class="fx__icon" style="--c:#c8dcf4"><img src="/assets/icons/f-handover.svg" alt=""></span><h3 class="h6">Human Handover</h3><p>Shoppers can request a real person anytime. Your team picks up right where the AI left off.</p></div>
+      </div>
+      <div class="btn-row btn-row--center fx-cta">
+        <a class="btn" href="https://app.cartpilot.ai/register">Try CartPilot Free</a>
+        <a class="btn btn--outline" href="/pricing/">See pricing</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Every feature, on your platform -->
+  <section class="section plat-sec">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <h2 class="h3">Every Feature, on Your Platform</h2>
+        <p class="lead" style="--lead-w:820px">Everything on this page works the same on WooCommerce and Shopify. Only the way you install CartPilot is different.</p>
+      </div>
+      <div class="plat-grid">
+        <article class="plat plat--woo" data-reveal>
+          <div class="plat__top">
+            <span class="plat__logo"><img class="plat__woo" src="/assets/img/woo-logo.png" alt="" width="36" height="9"></span>
+            <div><h3 class="plat__title">WooCommerce</h3><p class="plat__lab">WordPress plugin</p></div>
+          </div>
+          <div class="plat__body">
+            <p class="plat__text">Install the free plugin from WordPress.org, then connect your CartPilot account.</p>
+            <a class="btn btn--tertiary plat__link" href="/woocommerce/">See CartPilot for WooCommerce →</a>
+          </div>
+        </article>
+        <article class="plat plat--shopify" data-reveal>
+          <div class="plat__top">
+            <span class="plat__logo"><img src="/assets/icons/shopify.svg" alt="" width="34" height="34"></span>
+            <div><h3 class="plat__title">Shopify</h3><p class="plat__lab">Shopify app</p></div>
+          </div>
+          <div class="plat__body">
+            <p class="plat__text">Install the app from the Shopify App Store. Your account is set up automatically.</p>
+            <a class="btn btn--tertiary plat__link" href="/shopify/">See CartPilot for Shopify →</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <Faq {...faq} />
+
+  <!-- CTA -->
+  <CtaSky {...cta}>
+    <a class="btn" href="https://app.cartpilot.ai/register">Try CartPilot Free</a>
+    <a class="btn btn--white" href="/pricing/">View Pricing Plans</a>
+  </CtaSky>
+</main>
+
+<Fragment slot="scripts">
+<script is:inline>
+  /* Complete commerce agent: the tab row follows the card in view.
+     Pinned (≥1024px, motion allowed, stage fits the viewport): the section is made (stage height + travel) tall,
+     the stage sticks and the track is carried right → left with scroll, smoothed like a scrubbed tween.
+     Otherwise the cards sit in a native swipe row with scroll-snap. Tabs jump to their card either way. */
+  (() => {
+    const sec = document.querySelector(".fca");
+    if (!sec) return;
+    const pin = sec.querySelector(".fca__pin"), stage = sec.querySelector(".fca__stage"), nav = sec.querySelector(".fca__tabs");
+    const vp = sec.querySelector(".fca__viewport"), track = sec.querySelector(".fca__track");
+    const cards = [...track.children], tabs = [...nav.querySelectorAll(".fca__tab")];
+    const mq = matchMedia("(min-width: 1024px) and (prefers-reduced-motion: no-preference)");
+    let on = false, travel = 0, step = 1, cur = 0, raf = 0, active = 0;
+
+    const setActive = (i) => {
+      i = Math.max(0, Math.min(cards.length - 1, i));
+      if (i === active) return;
+      active = i;
+      cards.forEach((c, k) => c.classList.toggle("is-active", k === i));
+      tabs.forEach((t, k) => { t.classList.toggle("is-active", k === i); k === i ? t.setAttribute("aria-current", "true") : t.removeAttribute("aria-current"); });
+      const t = tabs[i];
+      if (nav.scrollWidth > nav.clientWidth) nav.scrollTo({ left: t.offsetLeft - (nav.clientWidth - t.offsetWidth) / 2, behavior: "smooth" });
+    };
+    let st = 0; /* sticky offset that centres the stage in the viewport */
+    const goal = () => Math.min(travel, Math.max(0, st - pin.getBoundingClientRect().top));
+    const tick = () => {
+      cancelAnimationFrame(raf);
+      const frame = () => {
+        if (!on) return;
+        const t = goal();
+        cur += (t - cur) * 0.14;
+        if (Math.abs(t - cur) < 0.3) cur = t;
+        track.style.transform = `translate3d(${-cur}px, 0, 0)`;
+        setActive(Math.round(cur / step));
+        if (cur !== t) raf = requestAnimationFrame(frame);
+      };
+      raf = requestAnimationFrame(frame);
+    };
+    const off = () => { on = false; sec.classList.remove("is-pinned"); pin.style.height = ""; track.style.transform = ""; cur = 0; };
+    const measure = () => {
+      if (!mq.matches) return off();
+      sec.classList.add("is-pinned");
+      if (stage.offsetHeight > innerHeight) return off();
+      on = true;
+      st = Math.max(0, Math.round((innerHeight - stage.offsetHeight) / 2));
+      stage.style.setProperty("--st", st + "px");
+      step = cards[1].offsetLeft - cards[0].offsetLeft;
+      travel = step * (cards.length - 1);
+      pin.style.height = stage.offsetHeight + travel + "px";
+      cur = goal();
+      tick();
+    };
+    /* swipe row: pick the card closest to the centre */
+    vp.addEventListener("scroll", () => {
+      if (on) return;
+      const mid = vp.scrollLeft + vp.clientWidth / 2;
+      let best = 0, d = Infinity;
+      cards.forEach((c, k) => { const m = Math.abs(c.offsetLeft + c.offsetWidth / 2 - mid); if (m < d) { d = m; best = k; } });
+      setActive(best);
+    }, { passive: true });
+    tabs.forEach((t, i) => t.addEventListener("click", () => {
+      if (on) scrollTo({ top: pin.getBoundingClientRect().top + scrollY - st + i * step, behavior: "smooth" });
+      else vp.scrollTo({ left: cards[i].offsetLeft - (vp.clientWidth - cards[i].offsetWidth) / 2, behavior: "smooth" });
+    }));
+    nav.addEventListener("keydown", (e) => {
+      if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+      const i = tabs.indexOf(document.activeElement);
+      if (i < 0) return;
+      const n = tabs[(i + (e.key === "ArrowRight" ? 1 : -1) + tabs.length) % tabs.length];
+      n.focus(); n.click(); e.preventDefault();
+    });
+    addEventListener("scroll", () => on && tick(), { passive: true });
+    addEventListener("resize", measure);
+    mq.addEventListener("change", measure);
+    (document.fonts ? document.fonts.ready : Promise.resolve()).then(measure);
+    addEventListener("load", () => { measure(); setTimeout(() => cards.forEach((c) => { const im = c.querySelector("img"); if (im) im.loading = "eager"; }), 600); });
+  })();
+</script>
+</Fragment>
+</Base>

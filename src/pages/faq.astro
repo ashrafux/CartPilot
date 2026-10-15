@@ -1,0 +1,163 @@
+---
+import Base from "../layouts/Base.astro";
+import CtaSky from "../components/CtaSky.astro";
+const title = "CartPilot FAQ: AI Sales Agent Questions Answered";
+const description = "Find answers to CartPilot FAQ questions about AI sales agent features, WooCommerce and Shopify support, voice interaction, BYOK, credits, and plans.";
+
+const cta = {
+  title: "Still Need Help? Explore Our Documentation.",
+  text: "Browse the CartPilot documentation for step-by-step guides, or reach out to the support team directly.",
+};
+---
+<Base title={title} description={description} bodyClass="header-white faq-page">
+<Fragment slot="head">
+  <style is:inline>
+    /* ---------- FAQ: a 960px ruled column that runs from the header to the CTA ---------- */
+    .faq-page { --rule: #e9eaec; }
+    .rail { max-width: 960px; margin-inline: auto; border-inline: 1px solid var(--rule); }
+    .faq-page .site-header::before {
+      content: ""; position: absolute; z-index: -1; inset-block: 0; left: 50%; translate: -50% 0;
+      width: min(960px, calc(100% - 2 * var(--gutter))); border-inline: 1px solid var(--rule); pointer-events: none;
+    }
+    .faq-hero .rail { padding: clamp(48px, 6.2vw, 89px) var(--sp-10) var(--sp-50); text-align: center; }
+    .faq-hero p { margin-top: 28px; font-size: var(--fs-body); }
+    .faq-body { border-block: 1px solid var(--rule); }
+    .faq-body .faq-list { gap: 12px; padding: var(--sp-20); }
+    .faq-spacer { height: clamp(36px, 13.06vw, 188px); }
+  </style>
+</Fragment>
+
+<main id="main">
+  <section class="faq-hero">
+    <div class="container">
+      <div class="rail">
+        <h1 class="h1">FAQ</h1>
+        <p>Quick answers about CartPilot plans, pricing, credits, and getting started.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="faq-body" aria-label="Frequently asked questions">
+    <div class="container">
+      <div class="rail">
+        <div class="faq-list faq-cards" data-faq-single>
+          <div class="faq">
+            <button class="faq__q" type="button">Will CartPilot slow down my store?<span class="faqx__tog" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span></button>
+            <div class="faq__a"><div><p>CartPilot is built to add a shopping assistant to your storefront without getting in your shoppers’ way. Real-world speed still depends on your hosting, theme and the other plugins you run.</p></div></div>
+          </div>
+          <div class="faq">
+            <button class="faq__q" type="button">What is CartPilot?<span class="faqx__tog" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span></button>
+            <div class="faq__a"><div><p>An AI sales agent for WooCommerce and Shopify stores. From a chat window it helps shoppers discover products, get answers and buying advice, and put the right items in their cart.</p></div></div>
+          </div>
+          <div class="faq">
+            <button class="faq__q" type="button">Is CartPilot a chatbot?<span class="faqx__tog" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span></button>
+            <div class="faq__a"><div><p>Not in the usual sense. Typical chatbots handle basic support questions, while CartPilot focuses on pre-sale shopping: searching your catalog, comparing options, answering buying questions and moving products into the cart. Think of it as an AI shopping assistant built for product discovery and sales.</p></div></div>
+          </div>
+          <div class="faq">
+            <button class="faq__q" type="button">Who is CartPilot for?<span class="faqx__tog" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span></button>
+            <div class="faq__a"><div><p>WooCommerce and Shopify merchants who want to take friction out of the buying journey and help shoppers decide faster.</p></div></div>
+          </div>
+          <div class="faq">
+            <button class="faq__q" type="button">Does CartPilot only work with WooCommerce?<span class="faqx__tog" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span></button>
+            <div class="faq__a"><div><p>No. It supports both WooCommerce and Shopify, and it works from your own product catalog, so the help shoppers get is always about products you actually sell.</p></div></div>
+          </div>
+          <div class="faq">
+            <button class="faq__q" type="button">What can CartPilot help shoppers do?<span class="faqx__tog" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span></button>
+            <div class="faq__a"><div>
+              <ul>
+                <li>Search for products in everyday language</li>
+                <li>Ask questions about a specific product</li>
+                <li>Get advice on what to buy and compare options</li>
+                <li>Reach relevant products faster</li>
+                <li>Add items to the cart without leaving the chat</li>
+                <li>Talk to it by voice on supported plans</li>
+              </ul>
+            </div></div>
+          </div>
+          <div class="faq">
+            <button class="faq__q" type="button">Can CartPilot add products to the cart?<span class="faqx__tog" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span></button>
+            <div class="faq__a"><div><p>Yes. Shoppers can add items straight from the conversation, which cuts the steps between finding a product and checking out.</p></div></div>
+          </div>
+          <div class="faq">
+            <button class="faq__q" type="button">Can CartPilot answer product-specific questions?<span class="faqx__tog" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span></button>
+            <div class="faq__a"><div><p>Yes. Answers are drawn from your store’s product data, so shoppers get useful replies without clicking through several product pages or waiting on your support team.</p></div></div>
+          </div>
+          <div class="faq">
+            <button class="faq__q" type="button">Can I upgrade my plan later?<span class="faqx__tog" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span></button>
+            <div class="faq__a"><div><p>Yes. Move to a higher plan whenever your store needs more shops, conversations, products or training items.</p></div></div>
+          </div>
+          <div class="faq">
+            <button class="faq__q" type="button">What happens if I exceed my plan limits?<span class="faqx__tog" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span></button>
+            <div class="faq__a"><div><p>On monthly and annual plans you can top up with a credit pack and keep going. If you regularly need more, a bigger plan is usually the better long-term fit.</p></div></div>
+          </div>
+          <div class="faq">
+            <button class="faq__q" type="button">What counts as a conversation?<span class="faqx__tog" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span></button>
+            <div class="faq__a"><div><p>A conversation begins when a shopper starts interacting with CartPilot, and a single conversation can include many back-and-forth messages.</p></div></div>
+          </div>
+          <div class="faq">
+            <button class="faq__q" type="button">Do conversations reset every month?<span class="faqx__tog" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span></button>
+            <div class="faq__a"><div><p>Yes. On monthly and annual plans your conversation allowance refreshes at the start of each billing cycle, so a plan with 400 conversations a month starts every cycle with a fresh 400.</p></div></div>
+          </div>
+          <div class="faq">
+            <button class="faq__q" type="button">What happens when my conversations run out?<span class="faqx__tog" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span></button>
+            <div class="faq__a"><div><p>Buy a credit pack to keep CartPilot running without changing plans. Packs are handy for launches, seasonal sales, ad campaigns and other traffic spikes.</p></div></div>
+          </div>
+          <div class="faq">
+            <button class="faq__q" type="button">What are credit packs?<span class="faqx__tog" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span></button>
+            <div class="faq__a"><div><p>Add-on conversation credits you can buy on top of a monthly or annual CartPilot plan.</p></div></div>
+          </div>
+          <div class="faq">
+            <button class="faq__q" type="button">Do credit packs expire?<span class="faqx__tog" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span></button>
+            <div class="faq__a"><div><p>Yes. Each pack is valid for 12 months from the date you buy it.</p></div></div>
+          </div>
+          <div class="faq">
+            <button class="faq__q" type="button">Are credit packs refundable?<span class="faqx__tog" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span></button>
+            <div class="faq__a"><div><p>No. Credit pack purchases can’t be refunded.</p></div></div>
+          </div>
+          <div class="faq">
+            <button class="faq__q" type="button">Should I upgrade my plan or buy a credit pack?<span class="faqx__tog" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span></button>
+            <div class="faq__a"><div><p>Pick a credit pack for an occasional top-up. Upgrade if you run out regularly or need higher store, product or training limits every month.</p></div></div>
+          </div>
+          <div class="faq">
+            <button class="faq__q" type="button">What is BYOK?<span class="faqx__tog" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span></button>
+            <div class="faq__a"><div><p>BYOK stands for Bring Your Own Key. On the BYOK Lifetime plan you connect your own AI provider API key, so CartPilot doesn’t put a cap on your conversations.</p></div></div>
+          </div>
+          <div class="faq">
+            <button class="faq__q" type="button">How does CartPilot connect to my store?<span class="faqx__tog" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span></button>
+            <div class="faq__a"><div><p>Through the CartPilot WooCommerce plugin or Shopify app. Once connected, it uses your product catalog to power search, answers and recommendations.</p></div></div>
+          </div>
+          <div class="faq">
+            <button class="faq__q" type="button">Does CartPilot support voice interaction?<span class="faqx__tog" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span></button>
+            <div class="faq__a"><div><p>Yes, on the Pilot, Growth, Scale and BYOK Lifetime plans. Voice isn’t part of the Free plan.</p></div></div>
+          </div>
+          <div class="faq">
+            <button class="faq__q" type="button">What are training items?<span class="faqx__tog" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span></button>
+            <div class="faq__a"><div><p>Extra information you add about your store, products, policies or buying advice, so CartPilot understands your business better and answers more accurately.</p></div></div>
+          </div>
+          <div class="faq">
+            <button class="faq__q" type="button">Can CartPilot compare products?<span class="faqx__tog" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span></button>
+            <div class="faq__a"><div><p>Yes. Using the information in your catalog, it explains how products differ and steers shoppers toward the option that suits them best.</p></div></div>
+          </div>
+          <div class="faq">
+            <button class="faq__q" type="button">Does CartPilot replace my support team?<span class="faqx__tog" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span></button>
+            <div class="faq__a"><div><p>It works alongside them. CartPilot handles everyday pre-sale and product questions at any hour, leaving your team free for the conversations that need a person.</p></div></div>
+          </div>
+          <div class="faq">
+            <button class="faq__q" type="button">Will CartPilot work with my theme?<span class="faqx__tog" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span></button>
+            <div class="faq__a"><div><p>It’s designed for standard WooCommerce and Shopify setups. If your theme or checkout is heavily customised, test compatibility before going live.</p></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container" aria-hidden="true"><div class="rail faq-spacer"></div></div>
+
+  <!-- CTA -->
+  <CtaSky {...cta}>
+    <a class="btn" href="/docs/">Explore Documentation</a>
+    <a class="btn btn--white" href="/support/">Contact Support</a>
+  </CtaSky>
+</main>
+
+</Base>

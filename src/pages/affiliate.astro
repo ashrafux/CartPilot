@@ -1,0 +1,339 @@
+---
+import Base from "../layouts/Base.astro";
+import Faq from "../components/Faq.astro";
+import CtaSky from "../components/CtaSky.astro";
+const title = "Affiliate Program - Earn With CartPilot";
+const description = "Join the CartPilot affiliate program. Refer CartPilot to your clients and audience, share your unique link and earn a commission on every sale.";
+
+const faq = {
+  chip: "Affiliate FAQ",
+  title: "Have Questions?",
+  lead: "Find answers to the most commonly asked questions by our users.",
+  button: { href: "/affiliate-terms-and-conditions/", label: "Read Affiliate Terms" },
+  items: [
+    { q: "How much commission do affiliates earn?",
+      a: "<p>You receive 20% of every qualifying new sale you refer, and there’s no ceiling on how much you can make.</p>" },
+    { q: "When are commissions paid?",
+      a: "<p>Earnings are checked once a month. Once the refund window has passed and your balance meets the payout minimum, the money is sent to your PayPal account.</p>" },
+    { q: "What is the minimum payout amount?",
+      a: "<p>A payout is released once your approved commissions add up to at least $300.</p>" },
+    { q: "Are coupon or deal sites allowed?",
+      a: "<p>No. Referrals from coupon-only or deal sites aren’t accepted, and neither is bidding on CartPilot brand terms.</p>" },
+    { q: "Can I run paid ads?",
+      a: "<p>Yes, you can advertise — just keep CartPilot brand keywords and misleading terms out of your campaigns. See the <a href=\"/affiliate-terms-and-conditions/\">affiliate terms</a> for details.</p>" },
+    { q: "What happens if a sale is refunded?",
+      a: "<p>If an order is refunded, or reversed because of fraud or a policy breach, the commission tied to it is cancelled.</p>" },
+    { q: "Do I need to provide support to my referrals?",
+      a: "<p>No. Our team takes care of all customer support, so you can focus on sending referrals our way.</p>" }
+  ],
+};
+
+const cta = {
+  title: "You’ve Seen What It Can Do. Let CartPilot Handle Your Conversations",
+  text: "CartPilot searches, sells, and supports your customers around the clock, starting the moment you add it to your WooCommerce or Shopify store.",
+};
+---
+<Base title={title} description={description} bodyClass="header-white">
+<Fragment slot="head">
+  <style is:inline>
+    /* ---------- Affiliate ---------- */
+    .aff { --pad-s: 74px; --pad-l: 148px; }
+    .aff-head { text-align: center; }
+    .aff-head p { margin-top: 28px; color: var(--text); }
+    .aff-wide { max-width: 1360px; margin-inline: auto; }
+
+    /* Hero */
+    .aff-hero { padding-block: var(--pad-s) var(--pad-l); }
+    .aff-hero .btn-row { margin-top: var(--sp-40); }
+    .btn--line { background: transparent; color: var(--blue); border-color: var(--blue); }
+    .btn--line:hover { background: var(--blue); border-color: var(--blue); color: #fff; }
+
+    /* 3 simple steps — pinned scroll tabs */
+    .aff-steps { padding-block: var(--pad-l) var(--pad-s); }
+    .aff-steps .aff-head { margin-bottom: var(--sp-50); }
+    .steps-rail { max-width: 1024px; margin: 0 auto; padding-block: 60px 135px; }
+    .steps-spacer { height: 2000px; }
+    .tabs-wrap {
+      position: sticky; top: min(60px, calc(100vh - 825px)); z-index: 2;
+      display: flex; border: 1px solid #ebebef; border-radius: 6px; overflow: hidden; background: #fff;
+    }
+    .tabs-left, .tabs-right { flex: 1 1 0; min-width: 0; }
+    .tabs-left { display: grid; place-items: center; background: #f1fffb; }
+    .tab { position: relative; padding: 40px; border-left: 1px solid #ebebef; background: #fff; }
+    .tab + .tab { border-top: 1px solid #ebebef; }
+    .tab__n {
+      display: inline-flex; align-items: center; justify-content: center; width: 72px; height: 72px; margin-bottom: 24px;
+      border: 1px solid #ebebef; border-radius: 50%; background: #fff; color: #0e0e0f; vertical-align: top;
+      transition: background-color .25s var(--ease), border-color .25s var(--ease);
+    }
+    .tab.is-active .tab__n { background: #00e79e; border-color: #00e79e; }
+    .tab h3 { margin-top: 8px; font-size: 18px; line-height: 1.5; color: #0e0e0f; }
+    .tab p { margin-top: 8px; font-size: 16px; line-height: 1.5; }
+    .tab__bar { position: absolute; left: -1px; top: 0; z-index: 3; width: 2px; height: 100%; overflow: hidden; }
+    .tab__bar i { display: block; width: 100%; height: 0; background: #00e79e; }
+
+    /* Left-pane illustration (one panel per step, cross-faded) */
+    .ill { display: grid; width: min(360px, calc(100% - 64px)); }
+    .ill__panel { grid-area: 1 / 1; align-self: center; opacity: 0; transform: translateY(14px) scale(.98); transition: opacity .45s var(--ease), transform .45s var(--ease); }
+    .ill__panel.is-active { opacity: 1; transform: none; }
+    .ill-card { background: #fff; border: 1px solid #e3f4ee; border-radius: 10px; padding: 24px; box-shadow: 0 30px 60px -30px rgb(6 95 70 / .25); font-size: 14px; line-height: 1.4; color: var(--slate); }
+    .ill-head { display: flex; align-items: center; gap: 10px; }
+    .ill-head img { width: 36px; height: 36px; border-radius: 9px; }
+    .ill-head b { font-weight: 500; color: var(--ink); }
+    .ill-badge { margin-left: auto; padding: 4px 10px; border-radius: 99px; background: #dcfce7; color: #15803d; font-size: 12px; font-weight: 500; }
+    .ill-label { margin-top: 22px; font-size: 13px; color: var(--muted); }
+    .ill-link { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 8px; padding: 6px 6px 6px 14px; border: 1px solid #e5e7eb; border-radius: 10px; color: var(--ink); }
+    .ill-link b { padding: 7px 14px; border-radius: 7px; background: var(--blue); color: #fff; font-weight: 500; font-size: 13px; }
+    .ill-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 16px; }
+    .ill-stats div { padding: 12px 14px; border-radius: 10px; background: #f6f8fb; }
+    .ill-stats small { display: block; font-size: 12px; color: var(--muted); }
+    .ill-stats strong { display: block; margin-top: 2px; font-size: 20px; font-weight: 500; color: var(--ink); }
+    .ill-title { font-weight: 500; color: var(--ink); font-size: 16px; }
+    .ill-banners { display: grid; grid-template-columns: 1.4fr 1fr; grid-template-rows: 1fr 1fr; gap: 10px; height: 170px; margin-top: 14px; }
+    .ill-banners span { position: relative; border-radius: 10px; padding: 12px; display: flex; flex-direction: column; justify-content: flex-end; gap: 6px; overflow: hidden; }
+    .ill-banners span:first-child { grid-row: span 2; background: linear-gradient(150deg, #2563eb, #0054ff 60%, #1e3a8a); }
+    .ill-banners span:nth-child(2) { background: #0f172a; }
+    .ill-banners span:nth-child(3) { background: #00e79e; }
+    .ill-banners img { position: absolute; top: 12px; left: 12px; width: 28px; height: 28px; border-radius: 7px; box-shadow: 0 0 0 2px rgb(255 255 255 / .9); }
+    .ill-banners i { display: block; height: 7px; border-radius: 4px; background: rgb(255 255 255 / .85); width: 80%; }
+    .ill-banners i + i { width: 55%; opacity: .6; }
+    .ill-banners span:nth-child(3) i { background: rgb(15 23 42 / .75); }
+    .ill-share { display: flex; gap: 10px; margin-top: 10px; }
+    .ill-share span { width: 44px; height: 44px; border-radius: 50%; border: 1px solid #e5e7eb; display: grid; place-items: center; }
+    .ill-share img { width: 18px; height: 18px; }
+    .ill-amount { margin-top: 4px; font-size: 32px; line-height: 1.2; color: var(--ink); }
+    .ill-up { margin-top: 4px; font-size: 13px; color: #059669; }
+    .ill-chart { display: flex; align-items: flex-end; gap: 8px; height: 110px; margin-top: 18px; padding-bottom: 1px; border-bottom: 1px solid #eef0f3; }
+    .ill-chart i { flex: 1; height: var(--h); border-radius: 6px 6px 2px 2px; background: #dbeafe; }
+    .ill-chart i:last-child { background: var(--blue); }
+    .ill-meter { height: 8px; margin-top: 18px; border-radius: 99px; background: #eef0f3; overflow: hidden; }
+    .ill-meter span { display: block; height: 100%; width: 100%; background: #00e79e; border-radius: inherit; }
+    .ill-note { display: flex; justify-content: space-between; margin-top: 8px; font-size: 12px; color: var(--muted); }
+    .ill-pay { display: flex; align-items: center; gap: 10px; margin-top: 18px; padding: 12px 14px; border-radius: 10px; background: #f1fffb; color: var(--ink); }
+    .ill-pay svg { flex: none; width: 22px; height: 22px; }
+
+    /* Avoid / Encourage */
+    .aff-rules { padding-block: var(--pad-s) var(--pad-l); }
+    .rules {
+      display: grid; grid-template-columns: 1fr 1px 1fr; column-gap: var(--sp-30); margin-top: var(--sp-50);
+      padding: 40px; background: #fff; border: 1px solid var(--line-2); border-radius: 8px;
+    }
+    .rules__divider { background: var(--line-2); }
+    .rules__icon { width: 54px; height: 54px; }
+    .rules h3 { margin-top: var(--sp-30); }
+    .rules__sub { margin-top: 19px; color: var(--muted); }
+    .rules ul { list-style: none; margin-top: 40px; display: grid; gap: var(--sp-20); }
+    .rules li { display: flex; align-items: center; gap: 12px; color: var(--text); }
+    .rules li img { flex: none; width: 32px; height: 32px; }
+
+    /* CTA */
+
+    /* FAQ */
+
+    @media (max-width: 1100px) {
+      .aff { --pad-s: 56px; --pad-l: 104px; }
+      .aff .br-d { display: none; }
+    }
+    @media (max-width: 768px) {
+      .steps-rail { padding-block: 0; }
+      .steps-spacer, .tabs-left, .tab__bar { display: none; }
+      .tabs-wrap { position: static; display: block; }
+      .tab { padding: 24px; border-left: 0; }
+      .tab__n { width: 60px; height: 60px; margin-bottom: 18px; }
+      .tab.is-active .tab__n { background: #fff; border-color: #ebebef; }
+    }
+    @media (max-width: 781px) {
+      .rules { grid-template-columns: 1fr; row-gap: 40px; }
+      .rules__divider { height: 1px; }
+    }
+    @media (max-width: 600px) {
+      .aff { --pad-s: 32px; --pad-l: 56px; }
+      .aff-hero .btn-row { flex-direction: column; align-items: stretch; }
+      .rules { padding: 24px 20px; }
+      .rules__icon { width: 46px; height: 46px; }
+      .rules ul { margin-top: 28px; gap: 20px; }
+      .rules li { align-items: flex-start; }
+      .rules li img { width: 26px; height: 26px; margin-top: 1px; }
+    }
+  </style>
+</Fragment>
+
+<main id="main" class="aff">
+  <!-- Hero -->
+  <section class="aff-hero">
+    <div class="container aff-head">
+      <h1 class="h1">Unlock Unlimited Earning <br class="br-d">With CartPilot</h1>
+      <p>Refer CartPilot to clients and audiences. Earn <br class="br-d">commissions on every signup.</p>
+      <div class="btn-row btn-row--center">
+        <a class="btn" href="https://affiliates.cartpilot.ai/register">Signup As Affiliate</a>
+        <a class="btn btn--line" href="/affiliate-terms-and-conditions/">Terms &amp; Conditions</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 simple steps -->
+  <section class="aff-steps" aria-labelledby="steps-title">
+    <div class="container">
+      <div class="aff-head" data-reveal>
+        <h2 class="h3" id="steps-title">Earning in just 3 Simple Steps</h2>
+        <p>Our process is straightforward, getting you from sign-up to <br class="br-d">earning as quickly as possible.</p>
+      </div>
+      <div class="steps-rail" data-steps>
+        <div class="tabs-wrap">
+          <div class="tabs-left" aria-hidden="true">
+            <div class="ill">
+              <div class="ill__panel is-active" data-step-panel>
+                <div class="ill-card">
+                  <div class="ill-head"><img src="/assets/img/favicon.png" alt="" width="36" height="36"><b>CartPilot Affiliates</b><span class="ill-badge">Approved</span></div>
+                  <p class="ill-label">Your unique referral link</p>
+                  <div class="ill-link"><span>cartpilot.ai/?ref=alex</span><b>Copy</b></div>
+                  <div class="ill-stats">
+                    <div><small>Commission</small><strong>20%</strong></div>
+                    <div><small>Cookie window</small><strong>30 days</strong></div>
+                  </div>
+                </div>
+              </div>
+              <div class="ill__panel" data-step-panel>
+                <div class="ill-card">
+                  <p class="ill-title">Brand assets</p>
+                  <div class="ill-banners">
+                    <span><img src="/assets/img/favicon.png" alt="" width="28" height="28"><i></i><i></i></span>
+                    <span><i></i><i></i></span>
+                    <span><i></i><i></i></span>
+                  </div>
+                  <p class="ill-label">Share across your network</p>
+                  <div class="ill-share">
+                    <span><img src="/assets/icons/sh-fb.svg" alt="" width="18" height="18"></span>
+                    <span><img src="/assets/icons/sh-x.svg" alt="" width="18" height="18"></span>
+                    <span><img src="/assets/icons/sh-li.svg" alt="" width="18" height="18"></span>
+                    <span><img src="/assets/icons/sh-pin.svg" alt="" width="18" height="18"></span>
+                  </div>
+                </div>
+              </div>
+              <div class="ill__panel" data-step-panel>
+                <div class="ill-card">
+                  <p class="ill-label" style="margin-top:0">Commission earned this month</p>
+                  <p class="ill-amount">$1,240.00</p>
+                  <p class="ill-up">+18% vs last month</p>
+                  <div class="ill-chart"><i style="--h:34%"></i><i style="--h:52%"></i><i style="--h:41%"></i><i style="--h:66%"></i><i style="--h:58%"></i><i style="--h:88%"></i></div>
+                  <div class="ill-meter"><span></span></div>
+                  <div class="ill-note"><span>Payout threshold</span><span>$300 reached</span></div>
+                  <div class="ill-pay"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" fill="#00e79e"/><path d="m7.5 12.3 3 3 6-6.3" stroke="#0f172a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Payout sent to PayPal</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <ol class="tabs-right" role="list" style="list-style:none">
+            <li class="tab is-active" data-step>
+              <span class="tab__n">01</span>
+              <span class="tab__bar" aria-hidden="true"><i></i></span>
+              <h3>Quick Sign-Up</h3>
+              <p>Register as an affiliate and get access to your unique link.</p>
+            </li>
+            <li class="tab" data-step>
+              <span class="tab__n">02</span>
+              <span class="tab__bar" aria-hidden="true"><i></i></span>
+              <h3>Promote &amp; Share</h3>
+              <p>Use our brand assets to promote CartPilot across your network.</p>
+            </li>
+            <li class="tab" data-step>
+              <span class="tab__n">03</span>
+              <span class="tab__bar" aria-hidden="true"><i></i></span>
+              <h3>Get Paid</h3>
+              <p>Earn commissions on each sale and get paid after reaching the minimum threshold.</p>
+            </li>
+          </ol>
+        </div>
+        <div class="steps-spacer" aria-hidden="true"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Avoid / Encourage -->
+  <section class="aff-rules">
+    <div class="container">
+      <div class="aff-wide">
+        <div class="aff-head" data-reveal>
+          <h2 class="h3">Don’t Risk Your Revenue on <br class="br-d">Random Tools</h2>
+          <p>CartPilot is built for modern eCommerce stores. <br class="br-d">Recommend a tool that helps your audience grow their bottom line.</p>
+        </div>
+        <div class="rules" data-reveal>
+          <div>
+            <img class="rules__icon" src="/assets/icons/aff-avoid.svg" alt="" width="54" height="54">
+            <h3 class="h5">What To Avoid</h3>
+            <p class="rules__sub">Please refrain from the following :</p>
+            <ul role="list">
+              <li><img src="/assets/icons/aff-x.svg" alt="" width="32" height="32">Using any form of spam to promote your link.</li>
+              <li><img src="/assets/icons/aff-x.svg" alt="" width="32" height="32">Running paid search engine ads on our keywords.</li>
+              <li><img src="/assets/icons/aff-x.svg" alt="" width="32" height="32">Offering unofficial discounts/promoting on coupon-only sites.</li>
+              <li><img src="/assets/icons/aff-x.svg" alt="" width="32" height="32">Misrepresenting the product’s features, pricing or capabilities.</li>
+              <li><img src="/assets/icons/aff-x.svg" alt="" width="32" height="32">Using any unethical or Blackhat marketing methods.</li>
+            </ul>
+          </div>
+          <span class="rules__divider" aria-hidden="true"></span>
+          <div>
+            <img class="rules__icon" src="/assets/icons/aff-encourage.svg" alt="" width="54" height="54">
+            <h3 class="h5">We Encourage</h3>
+            <p class="rules__sub">Please follow the playbook :</p>
+            <ul role="list">
+              <li><img src="/assets/icons/aff-check.svg" alt="" width="32" height="32">Sharing your link with genuinely interested audiences.</li>
+              <li><img src="/assets/icons/aff-check.svg" alt="" width="32" height="32">Writing honest reviews, tutorials and comparisons.</li>
+              <li><img src="/assets/icons/aff-check.svg" alt="" width="32" height="32">Creating helpful videos, guides and case studies on your own channels.</li>
+              <li><img src="/assets/icons/aff-check.svg" alt="" width="32" height="32">Describing CartPilot’s features, pricing and capabilities accurately.</li>
+              <li><img src="/assets/icons/aff-check.svg" alt="" width="32" height="32">Following ethical, transparent marketing practices.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- FAQ -->
+  <Faq {...faq} />
+
+  <!-- CTA -->
+  <CtaSky {...cta}>
+    <a class="btn" href="https://app.cartpilot.ai/register">Try CartPilot Free</a>
+    <a class="btn btn--white" href="/pricing/">View Pricing Plans</a>
+  </CtaSky>
+</main>
+
+<Fragment slot="scripts">
+<script is:inline>
+  /* Pinned "3 simple steps": scroll progress fills each step's bar and swaps the active step (desktop/tablet only). */
+  (() => {
+    const rail = document.querySelector("[data-steps]");
+    if (!rail) return;
+    const wrap = rail.querySelector(".tabs-wrap");
+    const spacer = rail.querySelector(".steps-spacer");
+    const tabs = [...rail.querySelectorAll("[data-step]")];
+    const bars = tabs.map((t) => t.querySelector(".tab__bar i"));
+    const panels = [...rail.querySelectorAll("[data-step-panel]")];
+    const mq = matchMedia("(min-width: 769px)");
+    let active = -1, ticking = false;
+    const setActive = (i) => {
+      if (i === active) return;
+      active = i;
+      tabs.forEach((t, k) => t.classList.toggle("is-active", k === i));
+      panels.forEach((p, k) => p.classList.toggle("is-active", k === i));
+    };
+    const update = () => {
+      ticking = false;
+      if (!mq.matches) return;
+      const top = parseFloat(getComputedStyle(wrap).top) || 0;
+      const start = spacer.getBoundingClientRect().top + scrollY - wrap.offsetHeight - top; /* scrollY at which the steps pin */
+      const range = spacer.offsetHeight || 1;
+      const p = Math.min(1, Math.max(0, (scrollY - start) / range));
+      const n = tabs.length;
+      bars.forEach((b, k) => (b.style.height = Math.min(1, Math.max(0, p * n - k)) * 100 + "%"));
+      setActive(Math.min(n - 1, Math.floor(p * n)));
+    };
+    const req = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
+    addEventListener("scroll", req, { passive: true });
+    addEventListener("resize", req);
+    update();
+  })();
+</script>
+</Fragment>
+</Base>

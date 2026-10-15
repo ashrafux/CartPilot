@@ -1,0 +1,166 @@
+---
+// /woocommerce/ and /shopify/ — one template, two pages. Copy lives in src/data/platforms.ts,
+// the UI mock-ups (store, chat, chips, "How it works" shots) in src/lib/platform.ts.
+// Anything changed here changes on both platform pages.
+import Base from "../layouts/Base.astro";
+import Faq from "../components/Faq.astro";
+import CtaSky from "../components/CtaSky.astro";
+import { platforms, type Platform } from "../data/platforms";
+import { CHECK, INFO, I, ico, art, SPRITE, cartTime, storeParts, chatSteps, chips, howShots } from "../lib/platform";
+
+export function getStaticPaths() {
+  return Object.values(platforms).map((d) => ({ params: { platform: d.slug }, props: { d } }));
+}
+
+const { d } = Astro.props as { d: Platform };
+const pr = d.product;
+const store = storeParts(d);
+const shots = howShots(d);
+const h1Logo = d.slug === "woocommerce"
+  ? '<img class="h1-logo h1-logo--woo" src="/assets/img/woo-logo.png" alt="" width="248" height="64">'
+  : '<img class="h1-logo" src="/assets/icons/shopify.svg" alt="" width="28" height="28">';
+const installBtn = d.buttons[0].replace(" btn--lg", "");
+const faq = {
+  chip: d.faq_chip,
+  title: d.faq_h2,
+  lead: d.faq_p,
+  button: { href: "/faq/", label: "Read All FAQs" },
+  items: d.faqs.map(([q, a]) => ({ q, a: `<p>${a}</p>` })),
+};
+---
+<Base title={d.title} description={d.desc} bodyClass={`theme-dark-hero ${d.body}`} fontWeights="400;500;600;700">
+<Fragment slot="head">
+  <link rel="stylesheet" href="/assets/css/platform.css?v=17">
+</Fragment>
+
+<main id="main">
+  <Fragment set:html={SPRITE} />
+
+  <!-- Hero -->
+  <section class="phero">
+    <div class="phero__bg" data-mesh aria-hidden="true"><canvas></canvas></div>
+    <div class="container phero__in">
+      <div class="phero__tag">
+        {d.pill && <p class="pill" set:html={d.pill} />}
+        <span class="phero__orb" aria-hidden="true"><video src="/assets/video/cartpilot-orb.mp4" poster="/assets/img/cartpilot-orb.jpg" autoplay muted loop playsinline preload="auto" disablepictureinpicture></video></span>
+      </div>
+      <h1 class="h1">CartPilot for <span class="h1-brand"><Fragment set:html={h1Logo} /><span class="grad">{d.name}</span></span></h1>
+      <p class="phero__lead" set:html={d.lead} />
+      <div class="btn-row">
+        <Fragment set:html={d.buttons.join("\n        ")} />
+      </div>
+      <ul class="phero__trust" role="list"><Fragment set:html={d.trust.map((t) => `<li>${CHECK}${t}</li>`).join("")} /></ul>
+      {d.switch && <p class="phero__switch"><Fragment set:html={d.switch[0]} /> <a href={d.switch[1]} set:html={d.switch[2]} /></p>}
+      <div class="phero__stage">
+        <Fragment set:html={chips(d)} />
+        <div class="mock" aria-hidden="true">
+          <div class="mock__bar"><span class="mock__dots"><i></i><i></i><i></i></span><span class="mock__url"><Fragment set:html={ico(I.lock, "2")} />{d.url}</span></div>
+          <div class="mock__body">
+            <div class="store">
+              <div class="store__nav"><span class="store__logo">OAKLINE</span><Fragment set:html={store.nav} /><span class="store__icons"><Fragment set:html={ico(I.search, "1.8") + ico(I.heart, "1.8")} /><span class="store__cart"><Fragment set:html={ico(I.bag, "1.8")} /><b style={`--d:${cartTime(d)}`}>1</b></span></span></div>
+              <div class="store__main">
+                <div class="store__gallery">
+                  <div class="store__img"><em>{pr.badge}</em><Fragment set:html={art(pr.kind, pr.main)} /></div>
+                  <div class="store__thumbs"><Fragment set:html={store.thumbs} /></div>
+                </div>
+                <div class="store__info">
+                  <span class="store__crumb">{pr.crumb}</span>
+                  <span class="store__title">{pr.name}</span>
+                  <span class="store__rate"><i>★★★★★</i>{pr.rating}</span>
+                  <span class="store__price">{pr.price}</span>
+                  <span class="store__label">Color: <span>{pr.color_name}</span></span>
+                  <span class="store__swatches"><Fragment set:html={store.swatches} /></span>
+                  <span class="store__label">{pr.size_label}</span>
+                  <span class="store__sizes"><Fragment set:html={store.sizes} /></span>
+                  <span class="store__add">Add to cart</span>
+                  <span class="store__note"><Fragment set:html={ico(I.truck, "1.8")} />{pr.note}</span>
+                  <span class="store__acc"><span>Details <b>+</b></span><span>Shipping &amp; returns <b>+</b></span></span>
+                </div>
+              </div>
+            </div>
+            <div class="cpw">
+              <div class="cpw__head"><span class="cpw__avatar"><img src="/assets/img/favicon.png" alt=""></span><span><b>Oakline Assistant</b><small>Online · replies instantly</small></span><span class="cpw__tools"><i></i><i></i></span></div>
+              <div class="cpw__tabs"><div><span><Fragment set:html={ico(I.chat, "2")} />Chat</span><span><Fragment set:html={ico(I.mic, "2")} />Voice</span></div></div>
+              <div class="cpw__body">
+                <Fragment set:html={chatSteps(d)} />
+              </div>
+              <div class="cpw__input"><span>Ask anything here...</span><i><Fragment set:html={ico(I.mic, "2")} /></i><i><Fragment set:html={ico(I.send, "2.2")} /></i></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- What it does -->
+  <section class="pfeat">
+    <div class="pfeat__in">
+      <div class="pfeat__head" data-reveal>
+        <h2 class="h3" set:html={d.feat_h2} />
+        <p set:html={d.feat_p} />
+      </div>
+      <div class="pfeat__grid">
+        {d.feats.map(([k, bg, fg, t, p]) => (
+          <div class="pcap" data-reveal>
+            <span class="pcap__ico" style={`background:${bg};color:${fg}`}><Fragment set:html={ico(I[k], "2")} /></span>
+            <div><h3 set:html={t} /><p set:html={p} /></div>
+          </div>
+        ))}
+      </div>
+      <div class="pfeat__more"><a class="btn btn--tertiary" href="/features/">See every feature →</a></div>
+    </div>
+  </section>
+
+  <!-- How it works: split head, then the steps; each fades up in from the bottom of the viewport and up out through the top -->
+  <section class="phow">
+    <div class="container">
+      <div class="phow__head" data-reveal>
+        <h2 class="h3" set:html={d.how_h2} />
+        <p set:html={d.how_p} />
+      </div>
+    </div>
+    <div class="container phow__body">
+      <ol class="phow__steps">
+        {d.how.map(([t, p], k) => (
+          <li class="phow__step">
+            <div class="phow__text"><span class="phow__ico"><Fragment set:html={ico(I[d.how_icons[k]], "1.8")} /></span><h3 set:html={t} /><p set:html={p} /></div>
+            <figure class="phow__shot"><img class="phow__bg" src={`/assets/img/how/how-${k + 1}.jpg`} alt="" width="1822" height="1158" loading="lazy" decoding="async"><div class="sx" aria-hidden="true" set:html={shots[k]} /></figure>
+          </li>
+        ))}
+      </ol>
+      <div class="phow__foot"><p class="phow__note"><Fragment set:html={INFO} /><span set:html={d.how_note} /></p></div>
+    </div>
+  </section>
+
+  <!-- Get started -->
+  <section class="psteps">
+    <div class="container">
+      <div class="psteps__head" data-reveal>
+        <h2 class="h3" set:html={d.steps_h2} />
+        <p set:html={d.steps_p} />
+      </div>
+      <ol class="psteps__grid">
+        {d.steps.map(([k, t, p], i) => (
+          <li class="pstep" data-reveal><span class="pstep__n"><Fragment set:html={ico(I[k], "1.8")} /><b>{i + 1}</b></span><h3 set:html={t} /><p set:html={p} /></li>
+        ))}
+      </ol>
+      {d.steps_note && <p class="psteps__note" set:html={d.steps_note} />}
+      <div class="psteps__cta">
+        <Fragment set:html={installBtn} />
+        <a class="btn btn--tertiary" href="/docs/" set:html={d.guide} />
+      </div>
+    </div>
+  </section>
+
+  <Faq {...faq} />
+
+  <CtaSky title={d.cta_h2} text={d.cta_p}>
+    <Fragment set:html={d.cta_buttons.join("\n          ")} />
+  </CtaSky>
+</main>
+
+<Fragment slot="scripts">
+<script is:inline src="/assets/js/mesh-bg.js?v=2" defer></script>
+<script is:inline src="/assets/js/platform.js?v=7" defer></script>
+</Fragment>
+</Base>

@@ -1,0 +1,24 @@
+---
+// Shown by the host for any unknown URL (Netlify / Cloudflare Pages / nginx `error_page 404 /404.html`).
+import Base from "../layouts/Base.astro";
+---
+<Base title="Page not found | CartPilot" description="The page you’re looking for doesn’t exist or has moved." bodyClass="header-white">
+<Fragment slot="head">
+  <meta name="robots" content="noindex">
+  <style is:inline>
+    .nf { min-height: calc(100svh - 109px); display: grid; place-items: center; padding: 96px var(--gutter); text-align: center; }
+    .nf__code { font-size: 14px; font-weight: 500; letter-spacing: .08em; color: var(--blue); }
+    .nf h1 { margin-top: 16px; }
+    .nf p { max-width: 520px; margin: 20px auto 0; font-size: var(--fs-lead); line-height: 1.5; color: #6b7280; }
+    .nf .btn-row { justify-content: center; margin-top: 36px; }
+  </style>
+</Fragment>
+<main id="main" class="nf">
+  <div>
+    <p class="nf__code">404</p>
+    <h1 class="h2">Page not found</h1>
+    <p>The page you’re looking for doesn’t exist or has moved. Let’s get you back on track.</p>
+    <div class="btn-row"><a class="btn" href="/">Back to home</a><a class="btn btn--secondary" href="/features/">See features</a></div>
+  </div>
+</main>
+</Base>

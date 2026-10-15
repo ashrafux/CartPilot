@@ -1,0 +1,21 @@
+---
+// Sky CTA card above the footer. Put the buttons inside the component:
+//   <CtaSky title="…" text="…"><a class="btn" href="…">Try CartPilot Free</a> …</CtaSky>
+interface Props {
+  title: string;
+  text: string;
+}
+const { title, text } = Astro.props;
+---
+<section class="cta-sky">
+  <div class="container">
+    <div class="cta-sky__card" data-reveal>
+      <span class="cta-sky__icon"><img src="/assets/img/favicon.png" alt="" width="44" height="44"></span>
+      <h2 class="cta-sky__title" set:html={title} />
+      <p class="cta-sky__text" set:html={text} />
+      <div class="btn-row btn-row--center">
+        <slot />
+      </div>
+    </div>
+  </div>
+</section>

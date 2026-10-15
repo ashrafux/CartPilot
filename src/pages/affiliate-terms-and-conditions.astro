@@ -1,0 +1,148 @@
+---
+import Base from "../layouts/Base.astro";
+const title = "Affiliate Terms and Conditions - CartPilot";
+const description = "How the CartPilot affiliate program works: commissions, cookies, payouts, promotion rules and the conditions every affiliate agrees to.";
+---
+<Base title={title} description={description}>
+<Fragment slot="head">
+  <style is:inline>
+    /* ---------- Affiliate terms (grey band with framed white sheet) ---------- */
+    body { --header-bg: #f6f6f6; }
+    /* frame lines continue up through the header, as on the live page */
+    .site-header__in { position: relative; }
+    .site-header__in::before { content: ""; position: absolute; inset: 0 var(--gutter); z-index: -1; border-inline: 1px solid #e9eaec; pointer-events: none; }
+
+    .terms { background: #f6f6f6; }
+    .terms__frame { border-inline: 1px solid #e9eaec; }
+    .terms__hero { padding-block: 61px var(--sp-50); text-align: center; }
+    .terms__note {
+      display: inline-flex; align-items: center; gap: 8px; margin-top: 18px; padding: 6px 14px;
+      background: #fff; border: 1px solid #e9eaec; border-radius: 99px; font-size: 14px; line-height: 1.5; color: var(--subtle);
+    }
+    .terms__note svg { flex: none; width: 16px; height: 16px; }
+    .terms__body { border-block: 1px solid #e9eaec; }
+    .terms__sheet { background: #fff; padding: 40px; font-size: 16px; line-height: 1.5; color: var(--text); }
+    .terms__sheet h2 { margin-top: var(--sp-30); }
+    .terms__sheet > * + p, .terms__sheet > * + ul { margin-top: 19.2px; }
+    .terms__sheet .intro { font-size: var(--fs-body); }
+    .terms__sheet ul { padding-left: 1.3em; }
+    .terms__sheet li + li { margin-top: 6px; }
+    .terms__sheet strong { font-weight: 500; color: var(--ink); }
+    .terms__sheet a { color: var(--blue); text-decoration: underline; text-underline-offset: 3px; }
+    .terms__end { height: 148px; }
+
+    @media (max-width: 1024px) {
+      .terms__end { height: 96px; }
+    }
+    @media (max-width: 600px) {
+      .terms__hero { padding: 40px 14px var(--sp-50); }
+      .terms__note { align-items: flex-start; border-radius: 10px; padding: 10px 14px; text-align: left; font-size: 13px; }
+      .terms__note svg { margin-top: 2px; }
+      .terms__sheet { padding: 28px 20px 36px; }
+      .terms__sheet h2 { font-size: 24px; }
+      .terms__end { height: 48px; }
+    }
+  </style>
+</Fragment>
+
+<main id="main" class="terms">
+  <div class="container">
+    <div class="terms__frame terms__hero">
+      <h1 class="h1">Affiliate Terms and Conditions</h1>
+      <p class="terms__note"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="7.25" stroke="currentColor" stroke-width="1.5"/><path d="M8 7.2v4M8 4.8v.1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>Summary version — replace with the official text from the CMS before publishing.</p>
+    </div>
+  </div>
+
+  <div class="terms__body">
+    <div class="container">
+      <article class="terms__frame terms__sheet">
+        <h2 class="h4">How Does It Work?</h2>
+        <p class="intro">Affiliates act as an extension of our sales team. Whenever someone you refer buys CartPilot, you earn a commission — so the more people you refer, the more you can earn.</p>
+
+        <h2 class="h4">Do CartPilot accept coupon site affiliation?</h2>
+        <p>No. Coupon sites tend to catch shoppers who were already on their way to buying rather than bringing us new customers, so referrals that come through coupon sites are never accepted.</p>
+
+        <h2 class="h4">How Do I Promote CartPilot?</h2>
+        <p>The simplest route is a banner or text link from your site to ours. We supply ready-made banners and examples so you can start promoting straight away.</p>
+
+        <h2 class="h4">How Quickly Can I Get Started?</h2>
+        <p>Almost immediately. The application takes about a minute and approval is instant. Your affiliate dashboard then gives you banners that carry your personal tracking code, so every referral is credited to you.</p>
+
+        <h2 class="h4">How Much Money Can I Make?</h2>
+        <p>You earn 20% of every successful sale. For monthly or annual plans the commission is calculated on the first payment, and there is no limit on how much you can earn in a month.</p>
+
+        <h2 class="h4">How Does The Program Work?</h2>
+        <p>Example: a visitor clicks the CartPilot banner on your site and buys a $199 plan, which earns you $39.80 (20%). An order must be at least 30 days old before its commission can be withdrawn.</p>
+
+        <h2 class="h4">How Will I Know if I Earned a Commission?</h2>
+        <p>We email you as soon as a referred sale comes in. Joining costs nothing, and your dashboard includes free analytics showing how many click-throughs you are generating.</p>
+
+        <h2 class="h4">How Do I Get Paid?</h2>
+        <p>All payouts go through PayPal, so create and verify a PayPal account first (verification can take a few days). Make sure your payout method and PayPal email are entered correctly in your affiliate account — accounts that aren’t set up properly are skipped for that payment cycle.</p>
+
+        <h2 class="h4">When are Payouts Made?</h2>
+        <p>At the end of each month we review affiliate sales and audit every transaction by hand to guard against fraud. Valid commissions are paid to PayPal by the end of the following month — for example, September sales are paid by October 31. The minimum payout is $300.</p>
+
+        <h2 class="h4">Can I Earn Commissions from My Own Purchases?</h2>
+        <p>No. Purchases made through your own affiliate link don’t qualify, even if you receive an automatic sale notification — they are removed before payouts are made.</p>
+        <p><strong>In short:</strong> if a referral’s legitimacy is in doubt, it won’t be paid.</p>
+
+        <h2 class="h4">Can I Earn Commissions from Product Upgrades?</h2>
+        <p>No. Upgrades and license renewals are not eligible for commission.</p>
+
+        <h2 class="h4">How Long Does the Affiliate Referral Last for?</h2>
+        <p>Each click on your link sets a 30-day cookie. If the visitor buys within that window (and hasn’t cleared their cookies), the sale is credited to you.</p>
+
+        <h2 class="h4">How Does the Affiliate Cookie Work?</h2>
+        <p>Your link sends visitors to our site and stores your affiliate ID in a cookie. The sale is yours as long as that cookie is still in place at checkout.</p>
+        <p>If the visitor already carries a cookie from an earlier affiliate link, it is not overwritten — the first referrer keeps the credit for the sale.</p>
+
+        <h2 class="h4">Can I use Paid Search to Promote Cartpilot?</h2>
+        <p>Yes, within limits. You may advertise on platforms such as Google, Bing or Facebook using generic terms like “WooCommerce plugin” or “eCommerce AI chatbot”, but you may not bid on CartPilot brand keywords or any variation of them. Sales generated in a month where branded keywords were used are voided.</p>
+
+        <h2 class="h4">Can I Setup a Dedicated Website to Promote CartPilot?</h2>
+        <p>Yes, but the domain must not be built around CartPilot brand keywords, and you must not mislead visitors with masked links or made-up coupon offers. Sales that come from such sites or misleading coupon claims are voided.</p>
+
+        <h2 class="h4">I Made a Sale but didn’t get Paid</h2>
+        <p>Most often the sale was voided during our audit, or your affiliate profile is incomplete. We need your full name, email, country, a completed tax form and a payout method on file.</p>
+        <ul>
+          <li>Suspected fraud is not paid and can lead to losing your affiliate account.</li>
+          <li>If your payout method was missing when payouts ran, you’ll be paid the following month.</li>
+          <li>If you believe we made a mistake, contact support with the transaction details — unpaid transactions older than 60 days can’t be disputed.</li>
+        </ul>
+
+        <h2 class="h4">Minimum Payout amount</h2>
+        <p>Payouts are made once a month, as soon as your balance reaches at least $300 USD.</p>
+
+        <h2 class="h4">Why do I need to Submit a Tax Form?</h2>
+        <p>As a US company, we must collect a W-9 (US affiliates) or a W-8BEN (non-US affiliates) before paying any commission. You can join and promote without one, but payouts wait until it is on file. It’s a one-time, paperless form that takes only a few minutes and can be signed digitally.</p>
+        <p>If you earn $500 or more in a year, we file a 1099-MISC for those earnings. Sales keep accumulating while the form is missing, but commissions for any year without a form submitted by December 31 are forfeited. You’ll find instructions under “Payout Details” in your affiliate account.</p>
+
+        <h2 class="h4">I Made a Sale but now it’s Showing up as a Credit</h2>
+        <p>This normally means the purchase was reversed — for example, a fraudulent transaction refunded by the payment gateway — so the related commission is reversed too. A sale can also be reversed if it wasn’t made in line with our affiliate guidelines.</p>
+
+        <h2 class="h4">Can I Promote CartPilot in the Forums?</h2>
+        <p>No. Posting affiliate links in our forums or adding them to forum profile signatures isn’t allowed. Forum access is a privilege, and repeat offences can lead to account termination and withheld payments.</p>
+
+        <h2 class="h4">Promotion Ideas</h2>
+        <p>Be creative. Banners on their own rarely perform well, so pair them with content that does the persuading.</p>
+        <p>A genuine blog review of CartPilot works especially well: readers who search for reviews are already close to buying, so an honest, helpful write-up is far more likely to convert through your link than a banner alone.</p>
+
+        <h2 class="h4">Legal</h2>
+        <p>CartPilot may decline payments, suspend or terminate any affiliate account without notice — for example for:</p>
+        <ul>
+          <li>sharing false or misleading information about CartPilot discount codes;</li>
+          <li>running paid search campaigns on CartPilot brand keywords;</li>
+          <li>using link farms, spamming forums or websites, or any other illicit way of driving traffic to affiliate links.</li>
+        </ul>
+        <p>Pending payments of terminated affiliates are not paid out, and suspensions or terminations are final.</p>
+      </article>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="terms__frame terms__end" aria-hidden="true"></div>
+  </div>
+</main>
+
+</Base>

@@ -1,0 +1,39 @@
+---
+// Shared page shell: <head> basics, fonts, site.css, header, footer and site.js.
+// Pages add their own <style>/<link> through the "head" slot and their scripts through the "scripts" slot.
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+
+interface Props {
+  title: string;
+  description: string;
+  bodyClass?: string;
+  /** Poppins weights to load (some pages also need 700) */
+  fontWeights?: string;
+}
+const { title, description, bodyClass, fontWeights = "400;500;600" } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{title}</title>
+  <meta name="description" content={description}>
+  <link rel="canonical" href={canonical}>
+  <link rel="icon" href="/assets/img/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href={`https://fonts.googleapis.com/css2?family=Lato&family=Poppins:wght@${fontWeights}&display=swap`}>
+  <link rel="stylesheet" href="/assets/css/site.css?v=34">
+  <slot name="head" />
+</head>
+<body class={bodyClass}>
+<Header />
+<slot />
+<Footer />
+<slot name="scripts" />
+<script is:inline src="/assets/js/site.js?v=3" defer></script>
+</body>
+</html>

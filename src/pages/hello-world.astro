@@ -1,0 +1,136 @@
+---
+import Base from "../layouts/Base.astro";
+const title = "Hello world! - CartPilot";
+const description = "A sample post on the CartPilot blog.";
+---
+<Base title={title} description={description} bodyClass="header-white" fontWeights="400;500;600;700">
+<Fragment slot="head">
+  <style is:inline>
+    /* ---------- Single post template (shared by all posts — keep in sync) ---------- */
+    .post {
+      --pg: clamp(20px, 2.115vw, 30.46px);          /* paragraph gap */
+      padding-block: clamp(36px, 5.14vw, 74px) clamp(72px, 10.28vw, 148px);
+    }
+    .post__col { max-width: calc(760px + 2 * var(--gutter)); margin-inline: auto; padding-inline: var(--gutter); }
+    .post__hero { margin: 0; overflow: hidden; background: #2741e8; }
+    .post__hero img { width: 100%; aspect-ratio: 1622 / 886; object-fit: cover; }
+    .post__meta {
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 30px;
+      margin-block: clamp(28px, 3.2vw, 46px) clamp(24px, 3.13vw, 45px); font-size: 16px; line-height: 1.5; color: var(--text);
+    }
+    .post__meta-l { display: flex; flex-wrap: wrap; gap: 4px 30.46px; }
+    .post__title { font-size: var(--fs-h1); line-height: 1.15; }
+    .summary-note {
+      display: flex; gap: 8px; align-items: flex-start; margin-top: 18px; padding: 9px 14px;
+      background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px; font-size: 14px; line-height: 1.5; color: #92400e;
+    }
+    .summary-note svg { flex: none; width: 16px; height: 16px; margin-top: 2px; }
+
+    /* Article body — WordPress flow spacing: blocks share a 30.46px gap, headings get extra top space */
+    .post-body { margin-top: 19.2px; font-size: var(--fs-lead); line-height: 1.5; color: var(--text); }
+    .post-body > * { margin: 0 0 var(--pg); }
+    .post-body h2 { margin-top: clamp(40px, 4.23vw, 60.92px); font-size: var(--fs-h4); line-height: 1.2; }
+    .post-body h3 { margin-top: clamp(32px, 3.17vw, 45.69px); font-size: var(--fs-h3); line-height: 1.3; }
+    .post-body strong { color: var(--text); font-weight: 700; }
+    .post-body a { transition: color .2s; }
+    .post-body a:hover { color: var(--blue); }
+    .post-body ul { list-style: none; padding: 0; font-size: 16px; line-height: 1.5; }
+    .post-body ul li { position: relative; padding-left: 22px; }
+    .post-body ul li::before { content: ""; position: absolute; left: 0; top: 8px; width: 9px; height: 9px; border-radius: 50%; background: var(--blue); }
+    .post-body .tip-list { padding: 20px; border: 1px solid #d8d8fe; border-radius: 10px; background: #fbfbff; }
+    .post-body .tip-list li { padding-left: 45px; }
+    .post-body .tip-list li + li { margin-top: 30px; }
+    .post-body .tip-list li::before { top: 0; width: 29px; height: 30px; border-radius: 0; background: url("/assets/icons/tip-bulb.svg") 0 0 / 29px 30px no-repeat; }
+    .post-body .tip-list li:not(:last-child)::after { content: ""; position: absolute; left: 14px; top: 30px; bottom: -30px; width: 2px; background: #d8d8fe; }
+    .post-body .callout { padding: clamp(18px, 1.74vw, 25px) clamp(20px, 3.3vw, 47.5px); background: #f5f8ff; border: 1px solid #dbe6ff; border-radius: 10px; }
+    .post-body .btn-row { justify-content: center; }
+
+    /* Full-width comparison table (breaks out of the 760px column) */
+    .cmp { margin: 0 0 var(--pg); border: 1px solid #d3d3d3; border-radius: 10px; background: #f7f7ff; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .cmp table { width: 100%; min-width: 860px; border-collapse: collapse; table-layout: fixed; font-size: 12px; line-height: 1.5; color: #000; }
+    .cmp th, .cmp td { padding: 18px 28px; text-align: center; border-right: 1px solid #d8d8fe; }
+    .cmp th:last-child, .cmp td:last-child { border-right: 0; }
+    .cmp td:first-child { text-align: left; }
+    .cmp th { font-weight: 700; }
+    .cmp thead tr, .cmp tbody tr:nth-child(odd) { background: #f8fafc; }
+    .cmp tbody tr:nth-child(even) { background: #ededff; }
+    .cmp tbody tr { transition: background-color .2s; }
+    .cmp tbody tr:hover { background: #e2e2fd; }
+
+    .post__end { margin: clamp(56px, 6.4vw, 92px) 0 0; border: 0; border-top: 2px solid var(--line); }
+    .post__cat { display: flex; flex-wrap: wrap; gap: 19.2px; margin-top: clamp(40px, 4.23vw, 61px); font-size: var(--fs-body); line-height: 1.5; }
+    .post__cat a { transition: color .2s; }
+    .post__cat a:hover { color: var(--blue); }
+
+    /* Related posts band */
+    .related { background: #f6f6f6; padding-block: clamp(64px, 10.28vw, 148px); }
+    .related__head { text-align: center; }
+    .related__head p { max-width: 640px; margin: 28px auto 0; font-size: var(--fs-lead); }
+    .related .post-grid { list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gutter); margin-top: var(--sp-50); }
+    .post-card .cat {
+      display: inline-block; padding: 8px 16px; border: 1px solid var(--line); border-radius: var(--radius); background: #fff;
+      font-size: 14px; line-height: 1.3; color: var(--text); transition: border-color .2s, color .2s;
+    }
+    .post-card .cat:hover { border-color: #cbd5e1; color: var(--ink); }
+    .post-card h3 { margin-top: 20px; font-size: var(--fs-h6); line-height: 1.3; }
+    .post-card h3 a { transition: color .2s; }
+    .post-card h3 a:hover { color: var(--blue); }
+    .byline { display: flex; align-items: center; gap: 16px; margin-top: 20px; font-size: 16px; line-height: 1.5; color: var(--text); }
+    .avatar {
+      --s: 28px; flex: none; width: var(--s); height: var(--s); border-radius: 50%;
+      display: grid; place-items: center; background: linear-gradient(135deg, #3b82f6, #0054ff); color: #fff;
+      font-size: calc(var(--s) * .4); font-weight: 600; letter-spacing: .02em; line-height: 1;
+    }
+
+    @media (max-width: 781px) {
+      .related .post-grid { grid-template-columns: 1fr; }
+      /* Comparison table: scrolls sideways with the feature column pinned */
+      .cmp table { min-width: 720px; }
+      .cmp th, .cmp td { padding: 14px 10px; }
+      .cmp th:first-child { width: 150px; }
+      .cmp th:first-child, .cmp td:first-child { position: sticky; left: 0; z-index: 1; background: inherit; padding-left: 14px; box-shadow: 1px 0 0 #d8d8fe; }
+    }
+  </style>
+</Fragment>
+
+<main id="main">
+  <article class="post">
+    <div class="post__col">
+      <div class="post__meta">
+        <div class="post__meta-l">
+          <span>By tareq1988</span>
+          <time datetime="2026-02-09">February 9, 2026</time>
+        </div>
+        <span>1 minute</span>
+      </div>
+      <h1 class="post__title">Hello world!</h1>
+      <p class="summary-note"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="8" cy="8" r="6.5"/><path d="M8 7.2v3.8M8 4.9v.1"/></svg><span>Summary version — replace with the official text from the CMS before publishing.</span></p>
+
+      <div class="post-body">
+        <p>This is a placeholder post that comes with every new site — swap it for your first real article or remove it.</p>
+      </div>
+
+      <hr class="post__end">
+      <p class="post__cat"><span>Category:</span><a href="/blog/">Uncategorized</a></p>
+    </div>
+  </article>
+
+  <!-- Related posts -->
+  <section class="related" aria-labelledby="related-title">
+    <div class="container">
+      <div class="related__head" data-reveal>
+        <h2 class="h3" id="related-title">Success Stories</h2>
+        <p>StorePulse is the backbone of your store, designed to make it smarter, faster and more efficient.</p>
+      </div>
+      <ul class="post-grid" role="list">
+        <li class="post-card" data-reveal>
+          <a class="cat" href="/blog/">Agentic Commerce</a>
+          <h3><a href="/introducing-cartpilot-ai-sales-agent/">Introducing CartPilot: The AI Sales Agent for eCommerce</a></h3>
+          <div class="byline"><span class="avatar" aria-hidden="true">SU</span><span>Shakhawat Ullah</span></div>
+        </li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+</Base>

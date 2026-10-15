@@ -1,0 +1,669 @@
+---
+import Base from "../layouts/Base.astro";
+const title = "CartPilot Documentation: Setup Your AI Sales Agent";
+const description = "Set up CartPilot, the AI sales agent for eCommerce: connect your store, configure and train the agent, customize the chat widget and track customer conversations.";
+---
+<Base title={title} description={description} bodyClass="header-white" fontWeights="400;500;600;700">
+<Fragment slot="head">
+  <style is:inline>
+    /* ---------- Docs (weDocs knowledge-base layout) ---------- */
+    .docs { --doc-scale: 1; padding-block: var(--sp-40); }
+    .docs__grid {
+      display: grid; grid-template-columns: 20fr 55fr 25fr; gap: 19.2px;
+      max-width: 1255px; margin-inline: auto; align-items: start;
+    }
+    .docs__grid > * { min-width: 0; }
+
+    /* Left: quick search + doc tree */
+    .qs {
+      display: flex; margin-top: 15px; background: #fff; border: 1px solid #d1d5db; border-radius: 8px;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .qs:focus-within { border-color: var(--blue-2); box-shadow: 0 0 0 3px rgb(37 99 235 / .12); }
+    .qs input {
+      flex: 1; min-width: 0; padding: 12px 16px; border: 0; outline: none; background: transparent;
+      font-size: 16px; line-height: 1.5; color: var(--ink);
+    }
+    .qs input::placeholder { color: #9ca3af; }
+    .qs input::-webkit-search-cancel-button { display: none; }
+    .qs__cmd { display: flex; padding: 6px 6px 6px 0; }
+    .qs kbd {
+      display: inline-flex; align-items: center; padding: 2px 4px; border: 1px solid #ddd; border-radius: 4px;
+      font-family: ui-sans-serif, system-ui, sans-serif; font-size: 12px; line-height: 1.5; color: #6b7280;
+    }
+    .qs-empty { margin: 12px 12px 0; font-size: 14px; color: var(--muted); }
+
+    .tree { margin-top: 19.2px; }
+    .tree__head {
+      display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 8px 12px; cursor: pointer;
+      border-radius: 6px; transition: background-color .2s;
+    }
+    .tree__head:hover { background: #f8fafc; }
+    .tree__title { display: flex; align-items: center; gap: 16px; font-size: 24px; line-height: 1.3; color: var(--text); }
+    .tree__title svg, .tree__toggle svg { color: #6c757d; }
+    .tree__title svg { width: 20px; height: 20px; flex: none; }
+    .tree__toggle { width: 24px; height: 24px; display: grid; place-items: center; border-radius: 2px; }
+    .tree__toggle svg { width: 16px; height: 16px; transition: transform .25s var(--ease); }
+    .tree.is-collapsed .tree__toggle svg { transform: rotate(180deg); }
+    .tree__body { display: grid; grid-template-rows: 1fr; transition: grid-template-rows .3s var(--ease); }
+    .tree.is-collapsed .tree__body { grid-template-rows: 0fr; }
+    .tree__body > div { overflow: hidden; padding-left: 8px; }
+    .tree ul { list-style: none; }
+    .tree li { position: relative; padding: 8px 12px; }
+    .tree li::before { content: ""; position: absolute; left: -10px; top: 0; bottom: 0; width: 1px; background: #e5e7eb; }
+    .tree li[hidden] { display: none; }
+    .tree__row { display: flex; align-items: center; gap: 16px; margin: 0 0 4px 20px; }
+    .tree__icon { flex: none; width: 18px; font-size: 14px; line-height: 21px; color: #6c757d; }
+    .tree__row a { flex: 1; padding-block: 8px; margin-block: -8px; font-size: 16px; line-height: 1.5; color: #111; overflow-wrap: break-word; transition: color .2s; }   /* 40px tap row, same look */
+    .tree__row a:hover { color: var(--blue); text-decoration: underline; text-underline-offset: 3px; }
+    .tree li ul { margin-left: 20px; padding-left: 8px; }
+    .tree li li { padding-right: 0; }
+    .tree mark { background: #fef08a; color: inherit; border-radius: 2px; }
+
+    /* Center: article */
+    .doc-title { margin-top: 8px; font-size: var(--fs-h1); line-height: 1.15; }
+    .crumbs { margin-top: 19.2px; }
+    .crumbs ol { list-style: none; display: flex; flex-wrap: wrap; align-items: center; font-size: 18px; line-height: 27px; color: var(--text); }
+    .crumbs li { display: flex; align-items: center; }
+    .crumbs li + li::before { content: "/"; margin-inline: 8px; }
+    .crumbs a { display: inline-flex; align-items: center; transition: color .2s; }
+    .crumbs a:hover { color: var(--blue); }
+    .crumbs svg { width: 20px; height: 20px; margin-right: 4px; }
+
+    .doc-actions { display: flex; flex-wrap: wrap; gap: 10px; padding-block: 20px; margin-bottom: 20px; }
+    .doc-action {
+      display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border: 1px solid #000; border-radius: 6px;
+      background: transparent; color: #000; font-size: 14px; line-height: 21px; font-weight: 500;
+      transition: background-color .2s, color .2s;
+    }
+    .doc-action svg { width: 20px; height: 20px; flex: none; }
+    .doc-action:hover, .doc-action.is-done { background: #000; color: #fff; }
+
+    .doc-updated { display: flex; align-items: center; gap: 8px; padding-block: 10px; margin-bottom: 20px; font-size: 14px; line-height: 21px; color: var(--text); }
+    .doc-updated svg { width: 16px; height: 16px; flex: none; }
+
+    .doc-body .doc-note {
+      display: flex; gap: 10px; align-items: flex-start; padding: 10px 14px; border: 1px dashed #93c5fd; border-radius: 6px;
+      background: var(--bg-hero); font-size: 14px; line-height: 1.5; color: #1e3a8a;
+    }
+    .doc-note svg { width: 18px; height: 18px; flex: none; margin-top: 1px; }
+
+    .doc-body > * + * { margin-top: 19.2px; }
+    .doc-body p, .doc-body ol li { font-size: calc(var(--fs-body) * var(--doc-scale)); line-height: 1.5; color: var(--text); }
+    .doc-body h2 { font-size: var(--fs-h3); line-height: 1.2; scroll-margin-top: 24px; }
+    .doc-body h3 { font-size: var(--fs-h5); line-height: 1.3; scroll-margin-top: 24px; }
+    .doc-body h3 a { color: var(--text); transition: color .2s; }
+    .doc-body h3 a:hover { color: var(--blue); }
+    .doc-body p a { color: inherit; }
+    .doc-body p a:hover { color: var(--blue); text-decoration: underline; text-underline-offset: 3px; }
+    .doc-body ol { padding-left: 0; list-style-position: outside; }
+    .doc-body ul { list-style: none; }
+    .doc-body ul li { position: relative; padding-left: 22px; font-size: calc(16px * var(--doc-scale)); line-height: 1.5; color: var(--text); }
+    .doc-body ul li::before { content: ""; position: absolute; left: 0; top: calc(.75em - 4.5px); width: 9px; height: 9px; border-radius: 50%; background: var(--blue); }
+    .doc-body .btn-row { justify-content: center; }
+    .doc-body .btn { padding-inline: 45.69px; }
+
+    .contrib { margin-top: 15px; padding: 15px; border: 1px solid #ddd; border-radius: 4px; background: #fff; }
+    .contrib h3 { padding-bottom: 10px; font-size: 16px; line-height: 1.3; font-weight: 600; color: #333; }
+    .contrib__list { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+    .contrib__item { display: flex; align-items: center; gap: 16px; }
+    .contrib__item img { width: 32px; height: 32px; border-radius: 8px; object-fit: cover; }
+    .contrib__item a { font-size: 14px; line-height: 21px; font-weight: 600; color: #333; transition: color .2s; }
+    .contrib__item a:hover { color: #0073aa; }
+    .contrib__date { margin-top: 10px; font-size: 12px; line-height: 18px; color: #666; }
+
+    .doc-foot { display: grid; grid-template-columns: 55fr 45fr; gap: 20px; margin-top: 19.2px; }
+    .need-help, .helpful { border-radius: 8px; box-shadow: 0 2px 4px rgb(0 0 0 / .1); }
+    .need-help {
+      display: flex; align-items: center; gap: 16px; padding: 27px; border: 1px solid #ddd;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 16px; line-height: 24px; color: var(--text);
+    }
+    .need-help__icon { flex: none; width: 48px; height: 48px; padding: 12px; border-radius: 50%; background: #fff; color: #000; }
+    .need-help__icon svg { width: 24px; height: 24px; }
+    .need-help a { color: #0073aa; font-weight: 500; text-decoration: underline; }
+    .need-help a:hover { color: #005177; }
+    .helpful { padding: 10px; border: 1px solid #e0e0e0; background: #fff; text-align: center; }
+    .helpful__title { padding-bottom: 16px; font-size: 16px; line-height: 1.4; font-weight: 600; color: #333; }
+    .helpful__btns { display: flex; justify-content: center; gap: 24px; }
+    .helpful__btns button {
+      display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 10px 24px; border: 1.5px solid #111; border-radius: 6px;
+      background: #fff; color: #111; font-size: 14px; line-height: 1; box-shadow: 0 2px 4px rgb(0 0 0 / .1);
+      transition: background-color .3s, color .3s;
+    }
+    .helpful__btns button > span { font-size: 12px; opacity: .8; }
+    .helpful__btns button:hover:not(:disabled), .helpful__btns button.is-voted { background: #111; color: #fff; }
+    .helpful__btns button:disabled { cursor: default; }
+    .helpful__msg { font-size: 14px; color: #15803d; }
+
+    /* Right: TOC, font size, share, print */
+    .toc { margin-top: 15px; padding: 20px; border: 1px solid #e0e0e0; border-radius: 5px; background: #f9f9f9; }
+    .toc__title { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-bottom: 15px; font-size: 18px; line-height: 27px; font-weight: 600; color: var(--text); }
+    .toc__toggle { display: none; width: 28px; height: 28px; place-items: center; color: var(--text); }
+    .toc__toggle svg { width: 16px; height: 16px; transition: transform .25s var(--ease); }
+    .toc.is-collapsed .toc__toggle svg { transform: rotate(-90deg); }
+    .toc ul { list-style: none; margin-top: 15px; font-size: 14px; line-height: 21px; }
+    .toc li { position: relative; margin-bottom: 8px; padding-left: 20px; }
+    .toc li.sub { margin-left: 20px; }
+    .toc li::before { content: "•"; position: absolute; left: 3px; top: 0; color: var(--text); }
+    .toc a { color: var(--text); transition: color .2s; }
+    .toc a:hover { color: var(--blue); }
+    .toc a.is-active { font-weight: 600; color: var(--ink); }
+
+    .fontsize { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 10px 15px; margin-bottom: 20px; }
+    .fontsize__label { font-size: 14px; font-weight: 500; color: #111; }
+    .fontsize button {
+      padding: 8px 12px; border: 1px solid #111; border-radius: 4px; background: transparent; color: #111;
+      font-size: 14px; line-height: 21px; transition: background-color .2s, color .2s;
+    }
+    .fontsize button:hover { background: #f3f4f6; }
+    .fontsize button.is-active { background: #000; border-color: #000; color: #fff; font-weight: 600; }
+    .fontsize__current { margin-left: 10px; font-size: 13px; font-style: italic; color: #111; opacity: .7; }
+
+    .share { display: grid; grid-template-columns: 1fr auto; align-items: center; row-gap: 11px; padding: 20px 30px 20px 8px; }
+    .share__label { grid-column: 1 / -1; font-size: 16px; line-height: 24px; font-weight: 500; color: #374151; }
+    .share__btns { display: flex; flex-wrap: wrap; gap: 10px; }
+    .share__btns a {
+      width: 32px; height: 32px; padding: 8px; border-radius: 50%; display: grid; place-items: center; color: #fff;
+      transition: transform .2s var(--ease), filter .2s;
+    }
+    .share__btns a:hover { transform: translateY(-2px); filter: brightness(1.12); }
+    .share__btns svg { width: 16px; height: 16px; }
+    .share .fb { background: #1877f2; }
+    .share .x { background: #000; }
+    .share .li { background: #0a66c2; }
+    .share .pin { background: #e60023; }
+    .print-btn {
+      display: inline-flex; align-items: center; gap: 8px; padding: 15px; border: 1px solid #000; border-radius: 8px; background: #fff;
+      font-size: 13px; line-height: 16px; font-weight: 600; color: #000; transition: background-color .2s, color .2s;
+    }
+    .print-btn svg { width: 16px; height: 16px; }
+    .print-btn:hover { background: #000; color: #fff; }
+
+    /* Reading progress (fixed bottom) */
+    .read-progress { position: fixed; left: 0; right: 0; bottom: 0; z-index: 75; pointer-events: none; }
+    .read-progress__bar { height: 4px; background: #f9f9f9; box-shadow: 0 2px 4px rgb(0 0 0 / .1); overflow: hidden; }
+    .read-progress__fill { height: 100%; width: 100%; background: #111; transform-origin: 0 50%; transform: scaleX(0); transition: transform .3s ease; }
+    .read-progress__info { position: absolute; right: 104px; bottom: 8px; padding: 2px 8px; border-radius: 4px; background: rgb(255 255 255 / .92); font-size: 12px; line-height: 18px; color: #666; }
+
+    /* Tablet: sidebar + article, TOC under the sidebar */
+    @media (max-width: 1100px) {
+      .docs__grid { grid-template-columns: 240px minmax(0, 1fr); grid-template-rows: auto 1fr; column-gap: 32px; }
+      .doc-main { grid-column: 2; grid-row: 1 / span 2; }
+      .doc-aside { grid-column: 1; grid-row: 2; }
+      .share { padding-right: 0; }
+    }
+    /* Phone: single column, like the live site */
+    @media (max-width: 781px) {
+      .docs { padding-block: 40px 56px; }
+      .docs__grid { grid-template-columns: minmax(0, 1fr); grid-template-rows: none; padding-inline: 18px; row-gap: 40px; }
+      .doc-main, .doc-aside { grid-column: auto; grid-row: auto; }
+      .doc-body ol { padding-left: 22px; }
+      .toc__toggle { display: grid; }
+      .toc ul { display: block; }
+      .toc.is-collapsed ul { display: none; }
+      .toc.is-collapsed .toc__title { padding-bottom: 0; }
+      .read-progress__info { right: 96px; }
+      .tree__toggle { width: 40px; height: 40px; margin-right: -8px; }
+    }
+    @media (max-width: 600px) {
+      .doc-actions .doc-action { width: 100%; justify-content: center; }
+      .doc-foot { grid-template-columns: 1fr; }
+      .need-help { padding: 20px; }
+      .helpful__btns { gap: 12px; }
+      .read-progress__info { display: none; }   /* the bar alone; the pill sat on top of the copy */
+    }
+    @media (max-width: 400px) {
+      .docs__grid { padding-inline: 0; }
+    }
+
+    /* Print: article only */
+    @media print {
+      .announce, .site-header, .site-footer, .chat-launch, .chat-panel, .skip-link,
+      .doc-side, .doc-aside, .doc-actions, .doc-foot, .read-progress, .doc-body .btn-row { display: none !important; }
+      .docs { padding: 0; }
+      .docs__grid { display: block; max-width: none; }
+      .doc-body h2, .doc-body h3 { break-after: avoid; }
+      .doc-body a { text-decoration: none; }
+    }
+  </style>
+</Fragment>
+
+<main id="main">
+  <section class="docs">
+    <div class="container">
+      <div class="docs__grid">
+
+        <!-- Left: quick search + document tree -->
+        <aside class="doc-side" aria-label="Documentation navigation">
+          <div class="qs" role="search">
+            <label class="sr-only" for="doc-search">Search the documentation</label>
+            <input id="doc-search" type="search" placeholder="Quick search..." autocomplete="off" data-doc-search>
+            <div class="qs__cmd"><kbd aria-hidden="true">⌘K</kbd></div>
+          </div>
+
+          <nav class="tree" data-tree aria-label="CartPilot docs">
+            <div class="tree__head" data-tree-head>
+              <span class="tree__title">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.75V12A2.25 2.25 0 0 1 4.5 9.75h15A2.25 2.25 0 0 1 21.75 12v.75m-8.69-6.44-2.12-2.12a1.5 1.5 0 0 0-1.061-.44H4.5A2.25 2.25 0 0 0 2.25 6v12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9a2.25 2.25 0 0 0-2.25-2.25h-5.379a1.5 1.5 0 0 1-1.06-.44Z"/></svg>
+                <span>CartPilot</span>
+              </span>
+              <button class="tree__toggle" type="button" aria-expanded="true" aria-controls="tree-body" aria-label="Toggle CartPilot section">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 15.75 7.5-7.5 7.5 7.5"/></svg>
+              </button>
+            </div>
+            <div class="tree__body" id="tree-body"><div>
+              <ul>
+                <li>
+                  <div class="tree__row"><span class="tree__icon" aria-hidden="true">📄</span><a href="https://cartpilot.ai/docs/cartpilot/getting-started/">Getting Started</a></div>
+                  <ul>
+                    <li><div class="tree__row"><span class="tree__icon" aria-hidden="true">📄</span><a href="https://cartpilot.ai/docs/cartpilot/getting-started/onboarding/">Onboarding</a></div></li>
+                  </ul>
+                </li>
+                <li>
+                  <div class="tree__row"><span class="tree__icon" aria-hidden="true">📄</span><a href="https://cartpilot.ai/docs/cartpilot/setup/">Setup</a></div>
+                  <ul>
+                    <li><div class="tree__row"><span class="tree__icon" aria-hidden="true">📄</span><a href="https://cartpilot.ai/docs/cartpilot/setup/agent-setup/">Agent Setup</a></div></li>
+                    <li><div class="tree__row"><span class="tree__icon" aria-hidden="true">📄</span><a href="https://cartpilot.ai/docs/cartpilot/setup/widget-appearance/">Widget Appearance</a></div></li>
+                    <li><div class="tree__row"><span class="tree__icon" aria-hidden="true">📄</span><a href="https://cartpilot.ai/docs/cartpilot/setup/product/">Product</a></div></li>
+                    <li><div class="tree__row"><span class="tree__icon" aria-hidden="true">📄</span><a href="https://cartpilot.ai/docs/cartpilot/setup/training/">Training</a></div></li>
+                    <li><div class="tree__row"><span class="tree__icon" aria-hidden="true">📄</span><a href="https://cartpilot.ai/docs/cartpilot/setup/analytics/">Analytics</a></div></li>
+                    <li><div class="tree__row"><span class="tree__icon" aria-hidden="true">📄</span><a href="https://cartpilot.ai/docs/cartpilot/setup/conversation-details/">Conversation Details</a></div></li>
+                  </ul>
+                </li>
+                <li>
+                  <div class="tree__row"><span class="tree__icon" aria-hidden="true">📄</span><a href="https://cartpilot.ai/docs/cartpilot/how-cartpilot-works-in-frontend/">How CartPilot Works in Frontend</a></div>
+                </li>
+              </ul>
+              <p class="qs-empty" data-search-empty hidden>No matching articles.</p>
+            </div></div>
+          </nav>
+        </aside>
+
+        <!-- Center: article -->
+        <article class="doc-main" data-doc-article>
+          <h1 class="doc-title" data-doc-title>CartPilot</h1>
+
+          <nav class="crumbs" aria-label="Breadcrumb">
+            <ol>
+              <li><a href="/"><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" clip-rule="evenodd" d="M9.293 2.293a1 1 0 0 1 1.414 0l7 7A1 1 0 0 1 17 11h-1v6a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-6H3a1 1 0 0 1-.707-1.707l7-7Z"/></svg><span class="sr-only">Home</span></a></li>
+              <li><a href="/docs/">Docs</a></li>
+              <li><span aria-current="page">CartPilot</span></li>
+            </ol>
+          </nav>
+
+          <div class="doc-actions">
+            <button class="doc-action" type="button" data-doc-action="copy">
+              <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><rect x="6" y="6" width="10" height="10" rx="1" stroke="currentColor" stroke-width="1.5"/><path d="M4 14H3C2.44772 14 2 13.5523 2 13V3C2 2.44772 2.44772 2 3 2H13C13.5523 2 14 2.44772 14 3V4" stroke="currentColor" stroke-width="1.5"/></svg>
+              <span data-label>Copy Markdown for LLM</span>
+            </button>
+            <button class="doc-action" type="button" data-doc-action="chatgpt">
+              <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 2C5.58172 2 2 5.58172 2 10C2 14.4183 5.58172 18 10 18C14.4183 18 18 14.4183 18 10C18 5.58172 14.4183 2 10 2Z" stroke="currentColor" stroke-width="1.5"/><circle cx="10" cy="10" r="3" fill="currentColor"/></svg>
+              <span>Open in ChatGPT</span>
+            </button>
+            <button class="doc-action" type="button" data-doc-action="claude">
+              <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 2L13 8L19 9L14.5 13L16 19L10 16L4 19L5.5 13L1 9L7 8L10 2Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span>Open in Claude</span>
+            </button>
+            <span class="sr-only" aria-live="polite" data-doc-live></span>
+          </div>
+
+          <p class="doc-updated">
+            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 2C2.44772 2 2 2.44772 2 3V13C2 13.5523 2.44772 14 3 14H13C13.5523 14 14 13.5523 14 13V6L9 2H3Z" stroke="currentColor" stroke-width="1.5"/><path d="M9 2V6H14" stroke="currentColor" stroke-width="1.5"/></svg>
+            <span>Last updated <time datetime="2026-07-06">07/06/2026</time></span>
+          </p>
+
+          <div class="doc-body" data-doc-body>
+            <p class="doc-note" data-md-skip>
+              <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="10" cy="10" r="8"/><path d="M10 9v5M10 6.2v.1" stroke-linecap="round"/></svg>
+              <span>Summary version — replace with the official text from the CMS before publishing.</span>
+            </p>
+
+            <p><a href="/">CartPilot</a> is an AI sales agent for online stores running on WooCommerce, Shopify or a similar platform. It learns your store’s information and stands in for your team in chat, answering shopper questions on your behalf at any hour of the day.</p>
+            <p>Shoppers can ask it questions, search your catalog, get product suggestions, talk to it by voice and add items to their cart without ever leaving the conversation.</p>
+            <p>Use this guide to connect your store, configure and train the agent with your own content, style the chat widget, and see how customers use it once it is live.</p>
+
+            <h2 id="toc-heading-0">Start Here</h2>
+            <p>New to CartPilot? Work through these guides first.</p>
+            <h3 id="toc-heading-1"><a href="https://cartpilot.ai/docs/cartpilot/getting-started/">Getting Started with CartPilot</a></h3>
+            <p>Sign up for an account, link your store, then install the WordPress plugin and confirm that the store shows as connected in your CartPilot dashboard.</p>
+            <h3 id="toc-heading-2"><a href="https://cartpilot.ai/docs/cartpilot/setup/agent-setup/">Set Up Your AI Sales Agent</a></h3>
+            <p>Name your agent, write its greeting, choose how it behaves and when the chat opens, add custom instructions, and decide whether shoppers can use text, voice or both.</p>
+            <h3 id="toc-heading-3"><a href="https://cartpilot.ai/docs/cartpilot/setup/widget-appearance/">Customize the Chat Widget</a></h3>
+            <p>Pick an avatar, launcher icon, colors and fonts that suit your brand, then check the live preview before you publish.</p>
+
+            <h2 id="toc-heading-4">Connect Your Store Data</h2>
+            <p>The agent gives better answers when it knows your store well. These guides cover syncing your catalog and feeding the agent the right reference material.</p>
+            <h3 id="toc-heading-5"><a href="https://cartpilot.ai/docs/cartpilot/setup/product/">Sync Your Products</a></h3>
+            <p>Import your WooCommerce catalog so the agent can search it, show product details and prices, and point shoppers to the right items quickly.</p>
+            <h3 id="toc-heading-6"><a href="https://cartpilot.ai/docs/cartpilot/setup/training/">Train Your Agent</a></h3>
+            <p>Add store pages, policies, FAQs and other documents as training sources so that answers about your products, delivery, returns and support stay accurate.</p>
+
+            <h2 id="toc-heading-7">Understand Customer Conversations</h2>
+            <p>After launch, use the dashboard to see how shoppers use the agent and how well it is performing.</p>
+            <h3 id="toc-heading-8"><a href="https://cartpilot.ai/docs/cartpilot/setup/analytics/">View Analytics</a></h3>
+            <p>Follow conversations, unique shoppers, message totals, voice minutes, token use, product searches, add-to-cart actions and your search-to-cart rate.</p>
+            <h3 id="toc-heading-9"><a href="https://cartpilot.ai/docs/cartpilot/setup/conversation-details/">Review Conversation Details</a></h3>
+            <p>Open any chat to read the full message history, check the session information and interaction metrics, and see exactly how it played out.</p>
+
+            <h2 id="toc-heading-10">See How CartPilot Works on Your Storefront</h2>
+            <p>On your site, CartPilot appears as a shopper-facing sales agent. Visitors can ask about products, chat by voice, browse suggestions, add items to the cart and head to checkout from the same conversation.</p>
+            <div class="btn-row"><a class="btn" href="https://cartpilot.ai/docs/cartpilot/how-cartpilot-works-in-frontend/">See Frontend Experience</a></div>
+
+            <h2 id="toc-heading-11">Recommended Setup Flow</h2>
+            <p>For the smoothest start, follow the setup in this order.</p>
+            <ol>
+              <li>Sign up for a CartPilot account</li>
+              <li>Link your WooCommerce store</li>
+              <li>Install and activate the CartPilot plugin</li>
+              <li>Configure the agent’s name, greeting, voice and behavior</li>
+              <li>Style the chat widget to match your brand</li>
+              <li>Sync your product catalog</li>
+              <li>Add policies, FAQs and documents as training data</li>
+              <li>Try the agent on your storefront</li>
+              <li>Review analytics and customer conversations</li>
+            </ol>
+
+            <h2 id="toc-heading-12">What You Can Do with CartPilot</h2>
+            <p>CartPilot covers the whole shopping journey on your site.</p>
+            <p>For shoppers, it can:</p>
+            <ul>
+              <li>Answer product questions asked in everyday language</li>
+              <li>Search the catalog without any filters</li>
+              <li>Compare options and surface relevant products</li>
+              <li>Show prices and product details</li>
+              <li>Add items to the cart from the chat</li>
+              <li>Talk with them by voice</li>
+              <li>Explain policies, returns, shipping and order status</li>
+              <li>Keep them shopping without waiting for a human</li>
+            </ul>
+            <p>For store owners, it helps to:</p>
+            <ul>
+              <li>Cut down repeat support questions</li>
+              <li>Steer shoppers to the right products</li>
+              <li>Reveal what customers are looking for</li>
+              <li>Track conversations and buying behavior</li>
+              <li>Make products easier to discover</li>
+              <li>Deliver a more helpful buying experience</li>
+            </ul>
+
+            <h2 id="toc-heading-13">Need Help?</h2>
+            <p>Stuck during setup, or something not working the way you expect? Contact the CartPilot support team and we will help you connect your store, train your agent and get CartPilot ready for your shoppers.</p>
+            <div class="btn-row"><a class="btn" href="/support/">Get Support</a></div>
+          </div>
+
+          <div class="contrib">
+            <h3>Contributors</h3>
+            <div class="contrib__list">
+              <div class="contrib__item"><img src="/assets/img/499f96a88aafd7b101de110de77b3d713b7009e5bea200f3392e60fd338d0299.png" alt="Shakhawat Ullah" width="32" height="32" loading="lazy"><a href="https://cartpilot.ai/author/badhon/">Shakhawat Ullah</a></div>
+              <div class="contrib__item"><img src="/assets/img/a692365346ef538723d4b3c3cbbb90bc7b222e5ba4cf3635609a363372e7293d.png" alt="shad" width="32" height="32" loading="lazy"><a href="https://cartpilot.ai/author/shad/">shad</a></div>
+              <div class="contrib__item"><img src="/assets/img/6c0e990f80b07f46279b25bcaf9559d39e8be3dce0d52c502ba9c9000071717d.png" alt="Shahid" width="32" height="32" loading="lazy"><a href="https://cartpilot.ai/author/shahid/">Shahid</a></div>
+            </div>
+            <p class="contrib__date">Updated on July 6, 2026</p>
+          </div>
+
+          <div class="doc-foot">
+            <div class="need-help">
+              <span class="need-help__icon" aria-hidden="true"><svg viewBox="0 0 26 25" fill="none"><path d="M1.429 21.292V9.924c0-.851.425-1.646 1.134-2.118l8.911-5.941c.855-.57 1.969-.57 2.825 0l8.911 5.941c.708.472 1.134 1.267 1.134 2.118v11.367m-22.914 0c0 1.406 1.14 2.546 2.546 2.546h17.822c1.406 0 2.546-1.14 2.546-2.546m-22.914 0l8.593-5.728m14.321 5.728l-8.593-5.728M1.429 9.835l8.593 5.728m14.321-5.728l-8.593 5.728m0 0l-1.452.968c-.855.57-1.969.57-2.825 0l-1.452-.968" stroke="currentColor" stroke-width="1.67" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              <p>Still stuck? How can we help? <a href="/support/">Get Help</a></p>
+            </div>
+            <div class="helpful" data-helpful>
+              <p class="helpful__title">Was this article helpful to you?</p>
+              <div class="helpful__btns">
+                <button type="button" data-vote="yes">Yes <span>(<span data-count>1</span>)</span></button>
+                <button type="button" data-vote="no">No <span>(<span data-count>0</span>)</span></button>
+              </div>
+              <p class="helpful__msg" aria-live="polite" data-helpful-msg></p>
+            </div>
+          </div>
+        </article>
+
+        <!-- Right: table of contents, font size, share, print -->
+        <aside class="doc-aside" aria-label="Article tools">
+          <nav class="toc" data-toc aria-labelledby="toc-title">
+            <div class="toc__title">
+              <span id="toc-title">Table of Contents</span>
+              <button class="toc__toggle" type="button" aria-expanded="true" aria-controls="toc-list" aria-label="Toggle table of contents">
+                <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M2 4h12L8 12z"/></svg>
+              </button>
+            </div>
+            <ul id="toc-list">
+              <li><a href="#toc-heading-0">Start Here</a></li>
+              <li class="sub"><a href="#toc-heading-1">Getting Started with CartPilot</a></li>
+              <li class="sub"><a href="#toc-heading-2">Set Up Your AI Sales Agent</a></li>
+              <li class="sub"><a href="#toc-heading-3">Customize the Chat Widget</a></li>
+              <li><a href="#toc-heading-4">Connect Your Store Data</a></li>
+              <li class="sub"><a href="#toc-heading-5">Sync Your Products</a></li>
+              <li class="sub"><a href="#toc-heading-6">Train Your Agent</a></li>
+              <li><a href="#toc-heading-7">Understand Customer Conversations</a></li>
+              <li class="sub"><a href="#toc-heading-8">View Analytics</a></li>
+              <li class="sub"><a href="#toc-heading-9">Review Conversation Details</a></li>
+              <li><a href="#toc-heading-10">See How CartPilot Works on Your Storefront</a></li>
+              <li><a href="#toc-heading-11">Recommended Setup Flow</a></li>
+              <li><a href="#toc-heading-12">What You Can Do with CartPilot</a></li>
+              <li><a href="#toc-heading-13">Need Help?</a></li>
+            </ul>
+          </nav>
+
+          <div class="fontsize" role="group" aria-label="Article font size" data-fontsize>
+            <span class="fontsize__label">Font Size:</span>
+            <button type="button" data-scale="0.875" data-name="Small" title="Small" aria-pressed="false">S</button>
+            <button type="button" data-scale="1" data-name="Default" title="Default" aria-pressed="true" class="is-active">M</button>
+            <button type="button" data-scale="1.125" data-name="Medium" title="Medium" aria-pressed="false">L</button>
+            <button type="button" data-scale="1.25" data-name="Large" title="Large" aria-pressed="false">XL</button>
+            <button type="button" data-scale="1.5" data-name="Extra Large" title="Extra Large" aria-pressed="false">2XL</button>
+            <span class="fontsize__current" data-fontsize-current>(Default)</span>
+          </div>
+
+          <div class="share">
+            <span class="share__label">Share This Article:</span>
+            <div class="share__btns">
+              <a class="fb" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fcartpilot.ai%2Fdocs%2F" target="_blank" rel="noopener noreferrer" title="Share on Facebook" aria-label="Share on Facebook" data-share="facebook"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+              <a class="x" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fcartpilot.ai%2Fdocs%2F&amp;text=CartPilot" target="_blank" rel="noopener noreferrer" title="Share on X" aria-label="Share on X" data-share="x"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+              <a class="li" href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fcartpilot.ai%2Fdocs%2F" target="_blank" rel="noopener noreferrer" title="Share on LinkedIn" aria-label="Share on LinkedIn" data-share="linkedin"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+              <a class="pin" href="https://pinterest.com/pin/create/button/?url=https%3A%2F%2Fcartpilot.ai%2Fdocs%2F&amp;description=CartPilot" target="_blank" rel="noopener noreferrer" title="Share on Pinterest" aria-label="Share on Pinterest" data-share="pinterest"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.174-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.402.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.357-.629-2.746-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24.009 12.017 24.009c6.624 0 11.99-5.367 11.99-11.988C24.007 5.367 18.641.001 12.017.001z"/></svg></a>
+            </div>
+            <button class="print-btn" type="button" title="Print this article" data-print>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z"/></svg>
+              <span>Print</span>
+            </button>
+          </div>
+        </aside>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="read-progress" aria-hidden="true" data-read-progress>
+    <div class="read-progress__bar"><div class="read-progress__fill" data-read-fill></div></div>
+    <div class="read-progress__info"><span data-read-left>📖 3 min left</span></div>
+  </div>
+</main>
+
+<Fragment slot="scripts">
+<script is:inline>
+  /* Docs page: doc actions, quick search, tree toggle, TOC scroll-spy, font size, helpful vote, print, reading progress */
+  (() => {
+    const $ = (s, el = document) => el.querySelector(s);
+    const $$ = (s, el = document) => [...el.querySelectorAll(s)];
+    const store = {
+      get(k) { try { return localStorage.getItem(k); } catch { return null; } },
+      set(k, v) { try { localStorage.setItem(k, v); } catch {} },
+    };
+    const local = /^(localhost|127\.|\[::1\]|0\.0\.0\.0)|\.(localhost|test)$/.test(location.hostname) || location.protocol === "file:";
+    const pageUrl = local ? "https://cartpilot.ai/docs/" : location.href.split("#")[0];
+    const docTitle = document.title;
+    const article = $("[data-doc-article]");
+    const body = $("[data-doc-body]");
+    const live = $("[data-doc-live]");
+
+    // Keep share links pointing at the real page URL once deployed.
+    if (!local) {
+      const u = encodeURIComponent(pageUrl);
+      const map = {
+        facebook: `https://www.facebook.com/sharer/sharer.php?u=${u}`,
+        x: `https://twitter.com/intent/tweet?url=${u}&text=CartPilot`,
+        linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${u}`,
+        pinterest: `https://pinterest.com/pin/create/button/?url=${u}&description=CartPilot`,
+      };
+      $$("[data-share]").forEach((a) => (a.href = map[a.dataset.share]));
+    }
+
+    /* ---------- Markdown export of the article ---------- */
+    const abs = (href) => new URL(href, pageUrl).href;
+    const inline = (el) => [...el.childNodes].map((n) => {
+      if (n.nodeType === 3) return n.textContent;
+      if (n.nodeType !== 1 || n.getAttribute("aria-hidden") === "true") return "";
+      if (n.tagName === "A") return `[${n.textContent.trim()}](${abs(n.getAttribute("href"))})`;
+      if (n.tagName === "STRONG" || n.tagName === "B") return `**${inline(n)}**`;
+      if (n.tagName === "EM" || n.tagName === "I") return `*${inline(n)}*`;
+      return inline(n);
+    }).join("").replace(/\s+/g, " ").trim();
+    const toMarkdown = () => {
+      const out = [`# ${docTitle}`, `Source: ${pageUrl}`, "---"];
+      [...body.children].forEach((el) => {
+        if (el.hasAttribute("data-md-skip")) return;
+        const t = el.tagName;
+        if (t === "H2") out.push(`## ${el.textContent.trim()}`);
+        else if (t === "H3") out.push(`### ${el.textContent.trim()}`);
+        else if (t === "P") out.push(inline(el));
+        else if (t === "UL") out.push($$("li", el).map((li) => `- ${inline(li)}`).join("\n"));
+        else if (t === "OL") out.push($$("li", el).map((li, i) => `${i + 1}. ${inline(li)}`).join("\n"));
+        else if (el.classList.contains("btn-row")) $$("a", el).forEach((a) => out.push(`[${a.textContent.trim()}](${abs(a.getAttribute("href"))})`));
+      });
+      return out.join("\n\n") + "\n";
+    };
+    const copyText = async (text) => {
+      try { await navigator.clipboard.writeText(text); return true; } catch {}
+      const ta = document.createElement("textarea");
+      ta.value = text; ta.setAttribute("readonly", ""); ta.style.cssText = "position:fixed;top:0;left:-9999px;opacity:0";
+      document.body.appendChild(ta); ta.select();
+      let ok = false;
+      try { ok = document.execCommand("copy"); } catch {}
+      ta.remove();
+      return ok;
+    };
+    const prompt = () => `Need more information on "${docTitle}"\n\nSource: ${pageUrl}`;
+    $$("[data-doc-action]").forEach((btn) => {
+      btn.addEventListener("click", async () => {
+        const action = btn.dataset.docAction;
+        if (action === "chatgpt") return window.open(`https://chatgpt.com/?prompt=${encodeURIComponent(prompt())}`, "_blank", "noopener");
+        if (action === "claude") return window.open(`https://claude.ai/new?q=${encodeURIComponent(prompt())}`, "_blank", "noopener");
+        const label = $("[data-label]", btn);
+        const ok = await copyText(toMarkdown());
+        label.textContent = ok ? "Copied to clipboard!" : "Copy failed — try again";
+        live.textContent = ok ? "Article copied to clipboard as Markdown." : "Copy failed.";
+        btn.classList.toggle("is-done", ok);
+        clearTimeout(btn._t);
+        btn._t = setTimeout(() => { label.textContent = "Copy Markdown for LLM"; btn.classList.remove("is-done"); }, 2000);
+      });
+    });
+
+    /* ---------- Doc tree: collapse + quick search ---------- */
+    const tree = $("[data-tree]");
+    const treeToggle = $(".tree__toggle", tree);
+    const setTree = (open) => { tree.classList.toggle("is-collapsed", !open); treeToggle.setAttribute("aria-expanded", String(open)); };
+    $("[data-tree-head]").addEventListener("click", () => setTree(tree.classList.contains("is-collapsed")));
+    if (matchMedia("(max-width: 781px)").matches) setTree(false);   // phones: article first, tree one tap away
+
+    const search = $("[data-doc-search]");
+    const empty = $("[data-search-empty]");
+    const items = $$("li", tree);
+    const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+    items.forEach((li) => { const a = $(":scope > .tree__row a", li); a.dataset.text = a.textContent; });
+    const linkOf = (li) => $(":scope > .tree__row a", li);
+    const filter = () => {
+      const q = search.value.trim().toLowerCase();
+      const hits = new Set(items.filter((li) => !q || linkOf(li).dataset.text.toLowerCase().includes(q)));
+      items.forEach((li) => {
+        const a = linkOf(li), text = a.dataset.text, i = q ? text.toLowerCase().indexOf(q) : -1;
+        li.hidden = !hits.has(li) && !$$("li", li).some((c) => hits.has(c));
+        if (i >= 0) a.innerHTML = esc(text.slice(0, i)) + "<mark>" + esc(text.slice(i, i + q.length)) + "</mark>" + esc(text.slice(i + q.length));
+        else a.textContent = text;
+      });
+      empty.hidden = hits.size > 0;
+      if (q) setTree(true);
+    };
+    if (!/Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent)) $(".qs kbd").textContent = "Ctrl K";
+    search.addEventListener("input", filter);
+    search.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") { search.value = ""; filter(); search.blur(); }
+      if (e.key === "Enter") { const first = items.find((li) => !li.hidden && $(":scope > .tree__row mark", li)); if (first) location.href = linkOf(first).href; }
+    });
+    document.addEventListener("keydown", (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") { e.preventDefault(); search.focus(); search.select(); }
+    });
+
+    /* ---------- TOC: collapse on phones + scroll-spy active state ---------- */
+    const toc = $("[data-toc]");
+    const tocToggle = $(".toc__toggle", toc);
+    tocToggle.addEventListener("click", () => {
+      const open = toc.classList.contains("is-collapsed");
+      toc.classList.toggle("is-collapsed", !open);
+      tocToggle.setAttribute("aria-expanded", String(open));
+    });
+    const links = $$("a[href^='#toc-heading-']", toc);
+    const heads = links.map((a) => document.getElementById(a.hash.slice(1)));
+    let current = -1;
+    const spy = () => {
+      const line = Math.min(160, innerHeight * 0.3);
+      let idx = -1;
+      heads.forEach((h, i) => { if (h.getBoundingClientRect().top <= line) idx = i; });
+      if (idx === current) return;
+      current = idx;
+      links.forEach((a, i) => { const on = i === idx; a.classList.toggle("is-active", on); on ? a.setAttribute("aria-current", "location") : a.removeAttribute("aria-current"); });
+    };
+    links.forEach((a, i) => a.addEventListener("click", () => { heads[i].setAttribute("tabindex", "-1"); setTimeout(() => heads[i].focus({ preventScroll: true }), 400); }));
+
+    /* ---------- Font size switcher ---------- */
+    const fs = $("[data-fontsize]");
+    const fsBtns = $$("button", fs);
+    const fsCur = $("[data-fontsize-current]", fs);
+    const setScale = (btn) => {
+      fsBtns.forEach((b) => { const on = b === btn; b.classList.toggle("is-active", on); b.setAttribute("aria-pressed", String(on)); });
+      article.style.setProperty("--doc-scale", btn.dataset.scale);
+      fsCur.textContent = `(${btn.dataset.name})`;
+    };
+    fsBtns.forEach((b) => b.addEventListener("click", () => { setScale(b); store.set("cp-doc-scale", b.dataset.scale); }));
+    const saved = fsBtns.find((b) => b.dataset.scale === store.get("cp-doc-scale"));
+    if (saved) setScale(saved);
+
+    /* ---------- Was this helpful? ---------- */
+    const helpful = $("[data-helpful]");
+    const msg = $("[data-helpful-msg]", helpful);
+    const voteBtns = $$("[data-vote]", helpful);
+    const lock = (vote) => voteBtns.forEach((b) => { b.disabled = true; b.classList.toggle("is-voted", b.dataset.vote === vote); });
+    const prev = store.get("cp-doc-vote");
+    if (prev) { const b = voteBtns.find((x) => x.dataset.vote === prev); if (b) { const c = $("[data-count]", b); c.textContent = Number(c.textContent) + 1; lock(prev); } }
+    voteBtns.forEach((b) => b.addEventListener("click", () => {
+      const c = $("[data-count]", b);
+      c.textContent = Number(c.textContent) + 1;
+      lock(b.dataset.vote);
+      store.set("cp-doc-vote", b.dataset.vote);
+      msg.textContent = "Thank you for your feedback!";
+    }));
+
+    /* ---------- Print ---------- */
+    $("[data-print]").addEventListener("click", (e) => { e.preventDefault(); window.print(); });
+
+    /* ---------- Reading progress ---------- */
+    const fill = $("[data-read-fill]");
+    const left = $("[data-read-left]");
+    const words = (body.textContent.match(/\S+/g) || []).length;
+    const progress = () => {
+      const r = article.getBoundingClientRect();
+      const total = r.height - innerHeight * 0.6;
+      const p = Math.min(1, Math.max(0, (-r.top + innerHeight * 0.2) / Math.max(1, total)));
+      fill.style.transform = `scaleX(${p})`;
+      const mins = Math.ceil((words * (1 - p)) / 200);
+      left.textContent = p >= 1 || mins <= 0 ? "📖 Finished reading" : `📖 ${mins} min left`;
+    };
+
+    let ticking = false;
+    const onScroll = () => { if (ticking) return; ticking = true; requestAnimationFrame(() => { ticking = false; spy(); progress(); }); };
+    addEventListener("scroll", onScroll, { passive: true });
+    addEventListener("resize", onScroll);
+    spy(); progress();
+  })();
+</script>
+</Fragment>
+</Base>

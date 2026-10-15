@@ -1,0 +1,211 @@
+---
+import Base from "../layouts/Base.astro";
+const title = "CartPilot Terms of Service";
+const description = "Read the CartPilot terms of service, including account rules, product access, licenses, refunds, updates, warranties, and usage conditions.";
+---
+<Base title={title} description={description} bodyClass="legal legal--white header-white" fontWeights="400;500;600;700">
+<Fragment slot="head">
+  <style is:inline>
+    /* ---------- Legal page (shared by privacy / terms / refund) ---------- */
+    :root { --legal-bg: #f6f6f6; --frame: #e9eaec; }
+    body.legal { --header-bg: var(--legal-bg); }
+    body.legal--white { --legal-bg: #fff; }
+    /* Thin frame lines that run from under the announcement bar down to the footer */
+    .legal .site-header::after {
+      content: ""; position: absolute; top: 0; bottom: 0; left: 50%; translate: -50% 0; z-index: -1;
+      width: min(calc(var(--container) - 2 * var(--gutter)), calc(100% - 2 * var(--gutter)));
+      border-inline: 1px solid var(--frame); pointer-events: none;
+    }
+    .legal-frame { border-inline: 1px solid var(--frame); }
+    .legal-hero { background: var(--legal-bg); }
+    /* Live band: H1 sits 170px (110px on phones) below the announcement bar; our header is in flow, so subtract its height */
+    .legal-hero .legal-frame { padding: 61px 16px min(76.15px, calc(41.54px + 2.404vw)); text-align: center; }
+    @media (max-width: 1024px) { .legal-hero .legal-frame { padding-top: 86px; } }
+    @media (max-width: 767px) { .legal-hero .legal-frame { padding-block: 36px; } }
+    @media (max-width: 600px) { .legal-main .legal-card { padding: 28px 20px 36px; } .legal-main .legal-card h2 { font-size: 24px; } }
+    .legal-main { background: var(--legal-bg); border-block: 1px solid var(--frame); }
+    .legal-card {
+      background: #fff; border-inline: 1px solid var(--frame); padding: 40px;
+      font-size: 16px; line-height: 1.5; color: var(--text); overflow-wrap: break-word;
+    }
+    .legal-card > * + * { margin-top: 19.2px; }
+    .legal-card h2 { font-size: clamp(30px, calc(18px + 3.125vw), 42px); line-height: 1.2; scroll-margin-top: 24px; }
+    .legal-card strong { font-weight: 700; }
+    .legal-card a { color: inherit; text-decoration: underline; text-decoration-color: rgb(87 87 87 / .35); text-underline-offset: 3px; transition: color .2s, text-decoration-color .2s; }
+    .legal-card a:hover { color: var(--blue); text-decoration-color: currentColor; }
+    .legal-card ul { list-style: none; padding: 0; }
+    .legal-card li { position: relative; padding-left: 22px; }
+    .legal-card li::after { content: ""; position: absolute; left: 0; top: 8px; width: 10px; height: 10px; border-radius: 50%; background: var(--blue); }
+    .legal-note {
+      display: flex; align-items: flex-start; gap: 8px; width: fit-content; max-width: 100%;
+      padding: 7px 14px; border: 1px dashed var(--line-btn); border-radius: 6px; background: #f8fafc;
+      font-size: 14px; line-height: 1.5; color: var(--subtle);
+    }
+    .legal-note svg { flex: none; width: 16px; height: 16px; margin-top: 2.5px; }
+    .legal-card > .legal-note + * { margin-top: 24px; }
+    .legal-tail { background: var(--legal-bg); }
+    .legal-tail .legal-frame { height: clamp(36px, calc(10.667vw - 5.6px), 148px); }
+  </style>
+</Fragment>
+
+<main id="main">
+  <div class="legal-hero">
+    <div class="container"><div class="legal-frame"><h1 class="h1">Terms of Service</h1></div></div>
+  </div>
+
+  <div class="legal-main">
+    <div class="container">
+      <article class="legal-card">
+        <p class="legal-note" role="note"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.4"/><path d="M8 7.2v4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><circle cx="8" cy="4.9" r=".9" fill="currentColor"/></svg>Summary version — replace with the official text from the CMS before publishing.</p>
+
+        <p><strong>Effective date:</strong> 12 June 2026<br><strong>Last updated:</strong> 1 July 2026</p>
+        <p>These Terms are a binding agreement between you (the “Merchant”) and weDevs Pte. Ltd., the Singapore company that runs the StorePulse brand and provides CartPilot (“weDevs”, “we”, “us”). Creating an account, installing the Plugin or App, or otherwise using CartPilot means you accept them from that point on; if you don’t agree, please don’t use the Service.</p>
+        <p>If you sign up for an organization, you confirm you can bind it. These Terms cover our relationship with you only — they create no agreement with your shoppers, and your own terms with shoppers are your responsibility.</p>
+
+        <h2 id="definitions">1. Definitions</h2>
+        <p>Key terms used throughout:</p>
+        <ul>
+          <li><strong>CartPilot or the Service</strong>: the AI sales agent and its hosted backend, including the Plugin and the App.</li>
+          <li><strong>Plugin</strong> / <strong>App</strong>: the WordPress/WooCommerce component and the Shopify application.</li>
+          <li><strong>weDevs, we, us, or our</strong>: weDevs Pte. Ltd., incorporated in Singapore.</li>
+          <li><strong>Merchant, you, or your</strong>: the account holder who connects and runs a Shop.</li>
+          <li><strong>Shopper</strong>: a Merchant’s customer using the chat or voice widget; not a party to these Terms.</li>
+          <li><strong>Shop or Connected Shop</strong>: one WooCommerce or one Shopify storefront linked to the Service; allowances and caps apply per Shop.</li>
+          <li><strong>Conversation</strong>: a unit of Shopper interaction counted against your plan, pooled across all Shops on the account.</li>
+          <li><strong>Credit or Credit Pack</strong>: prepaid one-off units for AI interactions on hosted plans.</li>
+          <li><strong>Training Item</strong> / <strong>Knowledge Base</strong>: entries (FAQs, policies, compatibility notes) a Merchant adds, and the collection of them.</li>
+          <li><strong>AI Output</strong>: any answer, search result, recommendation or cart action the Service produces.</li>
+          <li><strong>Hosted Subscription</strong>: a recurring plan where weDevs runs the AI model.</li>
+          <li><strong>Lifetime BYOK Plan</strong>: a one-time purchase where you bring and pay for your own model key.</li>
+          <li><strong>Model Provider</strong>: the third-party AI provider that processes interactions.</li>
+          <li><strong>Fair Usage Caps</strong> / <strong>Unlimited</strong>: the per-Shop limits in Section 8; “Unlimited” means up to those caps, not without limit.</li>
+        </ul>
+
+        <h2 id="the-service">2. The Service, Scope and Limitations</h2>
+        <p>CartPilot is hosted software that adds an AI sales agent to WooCommerce (via the Plugin) and Shopify (via the App) stores. By chat or voice it searches your catalog, answers product questions, guides buyers and manages cart items, using live product data and your Training Items. Both platforms depend on our hosted backend, and some features vary by plan.</p>
+        <p>The Service works <strong>before checkout only</strong>: it never takes payments, completes orders or acts as a payment processor or merchant of record. Your storefront, catalog, pricing and checkout stay under your control. Features may change as described in Section 12.</p>
+
+        <h2 id="accounts">3. Accounts, Eligibility, and Shop Connections</h2>
+        <ul>
+          <li>Keep your account details accurate and your credentials safe; report unauthorized access to <a href="mailto:support@storepulse.co">support@storepulse.co</a>.</li>
+          <li>Connecting a Shop (through the Shopify App install flow or the WooCommerce Plugin) authorizes us to read its catalog and perform cart actions there.</li>
+          <li>Each plan includes a set number of Connected Shops, each measured separately. A WooCommerce store and a Shopify store count as two Shops, so you need entitlements for both.</li>
+          <li>You must be able to form a binding contract. One account is for one business and can’t be shared with or resold to unrelated businesses.</li>
+        </ul>
+
+        <h2 id="plans-billing">4. Plans, Billing, and Payment</h2>
+        <p>Current plans, allowances and prices are listed on <a href="/">our website</a> and may change. There are three purchase types:</p>
+        <p><strong>Hosted Subscription</strong>. A free plan (small one-time allowance) plus paid monthly or annual plans whose Conversation allowance resets each period. Paid plans auto-renew until cancelled.</p>
+        <p><strong>Lifetime BYOK Plan</strong>. A one-time purchase using your own Model Provider key; you pay the provider directly and we don’t meter Conversations. See Sections 7 and 13.</p>
+        <p><strong>Conversation/Credit Packs</strong>. Optional prepaid top-ups for hosted plans, used after your allowance runs out. Non-refundable; they expire 12 months after purchase.</p>
+        <p>Taxes such as GST or VAT are extra. Price changes apply from your next period or purchase, unpaid balances can pause paid features, and payments are processed by Stripe, Inc. (see our <a href="/privacy-policy/">Privacy Policy</a>).</p>
+
+        <h2 id="fees-refunds">5. Fees, Refunds, and Cancellation</h2>
+        <p>Fees are generally non-refundable unless the law says otherwise. In summary:</p>
+        <ul>
+          <li>Lifetime BYOK money-back: a 7-day, no-questions-asked refund from the original purchase date — our only money-back exception.</li>
+          <li>Discounted and promotional purchases (coupons, promo codes, bundles, special offers) are final on every plan.</li>
+          <li>Subscriptions, Credit Packs and any Credits or Conversations already used are not refunded.</li>
+          <li>You can cancel anytime from your account or by <a href="/contact/">contacting us</a>; access runs to the end of the paid period, with no refund for unused time.</li>
+          <li>Approved refunds go back to the original payment method. Abusive requests (for example, repeated refunds or a refund plus a chargeback) may be declined.</li>
+          <li>Non-excludable statutory and consumer rights are not affected.</li>
+        </ul>
+
+        <h2 id="license-ip">6. License, Ownership, and Intellectual Property</h2>
+        <p><strong>The Plugin.</strong> The WordPress Plugin code is released under the <a href="https://www.gnu.org/licenses/gpl-2.0.html" target="_blank" rel="noopener">GNU General Public License, version 2 or later</a>.</p>
+        <p><strong>The hosted Service and the App</strong>. These are proprietary; while you comply and pay, you get a limited, non-exclusive, non-transferable, revocable right to use them during your plan.</p>
+        <p><strong>Ownership</strong>. CartPilot, StorePulse and weDevs brands and the underlying technology remain ours or our licensors’.</p>
+        <p><strong>Your content</strong>. You own your catalog data and Knowledge Base, and license us to process it only to run and support the Service.</p>
+        <p><strong>Restrictions</strong>. No reverse engineering, reselling, circumventing allowances or caps, or building a competing product.</p>
+        <p><strong>Feedback</strong>. We may use any suggestions you share without obligation.</p>
+
+        <h2 id="third-party">7. Third-party Platforms, Model Providers, and BYOK</h2>
+        <p><strong>WooCommerce and Shopify</strong>. The Service depends on <a href="https://woocommerce.com/" target="_blank" rel="noopener">WooCommerce</a> and <a href="https://www.shopify.com/" target="_blank" rel="noopener">Shopify</a>; their changes or outages may affect it and are outside our responsibility.</p>
+        <p><strong>Model Providers on Hosted Subscriptions</strong>. We currently use Google’s Gemini models and may add others such as OpenAI, acting as our sub-processors.</p>
+        <p><strong>Bring your own key (BYOK)</strong>. On a Lifetime BYOK Plan your provider’s terms apply and you keep the key valid and funded; key problems that degrade the Service don’t count as our outage. We don’t warrant third-party model content.</p>
+
+        <h2 id="fair-usage">8. Fair Usage Policy</h2>
+        <ul>
+          <li><strong>8.1 Purpose</strong>: defines what “Unlimited” products and Training Items mean on paid plans.</li>
+          <li><strong>8.2 The caps</strong>: <strong>50,000 products</strong> and <strong>10,000 Training Items</strong> <strong>per Connected Shop</strong>, not pooled across Shops.</li>
+          <li><strong>8.3 The free plan</strong>: has its own lower limits; the caps apply to paid Hosted and Lifetime BYOK plans.</li>
+          <li><strong>8.4 Measurement</strong>: products are indexed catalog items; Training Items are individual Knowledge Base entries.</li>
+          <li><strong>8.5 Approaching a cap</strong>: contact us and we’ll size a custom plan to your catalog.</li>
+          <li><strong>8.6 Reservation of rights</strong>: indexing above a cap may be paused or throttled until then — a temporary hold, not a penalty.</li>
+          <li><strong>8.7 Relationship to conversations</strong>: caps don’t affect your Conversation allowance, which is pooled across all Shops.</li>
+        </ul>
+
+        <h2 id="acceptable-use">9. Acceptable use</h2>
+        <p>You (and anyone using the Service through you) must not:</p>
+        <ul>
+          <li>use it unlawfully or in breach of these Terms;</li>
+          <li>upload infringing Training Items or third-party personal data without a lawful basis;</li>
+          <li>generate unlawful, deceptive or misleading content, or mislead Shoppers;</li>
+          <li>upload malware, or probe, scrape, overload or break into the Service;</li>
+          <li>game allowances, Credits or caps, for example with artificial Conversations;</li>
+          <li>share a plan across unrelated businesses or resell the Service; or</li>
+          <li>request a refund while filing a chargeback for the same purchase.</li>
+        </ul>
+        <p>Export-control and sanctions laws also apply. Breaches can lead to throttling, suspension or termination (Section 14).</p>
+
+        <h2 id="ai-output">10. AI Output &amp; Your Responsibilities</h2>
+        <p>AI Output is automated and can be wrong or incomplete, so test it on your Shop before relying on it. You are responsible for your storefront, product data, pricing and policies, for configuring the Service, and for any AI-disclosure notices the law requires. We don’t guarantee sales results, and you agree to cover third-party claims arising from your content, your storefront or your misuse of the Service, as far as the law allows.</p>
+
+        <h2 id="warranties">11. Warranties and Disclaimers</h2>
+        <p>The Service is provided “as is” and “as available”, without warranties to the extent Singapore law permits, and with no formal uptime or service-level commitment. Rights that cannot legally be excluded are unaffected.</p>
+
+        <h2 id="service-changes">12. Changes to the Service &amp; Discontinuation</h2>
+        <p>We may change features, AI models or Model Providers over time, giving at least 60 days’ notice of changes that materially harm your use. We’ll try to adapt to WooCommerce or Shopify changes but may retire unsupported features, and we’ll give reasonable notice before discontinuing the Service or a plan type.</p>
+
+        <h2 id="lifetime-plan">13. Lifetime Plan Terms</h2>
+        <ul>
+          <li>“Lifetime” means the working life of the CartPilot product — not of the customer or of weDevs.</li>
+          <li>It covers use with your own key, including the voice agent and full analytics with export, for your plan’s Shops; model costs are paid to your provider.</li>
+          <li>The Section 8 caps apply, and the 7-day money-back applies unless the plan was bought on a discount or promotion.</li>
+          <li>If CartPilot is discontinued, holders get reasonable notice and a fair wind-down. Lifetime licenses are non-transferable.</li>
+        </ul>
+
+        <h2 id="termination">14. Suspension and Termination</h2>
+        <p>You can cancel anytime (see Section 5). We may suspend or terminate access — immediately in serious cases — for non-payment, breach of Section 9 or other material terms, legal, security or fraud risk, or repeatedly exceeding the Fair Usage Caps.</p>
+        <p>On termination your license and Shop connections end and you must uninstall the Plugin or App. Your data is retained and deleted as our <a href="/privacy-policy/">Privacy Policy</a> describes, and clauses meant to survive (IP, disclaimers, liability, indemnity, governing law) continue.</p>
+
+        <h2 id="liability">15. Limitation of Liability</h2>
+        <ul>
+          <li>To the extent the law allows, weDevs isn’t liable for indirect or consequential losses, including lost profits, revenue, goodwill or data.</li>
+          <li>Total liability is capped at the greater of what you paid in the 12 months before the claim or the one-time purchase it concerns.</li>
+          <li>We aren’t liable for AI Output, Model Providers, or WooCommerce, Shopify and other third-party platforms. Liability that Singapore law doesn’t allow to be limited is unaffected.</li>
+        </ul>
+
+        <h2 id="data-protection">16. Data Protection and Privacy</h2>
+        <p>Our <a href="/privacy-policy/">Privacy Policy</a> forms part of these Terms and covers transcripts, catalog data, Training Items, analytics, transfers and sub-processors. For Shopper data we act as your processor and you are the controller, responsible for your own privacy notices and lawful basis.</p>
+
+        <h2 id="confidentiality">17. Confidentiality</h2>
+        <p>Each party protects the other’s non-public business information with reasonable care and uses it only for the Service; support access to your environment and logs is treated as confidential. Public, already-held, independently developed or legally required disclosures are excluded.</p>
+
+        <h2 id="changes-to-terms">18. Changes To These Terms</h2>
+        <p>We may revise these Terms, update the “Last updated” date and give advance notice of material changes by email or in the dashboard. Continuing to use the Service after a change means you accept it; otherwise you can cancel under Section 5.</p>
+
+        <h2 id="governing-law">19. Governing law and disputes</h2>
+        <p>Singapore law governs these Terms, and the Singapore courts have exclusive jurisdiction. Please <a href="/contact/">contact us</a> first so we can try to settle any dispute in good faith.</p>
+
+        <h2 id="general">20. General</h2>
+        <ul>
+          <li>These Terms, the Privacy Policy and any order form are the entire agreement; an unenforceable clause is limited without affecting the rest.</li>
+          <li>Not enforcing a right isn’t a waiver. You need our consent to assign these Terms; we may assign them in a merger, acquisition or asset sale.</li>
+          <li>Neither party is liable for events beyond its reasonable control. Notices go to your account email or our address below, and the English version prevails.</li>
+        </ul>
+
+        <h2 id="contact">21. Contact</h2>
+        <p>Our Address is – weDevs Pte. Ltd., 160 Robinson Road, #14-04 SBF Centre, Singapore 068914</p>
+        <p>For any query, including product support, billing and refunds, <a href="/contact/">contact us</a>.</p>
+        <p>CartPilot is a StorePulse product, operated by weDevs Pte. Ltd.</p>
+      </article>
+    </div>
+  </div>
+
+  <div class="legal-tail" aria-hidden="true">
+    <div class="container"><div class="legal-frame"></div></div>
+  </div>
+</main>
+
+</Base>

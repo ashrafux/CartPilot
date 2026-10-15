@@ -1,0 +1,4 @@
+# Old WordPress URLs that the static site doesn't have (Netlify / Cloudflare Pages read this file).
+/category/*        /blog/   301
+/feed/             /blog/   301
+/sitemap_index.xml /sitemap-index.xml 301

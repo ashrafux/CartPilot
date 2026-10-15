@@ -1,0 +1,138 @@
+---
+import Base from "../layouts/Base.astro";
+const title = "CartPilot Refund Policy";
+const description = "Read the CartPilot refund policy, including refund eligibility, license terms, product updates, account rules, and lifetime deal conditions.";
+---
+<Base title={title} description={description} bodyClass="legal" fontWeights="400;500;600;700">
+<Fragment slot="head">
+  <style is:inline>
+    /* ---------- Legal page (shared by privacy / terms / refund) ---------- */
+    :root { --legal-bg: #f6f6f6; --frame: #e9eaec; }
+    body.legal { --header-bg: var(--legal-bg); }
+    body.legal--white { --legal-bg: #fff; }
+    /* Thin frame lines that run from under the announcement bar down to the footer */
+    .legal .site-header::after {
+      content: ""; position: absolute; top: 0; bottom: 0; left: 50%; translate: -50% 0; z-index: -1;
+      width: min(calc(var(--container) - 2 * var(--gutter)), calc(100% - 2 * var(--gutter)));
+      border-inline: 1px solid var(--frame); pointer-events: none;
+    }
+    .legal-frame { border-inline: 1px solid var(--frame); }
+    .legal-hero { background: var(--legal-bg); }
+    /* Live band: H1 sits 170px (110px on phones) below the announcement bar; our header is in flow, so subtract its height */
+    .legal-hero .legal-frame { padding: 61px 16px min(76.15px, calc(41.54px + 2.404vw)); text-align: center; }
+    @media (max-width: 1024px) { .legal-hero .legal-frame { padding-top: 86px; } }
+    @media (max-width: 767px) { .legal-hero .legal-frame { padding-block: 36px; } }
+    @media (max-width: 600px) { .legal-main .legal-card { padding: 28px 20px 36px; } .legal-main .legal-card h2 { font-size: 24px; } }
+    .legal-main { background: var(--legal-bg); border-block: 1px solid var(--frame); }
+    .legal-card {
+      background: #fff; border-inline: 1px solid var(--frame); padding: 40px;
+      font-size: 16px; line-height: 1.5; color: var(--text); overflow-wrap: break-word;
+    }
+    .legal-card > * + * { margin-top: 19.2px; }
+    .legal-card h2 { font-size: clamp(30px, calc(18px + 3.125vw), 42px); line-height: 1.2; scroll-margin-top: 24px; }
+    .legal-card strong { font-weight: 700; }
+    .legal-card a { color: inherit; text-decoration: underline; text-decoration-color: rgb(87 87 87 / .35); text-underline-offset: 3px; transition: color .2s, text-decoration-color .2s; }
+    .legal-card a:hover { color: var(--blue); text-decoration-color: currentColor; }
+    .legal-card ul { list-style: none; padding: 0; }
+    .legal-card li { position: relative; padding-left: 22px; }
+    .legal-card li::after { content: ""; position: absolute; left: 0; top: 8px; width: 10px; height: 10px; border-radius: 50%; background: var(--blue); }
+    .legal-note {
+      display: flex; align-items: flex-start; gap: 8px; width: fit-content; max-width: 100%;
+      padding: 7px 14px; border: 1px dashed var(--line-btn); border-radius: 6px; background: #f8fafc;
+      font-size: 14px; line-height: 1.5; color: var(--subtle);
+    }
+    .legal-note svg { flex: none; width: 16px; height: 16px; margin-top: 2.5px; }
+    .legal-card > .legal-note + * { margin-top: 24px; }
+    .legal-tail { background: var(--legal-bg); }
+    .legal-tail .legal-frame { height: clamp(36px, calc(10.667vw - 5.6px), 148px); }
+  </style>
+</Fragment>
+
+<main id="main">
+  <div class="legal-hero">
+    <div class="container"><div class="legal-frame"><h1 class="h1">Refund Policy</h1></div></div>
+  </div>
+
+  <div class="legal-main">
+    <div class="container">
+      <article class="legal-card">
+        <p class="legal-note" role="note"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.4"/><path d="M8 7.2v4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><circle cx="8" cy="4.9" r=".9" fill="currentColor"/></svg>Summary version — replace with the official text from the CMS before publishing.</p>
+
+        <p><strong>Effective date:</strong> 12 June 2026<br><strong>Last updated:</strong> 1 July 2026</p>
+        <p>We want you to be happy with CartPilot, so we make it easy to evaluate before you pay: there’s a free plan, a live demo, documentation, tutorials, feature lists and merchant reviews, and our support team is glad to answer questions.</p>
+        <p>CartPilot is a StorePulse product from weDevs — an AI sales agent that helps WooCommerce and Shopify merchants turn browsers into buyers by searching products, answering questions and guiding shoppers to checkout.</p>
+        <p>Every AI conversation carries a real, metered cost, whether we run the model or you bring your own key on a Lifetime plan. That’s why refunds work differently from a one-off plugin purchase, as explained below. We always welcome feedback during a refund on how we can improve.</p>
+
+        <h2 id="try-before-buying">Try Before Buying: Your Peace of Mind</h2>
+        <p>Start on the free plan — no card, no commitment. Connect your store, add training items and let the agent handle real conversations, with our support engineers on hand to help you set up.</p>
+
+        <h2 id="money-back">7-Day Money Back: Risk-Free on Lifetime Plans</h2>
+        <p>If CartPilot isn’t right for your store, Lifetime plans come with a 7-day, no-questions-asked money-back: ask within 7 days of your original Lifetime purchase and we’ll refund it in full.</p>
+        <p>Monthly and annual plans can be tried fully on the free plan first, and credit packs and conversations cost us as soon as they’re used — so the money-back applies to Lifetime plans only.</p>
+
+        <h2 id="refund-eligibility">Refund Eligibility</h2>
+        <p>The money-back can only be processed within 7 days of a Lifetime purchase. In addition:</p>
+        <ul>
+          <li>Monthly and annual subscriptions aren’t refundable, including unused time.</li>
+          <li>Credit packs aren’t refundable, used or unused; credits expire 12 months after purchase.</li>
+          <li>Used conversations and credits aren’t refundable.</li>
+          <li>For bugs or malfunctions, we’ll try to fix the problem before considering a refund.</li>
+          <li>We may refuse refunds in cases of bad faith or misuse.</li>
+          <li>Consumers in the EU or UK keep any statutory rights this policy can’t limit.</li>
+        </ul>
+        <p>Discounted or promotional purchases on any plan, including Lifetime, aren’t covered, and neither are upgrades or renewals; CartPilot’s decision in these cases is final.</p>
+
+        <h2 id="resolving-issues">Resolving Product Issues</h2>
+        <p>Hit a bug, a connection problem or unexpected agent behavior? Open a support ticket before asking for a refund — our team will work to fix it, and your feedback helps us improve.</p>
+
+        <h2 id="automatic-payments">Policy for Automatic Payments</h2>
+        <p>Monthly and annual subscriptions renew automatically by default to keep CartPilot running and up to date; you can switch renewal off whenever you like. Unless you cancel, we will:</p>
+        <ul>
+          <li>Renew your subscription for the next billing period.</li>
+          <li>Charge your saved payment method automatically.</li>
+          <li>Treat auto-renewal payments as non-refundable on every plan.</li>
+        </ul>
+        <p>Cancel anytime from your account or by contacting us, even after an accidental purchase. You keep access until the paid period ends and won’t be charged again — cancelling stops future billing but doesn’t refund unused time.</p>
+
+        <h2 id="support-requests">Customer Support and Refund Requests</h2>
+        <p>If you meet the criteria above, contact us to request a refund and we’ll handle it promptly and carefully. Thank you for choosing CartPilot to help grow your store.</p>
+
+        <h2 id="non-refundable">Non-Refundable Scenarios</h2>
+        <p>Refunds are not available for:</p>
+        <ul>
+          <li>Used Conversations and Credits: usage that has already been consumed.</li>
+          <li>Subscriptions and Credit Packs: monthly plans, annual plans and credit packs.</li>
+          <li>Promotional or Discounted Purchases: coupon, discount or campaign purchases on any plan, plus upgrades and renewals.</li>
+          <li>Expired Timeframe: Lifetime requests made after the 7-day window.</li>
+          <li>Licensing or Terms Violations: accounts that breached our Terms of Service or acceptable use rules.</li>
+          <li>Refund Combined With a Chargeback: a refund requested alongside a chargeback for the same purchase.</li>
+          <li>Third-Party Marketplaces: purchases through an app store or marketplace, which follow that platform’s refund process.</li>
+        </ul>
+
+        <h2 id="refund-process">Refund Process</h2>
+        <p>To request a refund:</p>
+        <ul>
+          <li>Contact Customer Support: email <a href="mailto:support@storepulse.co">support@storepulse.co</a> with your request, the reason and your purchase details.</li>
+          <li>Refund Duration: eligible refunds are processed within 5–7 business days of review.</li>
+          <li>Refund Method: refunds go to your original payment method via Stripe, Inc.; arrival time depends on your bank or card provider.</li>
+        </ul>
+
+        <h2 id="acceptance">Acceptance of the Refund Policy</h2>
+        <p>Buying a CartPilot plan, credit pack or Lifetime license confirms you’ve read and accepted this policy. If you don’t agree with it, please don’t make a purchase.</p>
+
+        <h2 id="updates">Updates to the Policy</h2>
+        <p>We may update this policy from time to time and will announce changes on our website or other suitable channels, so please check back periodically.</p>
+
+        <h2 id="contact-us">Contact Us</h2>
+        <p>Questions or need help? Email our support team at <a href="mailto:support@storepulse.co">support@storepulse.co</a> — we’re here to make sure you’re happy with CartPilot.</p>
+        <p>Thank you for choosing CartPilot and trusting our product.</p>
+      </article>
+    </div>
+  </div>
+
+  <div class="legal-tail" aria-hidden="true">
+    <div class="container"><div class="legal-frame"></div></div>
+  </div>
+</main>
+
+</Base>

@@ -1,0 +1,528 @@
+---
+import Base from "../layouts/Base.astro";
+import Faq from "../components/Faq.astro";
+import CtaSky from "../components/CtaSky.astro";
+const title = "CartPilot Pricing: AI Sales Agent Plans";
+const description = "Compare CartPilot plans for WooCommerce and Shopify: start free with 50 conversations, pick a monthly or annual plan, or get lifetime access with your own AI key.";
+
+const faq = {
+  chip: "CartPilot FAQ",
+  title: "Frequently Asked Questions",
+  lead: "Find answers to common questions and learn how to get the most out of CartPilot.",
+  button: { href: "/faq/", label: "Read All FAQs" },
+  items: [
+    { q: "Which platforms does CartPilot support?",
+      a: "<p>WooCommerce is supported today, and Shopify plus other platforms are on the way. Setup is just installing the plugin and connecting your store, with no custom code needed.</p>" },
+    { q: "What counts as a conversation?",
+      a: "<p>One chat or voice session between a shopper and your agent counts as a single conversation, however many messages it contains. It is counted once the session closes. Paid plans come with a monthly allowance, and credit packs top you up if you run out.</p>" },
+    { q: "Is there a free plan? Do I need a card to try it?",
+      a: "<p>Yes. Sign up without a card and you get 50 one-time conversations to test CartPilot on your live store before deciding on a paid plan.</p>" },
+    { q: "Do my conversations reset each month? Do unused ones roll over?",
+      a: "<p>Your plan allowance refreshes at the start of every billing period, and anything left unused expires instead of carrying over. The free plan’s 50 conversations are a one-off allowance rather than a monthly one.</p>" },
+    { q: "How many stores does a plan cover?",
+      a: "<p>Each plan card lists how many stores it includes. Every connected store counts on its own, so running a WooCommerce shop and a Shopify shop side by side needs a plan with room for at least two.</p>" },
+    { q: "Do I need my own AI key?",
+      a: "<p>Not on monthly or annual plans: the AI runs on our side and usage is included in your conversations. Only the Lifetime (bring-your-own-key) plans ask you to connect your own AI provider key.</p>" },
+    { q: "How can I cancel?",
+      a: "<p>Cancel from your account settings whenever you like. You won’t be billed again, and your plan stays active until the end of the period you’ve already paid for.</p>" }
+  ],
+};
+
+const cta = {
+  title: "Give Every Shopper a Smarter Way To Buy.",
+  text: "CartPilot is the AI agent that talks, types, and closes – right from the chat window, on any eCommerce platform.",
+};
+---
+<Base title={title} description={description} bodyClass="header-white">
+<Fragment slot="head">
+  <style is:inline>
+    /* ---------- Pricing ---------- */
+    .pricing-page {
+      --bg-page: #f6f6f6;
+      --gap-xl: clamp(64px, 10.28vw, 148px);   /* 148 between blocks at 1440 */
+      --gap-lg: clamp(40px, 5.28vw, 76px);     /* 76 head → content */
+      --ink-2: #0e0e0f;
+    }
+    .pricing-page [hidden] { display: none !important; }
+    .lead--sm { font-size: var(--fs-body); }
+
+    /* Gray band: hero + plans + credits + comparison */
+    .price-band { background: var(--bg-page); padding-block: clamp(56px, 11.67vw, 168px) var(--gap-xl); }
+    .price-hero { text-align: center; }
+    .price-hero__offer { width: 277px; height: auto; margin-inline: auto; }
+    .price-hero h1 { max-width: 720px; margin: 23px auto 0; }
+    .price-hero .lead { max-width: 660px; margin: 40px auto 0; }
+    .soon {
+      display: inline-flex; align-items: center; gap: 7px; margin-top: var(--sp-40);
+      padding: 4px 5px 4px 14px; border-radius: 5px; background: #f3ffdd;
+      font-size: 16px; line-height: 1.2; font-weight: 500; color: #000;
+    }
+    .soon img { width: 37px; height: 35px; }
+    .billing-wrap { margin-top: 15px; }
+    .billing { position: relative; display: inline-flex; background: #fff; border-radius: 5px; }
+    .billing button {
+      padding: 13px 23px; border-radius: 5px; font-size: 18px; line-height: 27px; color: var(--ink-2);
+      transition: background-color .25s var(--ease), color .25s var(--ease);
+    }
+    .billing button:hover:not(.is-active) { background: #f4f4f5; }
+    .billing button.is-active { background: #000; color: #fff; }
+    .billing__go { position: absolute; left: calc(100% - 20px); top: -39px; width: 140px; height: 53px; pointer-events: none; }
+
+    /* Plan cards */
+    .plans-band { margin-top: 46px; border-block: 1px solid var(--line); }
+    .plans { display: grid; gap: 1px; background: var(--line); border-inline: 1px solid var(--line); }
+    .plans--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .plans--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .plan {
+      display: flex; flex-direction: column; justify-content: space-between; gap: 19.2px;
+      padding: var(--sp-10); background: var(--bg-page); transition: background-color .3s var(--ease);
+    }
+    .plan:hover { background: #fafafa; }
+    .plan--pick, .plan--pick:hover { background: #fff; border-bottom: 2px solid var(--text); }
+    .plan__head { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .plan__tag { padding: 6px 12px; border-radius: 45px; background: #faedcd; font-size: 14px; line-height: 21px; color: #000; }
+    .plan__desc { margin-top: 12px; font-size: 16px; line-height: 24px; color: var(--text); }
+    .plan__was { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 19.2px; }
+    .plan__was s { font-size: 20px; line-height: 30px; color: var(--muted); }
+    .plan__off { padding: 6px 12px; border-radius: 25px; background: #d6f1a2; font-size: 14px; line-height: 18.2px; color: var(--text); }
+    .plan__price { display: flex; align-items: flex-end; gap: 8px; margin-top: var(--sp-10); }
+    .plan__amt { font-size: var(--fs-h2); line-height: 1.2; color: var(--ink); }
+    .plan__per { font-size: 16px; line-height: 43.2px; color: var(--text); }
+    .plan__price--free { margin-bottom: 49px; }
+    .btn.plan__btn { width: 100%; min-height: 61px; margin-top: var(--sp-10); border-width: 1px; border-color: var(--line); }
+    .btn.plan__btn:hover { border-color: #000; background: #000; color: #fff; }
+    .plans--3 .plan__btn { max-width: 364px; }
+    .plan__feats { margin-top: var(--sp-10); }
+    .plan__feats-title { font-size: 16px; line-height: 24px; font-weight: 600; color: var(--ink-2); }
+    .plan__feats ul { list-style: none; margin-top: 23px; display: grid; gap: 10px; }
+    .plan__feats li { display: flex; align-items: center; gap: 8px; font-size: 16px; line-height: 24px; color: var(--text); }
+    .plan__feats li:first-child { color: var(--ink-2); }
+    .plan__feats li img { width: 20px; height: 20px; flex: none; }
+    .plan__all { align-self: flex-start; padding-block: 8px; margin-block: -8px; font-size: var(--fs-body); line-height: 27px; color: var(--ink-2); transition: color .2s; }
+    .plan__all:hover { color: var(--blue); }
+    .js .plans [data-show-for]:not([hidden]), .js .plans[data-show-for]:not([hidden]) { animation: plan-in .35s var(--ease); }
+    @keyframes plan-in { from { opacity: 0; } to { opacity: 1; } }
+    .fine { margin-top: 40px; text-align: center; font-size: 14px; line-height: 21px; color: #9b9b9b; }
+    .fine a { text-decoration: underline; text-underline-offset: 2px; transition: color .2s; }
+    .fine a:hover { color: var(--ink); }
+
+    /* Credit packs */
+    .credits-head { margin-top: var(--gap-xl); }
+    .band-line { border-block: 1px solid var(--line); }
+    .packs-band { margin-top: var(--gap-lg); }
+    .packs { display: flex; flex-wrap: wrap; gap: 1px; background: #ebebef; }
+    .pack { flex: 1 1 160px; min-width: 0; display: flex; flex-direction: column; padding: var(--sp-20); background: #fff; }   /* 5 in a row on laptops */
+    @media (max-width: 1279px) { .pack { flex-basis: 30%; } }   /* 3 + 2 below laptop width: five in a row clip the Buy Pack buttons, four leave one alone */
+    .pack__desc { flex-grow: 1; margin-top: 11px; font-size: 16px; line-height: 24px; color: var(--text); }
+    .pack__price { margin-top: 23px; line-height: 1.2; color: var(--ink); }
+    .btn.pack__btn { --b: #000; width: 100%; min-height: 61px; margin-top: 23px; border-width: 1px; }
+    .btn.pack__btn:hover { box-shadow: 0 8px 22px -12px rgb(0 84 255 / .55); }   /* colour comes from the blue primary */
+    .pack__unit { margin-top: 27px; font-size: 14px; line-height: 21px; color: var(--text); }
+    .credits-note { margin-top: 31px; text-align: center; font-size: var(--fs-lead); line-height: 1.5; color: var(--text); }
+
+    /* Refund + promises */
+    .trust { margin-top: var(--gap-xl); }
+    .refund { padding: var(--sp-20) 40px; background: #fff; }
+    .refund__in { max-width: 1006px; }
+    .refund h2 { line-height: 1.2; }
+    .refund p { margin-top: 20px; font-size: 16px; line-height: 24px; color: #3b5261; }
+    .refund .pay { display: flex; align-items: center; flex-wrap: wrap; gap: 12px 20px; margin-top: 19px; }
+    .pay__label { font-size: 16px; line-height: 24px; font-weight: 600; color: #101010; }
+    .pay img { width: 592px; max-width: 100%; height: auto; }
+    .band-line--b { border-top: 0; }
+    .promises { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); }
+    .promise { padding: var(--sp-20) 40px; background: #fff; }
+    .promise img { width: 72px; height: 72px; transition: transform .35s var(--ease); }
+    .promise:hover img { transform: rotate(-8deg) scale(1.05); }
+    .promise h3 { margin-top: 23px; }
+    .promise p { margin-top: 8px; font-size: 16px; line-height: 24px; color: var(--muted); max-width: 617px; }
+
+    /* Comparison table */
+    .compare-head { margin-top: var(--gap-xl); }
+    .compare { max-width: 1180px; margin: var(--gap-lg) auto 0; overflow-x: auto; border-radius: 10px; }
+    .compare-head { scroll-margin-top: 32px; }
+    .compare table { width: 100%; min-width: 760px; border-collapse: collapse; font-size: 16px; line-height: 24px; color: var(--ink-2); }
+    .compare th, .compare td { padding: 20px; text-align: center; font-weight: 400; }
+    .compare thead th { padding: 24px 20px; font-weight: 600; color: var(--blue-2); background: var(--bg-page); }
+    .compare thead th:first-child { color: var(--ink-2); font-weight: 400; }
+    .compare th:first-child { text-align: left; position: sticky; left: 0; z-index: 1; background: var(--bg-page); }
+    .compare tbody tr:nth-child(odd) { background: #fff; }
+    .compare tbody tr:nth-child(odd) th { background: #fff; }
+    .compare tbody tr.is-icons td, .compare tbody tr.is-icons th { height: 71px; }
+    .compare td img { width: 24px; height: 24px; display: inline-block; vertical-align: middle; }
+    .compare col { width: 12.7%; }
+    .compare col.c-label { width: 31.6%; }
+    .compare col.c-free { width: 13.6%; }
+    .compare col.c-wide { width: 14.7%; }
+
+    /* How conversations work */
+    .how { background: #000; padding-block: var(--gap-xl); }
+    .how h2, .how .lead { color: #fff; }
+    .how__media { margin-top: var(--gap-lg); }
+    .how__media img { width: 100%; height: auto; }
+
+    /* FAQ + CTA */
+
+    @media (max-width: 1100px) {
+      .plans--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 860px) {
+      .plans--3 { grid-template-columns: minmax(0, 1fr); }
+      .plans--3 .plan__btn { max-width: none; }
+    }
+    @media (max-width: 781px) {
+      .promises { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .pack { flex-basis: 100%; }
+      .plans--4 { grid-template-columns: minmax(0, 1fr); }
+      .plan__price--free { margin-bottom: 0; }
+      .billing__go { display: none; }
+      .billing button { padding-inline: 18px; }
+      .refund, .promise { padding: 28px 20px; }
+      .price-hero h1 { margin-top: 20px; }
+      .price-hero .lead { margin-top: 24px; }
+      .compare { border-radius: 8px; }
+      .compare th, .compare td { padding: 16px 12px; }
+      .compare thead th { padding: 20px 12px; }
+      .compare table { min-width: 640px; }
+      .compare col.c-label { width: 150px; }
+      .compare th:first-child { box-shadow: 1px 0 0 var(--line); }
+    }
+    @media (max-width: 400px) {
+      .billing button { padding: 11px 14px; font-size: 16px; }
+    }
+  </style>
+</Fragment>
+
+<main id="main" class="pricing-page">
+  <div class="price-band" data-toggle-scope>
+    <!-- Hero + billing toggle -->
+    <div class="container price-hero">
+      <img class="price-hero__offer" src="/assets/img/TryAura-Optin-Banner-.png" alt="Introductory offer: get up to 30% off" width="554" height="120" fetchpriority="high">
+      <h1 class="h1">Pick The Plan That Fits Your Store</h1>
+      <p class="lead lead--sm">Give your store an AI sales agent that helps shoppers find products, get answers, and add the right items to cart.</p>
+      <p class="soon">Coming soon to Shopify <img src="/assets/img/Group-2085663532.png" alt="" width="74" height="69"></p>
+      <div class="billing-wrap">
+        <div class="billing" role="group" aria-label="Billing period" data-toggle-group>
+          <button type="button" class="is-active" data-toggle="monthly">Monthly</button>
+          <button type="button" data-toggle="annual">Annual</button>
+          <button type="button" data-toggle="lifetime">Lifetime</button>
+          <img class="billing__go" src="/assets/img/go-unlimited.gif" alt="" width="680" height="256">
+        </div>
+      </div>
+    </div>
+
+    <!-- Plans -->
+    <div class="plans-band">
+      <div class="container">
+        <!-- Monthly / Annual -->
+        <div class="plans plans--4" data-show-for="monthly annual">
+          <article class="plan">
+            <div>
+              <div class="plan__head"><h2 class="h6">Lite</h2></div>
+              <p class="plan__desc">Best for trying Cartpilot on a single store</p>
+              <p class="plan__price plan__price--free"><span class="plan__amt">Free</span></p>
+              <a class="btn btn--soft plan__btn" href="https://app.cartpilot.ai/register">Sign Up Now</a>
+              <div class="plan__feats">
+                <p class="plan__feats-title">Features</p>
+                <ul>
+                  <li><img src="/assets/icons/shop.svg" alt="">1 Shop</li>
+                  <li><img src="/assets/icons/shop.svg" alt="">50 conversations (one-time)</li>
+                  <li><img src="/assets/icons/shop.svg" alt="">Up to 1,000 products</li>
+                  <li><img src="/assets/icons/shop.svg" alt="">Up to 100 training items</li>
+                  <li><img src="/assets/icons/shop.svg" alt=""><s><span class="sr-only">Not included: </span>Voice Agent</s></li>
+                  <li><img src="/assets/icons/shop.svg" alt=""><s><span class="sr-only">Not included: </span>Analytics</s></li>
+                  <li><img src="/assets/icons/shop.svg" alt="">Regular Support</li>
+                </ul>
+              </div>
+            </div>
+            <a class="plan__all" href="#features">See all features</a>
+          </article>
+
+          <article class="plan">
+            <div>
+              <div class="plan__head"><h2 class="h6">Pilot</h2></div>
+              <p class="plan__desc">Best for solo stores ready to sell smarter</p>
+              <p class="plan__was">
+                <s data-show-for="monthly"><span class="sr-only">Regular price </span>$39</s><s data-show-for="annual" hidden><span class="sr-only">Regular price </span>$390</s>
+                <span class="plan__off" data-show-for="monthly">20% OFF</span><span class="plan__off" data-show-for="annual" hidden>2 Months FREE + 20% OFF</span>
+              </p>
+              <p class="plan__price">
+                <span class="plan__amt" data-show-for="monthly">$31</span><span class="plan__amt" data-show-for="annual" hidden>$312</span>
+                <span class="plan__per" data-show-for="monthly">/m</span><span class="plan__per" data-show-for="annual" hidden>/year</span>
+              </p>
+              <a class="btn btn--soft plan__btn" data-show-for="monthly" href="https://app.cartpilot.ai/get-started?plan=cp-pilot&amp;period=monthly&amp;coupon=CPLAUNCHOFFER">Get Started</a>
+              <a class="btn btn--soft plan__btn" data-show-for="annual" hidden href="https://app.cartpilot.ai/get-started?plan=cp-pilot&amp;period=yearly&amp;coupon=CPLAUNCHOFFER">Get Started</a>
+              <div class="plan__feats">
+                <p class="plan__feats-title">Features</p>
+                <ul>
+                  <li><img src="/assets/icons/shop.svg" alt="">1 Shop</li>
+                  <li><img src="/assets/icons/shop.svg" alt="">200 conversations/month</li>
+                  <li><img src="/assets/icons/shop.svg" alt="">Unlimited products</li>
+                  <li><img src="/assets/icons/shop.svg" alt="">Unlimited training items</li>
+                  <li><img src="/assets/icons/shop.svg" alt="">Voice Agent</li>
+                  <li><img src="/assets/icons/shop.svg" alt="">Basic Analytics</li>
+                  <li><img src="/assets/icons/shop.svg" alt="">Priority Support</li>
+                </ul>
+              </div>
+            </div>
+            <a class="plan__all" href="#features">See all features</a>
+          </article>
+
+          <article class="plan plan--pick">
+            <div>
+              <div class="plan__head"><h2 class="h6">Growth</h2><span class="plan__tag">Recommended</span></div>
+              <p class="plan__desc">Best for growing teams and larger catalogs</p>
+              <p class="plan__was">
+                <s data-show-for="monthly"><span class="sr-only">Regular price </span>$89</s><s data-show-for="annual" hidden><span class="sr-only">Regular price </span>$890</s>
+                <span class="plan__off" data-show-for="monthly">20% OFF</span><span class="plan__off" data-show-for="annual" hidden>2 Months FREE + 20% OFF</span>
+              </p>
+              <p class="plan__price">
+                <span class="plan__amt" data-show-for="monthly">$71</span><span class="plan__amt" data-show-for="annual" hidden>$712</span>
+                <span class="plan__per" data-show-for="monthly">/m</span><span class="plan__per" data-show-for="annual" hidden>/year</span>
+              </p>
+              <a class="btn btn--soft plan__btn" data-show-for="monthly" href="https://app.cartpilot.ai/get-started?plan=cp-growth&amp;period=monthly&amp;coupon=CPLAUNCHOFFER">Get Started</a>
+              <a class="btn btn--soft plan__btn" data-show-for="annual" hidden href="https://app.cartpilot.ai/get-started?plan=cp-growth&amp;period=yearly&amp;coupon=CPLAUNCHOFFER">Get Started</a>
+              <div class="plan__feats">
+                <p class="plan__feats-title">Features</p>
+                <ul>
+                  <li><img src="/assets/icons/shop.svg" alt="">3 Shops</li>
+                  <li><img src="/assets/icons/shop.svg" alt="">500 conversations/month</li>
+                  <li><img src="/assets/icons/shop.svg" alt="">Unlimited products</li>
+                  <li><img src="/assets/icons/shop.svg" alt="">Unlimited training items</li>
+                  <li><img src="/assets/icons/shop.svg" alt="">Voice Agent</li>
+                  <li><img src="/assets/icons/shop.svg" alt="">Human Handover</li>
+                  <li><img src="/assets/icons/shop.svg" alt="">Full Analytics</li>
+                  <li><img src="/assets/icons/shop.svg" alt="">Priority Support</li>
+                </ul>
+              </div>
+            </div>
+            <a class="plan__all" href="#features">See all features</a>
+          </article>
+
+          <article class="plan">
+            <div>
+              <div class="plan__head"><h2 class="h6">Scale</h2></div>
+              <p class="plan__desc">Best for scaling stores with serious traffic</p>
+              <p class="plan__was">
+                <s data-show-for="monthly"><span class="sr-only">Regular price </span>$159</s><s data-show-for="annual" hidden><span class="sr-only">Regular price </span>$1590</s>
+                <span class="plan__off" data-show-for="monthly">20% OFF</span><span class="plan__off" data-show-for="annual" hidden>2 Months FREE + 20% OFF</span>
+              </p>
+              <p class="plan__price">
+                <span class="plan__amt" data-show-for="monthly">$127</span><span class="plan__amt" data-show-for="annual" hidden>$1272</span>
+                <span class="plan__per" data-show-for="monthly">/m</span><span class="plan__per" data-show-for="annual" hidden>/year</span>
+              </p>
+              <a class="btn btn--soft plan__btn" data-show-for="monthly" href="https://app.cartpilot.ai/get-started?plan=cp-scale&amp;period=monthly&amp;coupon=CPLAUNCHOFFER">Get Started</a>
+              <a class="btn btn--soft plan__btn" data-show-for="annual" hidden href="https://app.cartpilot.ai/get-started?plan=cp-scale&amp;period=yearly&amp;coupon=CPLAUNCHOFFER">Get Started</a>
+              <div class="plan__feats">
+                <p class="plan__feats-title">Features</p>
+                <ul>
+                  <li><img src="/assets/icons/shop.svg" alt="">5 Shops</li>
+                  <li><img src="/assets/icons/shop.svg" alt="">1,000 conversations/month</li>
+                  <li><img src="/assets/icons/shop.svg" alt="">Unlimited products</li>
+                  <li><img src="/assets/icons/shop.svg" alt="">Unlimited training items</li>
+                  <li><img src="/assets/icons/shop.svg" alt="">Voice Agent</li>
+                  <li><img src="/assets/icons/shop.svg" alt="">Human Handover</li>
+                  <li><img src="/assets/icons/shop.svg" alt="">Full Analytics + Export</li>
+                  <li><img src="/assets/icons/shop.svg" alt="">Priority Support</li>
+                </ul>
+              </div>
+            </div>
+            <a class="plan__all" href="#features">See all features</a>
+          </article>
+        </div>
+
+        <!-- Lifetime -->
+        <div class="plans plans--3" data-show-for="lifetime" hidden>
+          <article class="plan">
+            <div>
+              <div class="plan__head"><h2 class="h6">Starter</h2></div>
+              <p class="plan__desc">Best for solo stores ready to sell smarter</p>
+              <p class="plan__was"><s><span class="sr-only">Regular price </span>$199</s><span class="plan__off">30% OFF</span></p>
+              <p class="plan__price"><span class="plan__amt">$139</span><span class="plan__per">/one-time</span></p>
+              <a class="btn btn--soft plan__btn" href="https://app.cartpilot.ai/get-started?plan=cp-starter-ltd&amp;coupon=CPLAUNCHOFFERLTD">Get Started</a>
+              <div class="plan__feats">
+                <p class="plan__feats-title">Features</p>
+                <ul>
+                  <li><img src="/assets/icons/shop.svg" alt="">1 Shop</li>
+                  <li><img src="/assets/icons/shop.svg" alt="">Unlimited conversations with your own API</li>
+                  <li><img src="/assets/icons/shop.svg" alt="">Unlimited products</li>
+                  <li><img src="/assets/icons/shop.svg" alt="">Unlimited training items</li>
+                  <li><img src="/assets/icons/shop.svg" alt="">Voice Agent</li>
+                  <li><img src="/assets/icons/shop.svg" alt="">Full Analytics + Export</li>
+                  <li><img src="/assets/icons/shop.svg" alt="">Priority Support</li>
+                  <li><img src="/assets/icons/shop.svg" alt="">Bring Your Own API Key</li>
+                </ul>
+              </div>
+            </div>
+            <a class="plan__all" href="#features">See all features</a>
+          </article>
+
+          <article class="plan plan--pick">
+            <div>
+              <div class="plan__head"><h2 class="h6">Professional</h2><span class="plan__tag">Recommended</span></div>
+              <p class="plan__desc">Best for growing teams and larger catalogs</p>
+              <p class="plan__was"><s><span class="sr-only">Regular price </span>$399</s><span class="plan__off">30% OFF</span></p>
+              <p class="plan__price"><span class="plan__amt">$279</span><span class="plan__per">/one-time</span></p>
+              <a class="btn btn--soft plan__btn" href="https://app.cartpilot.ai/get-started?plan=cp-professional-ltd&amp;coupon=CPLAUNCHOFFERLTD">Get Started</a>
+              <div class="plan__feats">
+                <p class="plan__feats-title">Features</p>
+                <ul>
+                  <li><img src="/assets/icons/shop.svg" alt="">5 Shops</li>
+                  <li><img src="/assets/icons/shop.svg" alt="">Unlimited conversations with your own API</li>
+                  <li><img src="/assets/icons/shop.svg" alt="">Unlimited products</li>
+                  <li><img src="/assets/icons/shop.svg" alt="">Unlimited training items</li>
+                  <li><img src="/assets/icons/shop.svg" alt="">Voice Agent</li>
+                  <li><img src="/assets/icons/shop.svg" alt="">Human Handover</li>
+                  <li><img src="/assets/icons/shop.svg" alt="">Full Analytics + Export</li>
+                  <li><img src="/assets/icons/shop.svg" alt="">Priority Support</li>
+                  <li><img src="/assets/icons/shop.svg" alt="">Bring Your Own API Key</li>
+                </ul>
+              </div>
+            </div>
+            <a class="plan__all" href="#features">See all features</a>
+          </article>
+
+          <article class="plan">
+            <div>
+              <div class="plan__head"><h2 class="h6">Agency</h2></div>
+              <p class="plan__desc">Best for scaling stores with serious traffic</p>
+              <p class="plan__was"><s><span class="sr-only">Regular price </span>$699</s><span class="plan__off">30% OFF</span></p>
+              <p class="plan__price"><span class="plan__amt">$489</span><span class="plan__per">/one-time</span></p>
+              <a class="btn btn--soft plan__btn" href="https://app.cartpilot.ai/get-started?plan=cp-agency-ltd&amp;coupon=CPLAUNCHOFFERLTD">Get Started</a>
+              <div class="plan__feats">
+                <p class="plan__feats-title">Features</p>
+                <ul>
+                  <li><img src="/assets/icons/shop.svg" alt="">20 Shops</li>
+                  <li><img src="/assets/icons/shop.svg" alt="">Unlimited conversations with your own API</li>
+                  <li><img src="/assets/icons/shop.svg" alt="">Unlimited products</li>
+                  <li><img src="/assets/icons/shop.svg" alt="">Unlimited training items</li>
+                  <li><img src="/assets/icons/shop.svg" alt="">Voice Agent</li>
+                  <li><img src="/assets/icons/shop.svg" alt="">Human Handover</li>
+                  <li><img src="/assets/icons/shop.svg" alt="">Full Analytics + Export</li>
+                  <li><img src="/assets/icons/shop.svg" alt="">Priority Support</li>
+                  <li><img src="/assets/icons/shop.svg" alt="">Bring Your Own API Key</li>
+                </ul>
+              </div>
+            </div>
+            <a class="plan__all" href="#features">See all features</a>
+          </article>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <p class="fine">Prices exclude applicable taxes. See our <a href="/terms-of-service/">Terms of Service</a> for refunds, cancellation and Fair Usage Policy.</p>
+    </div>
+
+    <!-- Credit packs -->
+    <div class="container">
+      <div class="section-head credits-head" data-reveal>
+        <h2 class="h3">Need More Conversations?</h2>
+        <p class="lead lead--sm" style="--lead-w:600px">Add credits anytime when your monthly or annual plan runs out. Perfect for launches, campaigns, and seasonal traffic spikes.</p>
+      </div>
+    </div>
+    <div class="band-line packs-band">
+      <div class="container">
+        <div class="packs">
+          <div class="pack"><h3 class="h6">Mini</h3><p class="pack__desc">100 conversation credits</p><p class="h4 pack__price">$19</p><a class="btn pack__btn" href="https://app.cartpilot.ai/get-started?plan=cp-pack-mini">Buy Pack</a><p class="pack__unit">Per Credit $0.19</p></div>
+          <div class="pack"><h3 class="h6">Small</h3><p class="pack__desc">300 conversation credits</p><p class="h4 pack__price">$49</p><a class="btn pack__btn" href="https://app.cartpilot.ai/get-started?plan=cp-pack-small">Buy Pack</a><p class="pack__unit">Per Credit $0.16</p></div>
+          <div class="pack"><h3 class="h6">Medium</h3><p class="pack__desc">1,000 conversation credits</p><p class="h4 pack__price">$149</p><a class="btn pack__btn" href="https://app.cartpilot.ai/get-started?plan=cp-pack-medium">Buy Pack</a><p class="pack__unit">Per Credit $0.15</p></div>
+          <div class="pack"><h3 class="h6">Large</h3><p class="pack__desc">2,500 conversation credits</p><p class="h4 pack__price">$349</p><a class="btn pack__btn" href="https://app.cartpilot.ai/get-started?plan=cp-pack-large">Buy Pack</a><p class="pack__unit">Per Credit $0.14</p></div>
+          <div class="pack"><h3 class="h6">Bulk</h3><p class="pack__desc">5,000 conversation credits</p><p class="h4 pack__price">$599</p><a class="btn pack__btn" href="https://app.cartpilot.ai/get-started?plan=cp-pack-bulk">Buy Pack</a><p class="pack__unit">Per Credit $0.12</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="container"><p class="credits-note">Credits expire 12 months after purchase</p></div>
+
+    <!-- Refund policy + promises -->
+    <div class="band-line trust">
+      <div class="container">
+        <div class="refund">
+          <div class="refund__in">
+            <h2 class="h4">Our Fair Refund Policy</h2>
+            <p>Start free, no card required. Lifetime plans include a 7-day money-back, no questions asked. Subscriptions and credit packs are not refundable, but you can cancel anytime and keep access until your billing period ends.</p>
+            <div class="pay">
+              <span class="pay__label">Payment Options:</span>
+              <img src="/assets/img/payments-1024x67.png" alt="PayPal, Visa, Mastercard, JCB, Discover and American Express" width="1024" height="67" loading="lazy">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="band-line band-line--b">
+      <div class="container">
+        <div class="promises">
+          <div class="promise">
+            <img src="/assets/img/Group-10.png" alt="" width="144" height="144" loading="lazy">
+            <h3 class="h5">World Class Support Team</h3>
+            <p>Get 24*7 expert support and resolve all your pressing issues.</p>
+          </div>
+          <div class="promise">
+            <img src="/assets/img/Group-11.png" alt="" width="144" height="144" loading="lazy">
+            <h3 class="h5">Regular Updates</h3>
+            <p>We provide regular updates for seamless compatibility and ongoing feature enhancements.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Feature comparison -->
+    <div class="container">
+      <div class="section-head compare-head" id="features" data-reveal>
+        <h2 class="h3">Feature Comparison</h2>
+        <p class="lead lead--sm" style="--lead-w:540px">Confused on which plan to choose? See what features are included in each plan.</p>
+      </div>
+      <p class="scroll-hint" aria-hidden="true">Swipe to compare every plan <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></p>
+      <div class="compare" tabindex="0" role="region" aria-label="Plan feature comparison">
+        <table>
+          <colgroup><col class="c-label"><col class="c-free"><col><col><col class="c-wide"><col class="c-wide"></colgroup>
+          <thead>
+            <tr><th scope="col">Plans &amp; Features</th><th scope="col">Free</th><th scope="col">Pilot</th><th scope="col">Growth</th><th scope="col">Scale</th><th scope="col">Lifetime</th></tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">Shops</th><td>1</td><td>1</td><td>3</td><td>5</td><td>1 / 5 / 10</td></tr>
+            <tr><th scope="row">Conversations</th><td>50</td><td>200/mo</td><td>500/mo</td><td>1000/mo</td><td>Unlimited</td></tr>
+            <tr><th scope="row">Products</th><td>Up to 1,000</td><td>Unlimited</td><td>Unlimited</td><td>Unlimited</td><td>Unlimited</td></tr>
+            <tr><th scope="row">Training Items</th><td>Up to 100</td><td>Unlimited</td><td>Unlimited</td><td>Unlimited</td><td>Unlimited</td></tr>
+            <tr class="is-icons"><th scope="row">Voice Agent</th><td><img src="/assets/img/minus.svg" alt="Not included"></td><td><img src="/assets/img/check.svg" alt="Included"></td><td><img src="/assets/img/check.svg" alt="Included"></td><td><img src="/assets/img/check.svg" alt="Included"></td><td><img src="/assets/img/check.svg" alt="Included"></td></tr>
+            <tr class="is-icons"><th scope="row">Human Handover</th><td><img src="/assets/img/minus.svg" alt="Not included"></td><td><img src="/assets/img/minus.svg" alt="Not included"></td><td><img src="/assets/img/check.svg" alt="Included"></td><td><img src="/assets/img/check.svg" alt="Included"></td><td><img src="/assets/img/check.svg" alt="Included"></td></tr>
+            <tr class="is-icons"><th scope="row">Bring Your Own API Key</th><td><img src="/assets/img/minus.svg" alt="Not included"></td><td><img src="/assets/img/minus.svg" alt="Not included"></td><td><img src="/assets/img/minus.svg" alt="Not included"></td><td><img src="/assets/img/minus.svg" alt="Not included"></td><td><img src="/assets/img/check.svg" alt="Included"></td></tr>
+            <tr class="is-icons"><th scope="row">Chat Interactions</th><td><img src="/assets/img/check.svg" alt="Included"></td><td><img src="/assets/img/check.svg" alt="Included"></td><td><img src="/assets/img/check.svg" alt="Included"></td><td><img src="/assets/img/check.svg" alt="Included"></td><td><img src="/assets/img/check.svg" alt="Included"></td></tr>
+            <tr class="is-icons"><th scope="row">Product Search &amp; Sync</th><td><img src="/assets/img/check.svg" alt="Included"></td><td><img src="/assets/img/check.svg" alt="Included"></td><td><img src="/assets/img/check.svg" alt="Included"></td><td><img src="/assets/img/check.svg" alt="Included"></td><td><img src="/assets/img/check.svg" alt="Included"></td></tr>
+            <tr class="is-icons"><th scope="row">Add to cart from chat</th><td><img src="/assets/img/check.svg" alt="Included"></td><td><img src="/assets/img/check.svg" alt="Included"></td><td><img src="/assets/img/check.svg" alt="Included"></td><td><img src="/assets/img/check.svg" alt="Included"></td><td><img src="/assets/img/check.svg" alt="Included"></td></tr>
+            <tr class="is-icons"><th scope="row">Compare Products</th><td><img src="/assets/img/check.svg" alt="Included"></td><td><img src="/assets/img/check.svg" alt="Included"></td><td><img src="/assets/img/check.svg" alt="Included"></td><td><img src="/assets/img/check.svg" alt="Included"></td><td><img src="/assets/img/check.svg" alt="Included"></td></tr>
+            <tr class="is-icons"><th scope="row">Widget Customization</th><td><img src="/assets/img/check.svg" alt="Included"></td><td><img src="/assets/img/check.svg" alt="Included"></td><td><img src="/assets/img/check.svg" alt="Included"></td><td><img src="/assets/img/check.svg" alt="Included"></td><td><img src="/assets/img/check.svg" alt="Included"></td></tr>
+            <tr class="is-icons"><th scope="row">Multi-Platform (Woo &amp; Shopify)</th><td><img src="/assets/img/check.svg" alt="Included"></td><td><img src="/assets/img/check.svg" alt="Included"></td><td><img src="/assets/img/check.svg" alt="Included"></td><td><img src="/assets/img/check.svg" alt="Included"></td><td><img src="/assets/img/check.svg" alt="Included"></td></tr>
+            <tr class="is-icons"><th scope="row">Analytics</th><td><img src="/assets/img/minus.svg" alt="Not included"></td><td>Basic</td><td>Full</td><td>Full + Export</td><td>Full + Export</td></tr>
+            <tr><th scope="row">Support</th><td>Regular</td><td>Priority</td><td>Priority</td><td>Priority</td><td>Priority</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- How conversations work -->
+  <section class="how">
+    <div class="container">
+      <div class="section-head" data-reveal>
+        <h2 class="h3">How Conversations Work</h2>
+        <p class="lead lead--sm" style="--lead-w:760px">A conversation starts when a shopper interacts with CartPilot. A conversation may include multiple messages back and forth.</p>
+      </div>
+      <div class="how__media">
+        <img src="/assets/img/1400KB.gif" alt="A shopper asks the CartPilot chat widget for a black T-shirt under $80 and adds the suggested products to the cart" width="1000" height="563" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <Faq {...faq} />
+
+  <!-- CTA -->
+  <CtaSky {...cta}>
+    <a class="btn" href="https://app.cartpilot.ai/register">Try CartPilot Free</a>
+    <a class="btn btn--white" href="/features/">See All Features</a>
+  </CtaSky>
+</main>
+
+</Base>

@@ -1,0 +1,277 @@
+---
+import Base from "../layouts/Base.astro";
+const title = "Introducing CartPilot: The AI Sales Agent for WooCommerce";
+const description = "Meet CartPilot, an AI sales agent that answers shopper questions, recommends products and adds items to the cart from chat or voice on WooCommerce and Shopify stores.";
+---
+<Base title={title} description={description} bodyClass="header-white" fontWeights="400;500;600;700">
+<Fragment slot="head">
+  <style is:inline>
+    /* ---------- Single post template (shared by all posts — keep in sync) ---------- */
+    .post {
+      --pg: clamp(20px, 2.115vw, 30.46px);          /* paragraph gap */
+      padding-block: clamp(36px, 5.14vw, 74px) clamp(72px, 10.28vw, 148px);
+    }
+    .post__col { max-width: calc(760px + 2 * var(--gutter)); margin-inline: auto; padding-inline: var(--gutter); }
+    .post__hero { margin: 0; overflow: hidden; background: #2741e8; }
+    .post__hero img { width: 100%; aspect-ratio: 1622 / 886; object-fit: cover; }
+    .post__meta {
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 30px;
+      margin-block: clamp(28px, 3.2vw, 46px) clamp(24px, 3.13vw, 45px); font-size: 16px; line-height: 1.5; color: var(--text);
+    }
+    .post__meta-l { display: flex; flex-wrap: wrap; gap: 4px 30.46px; }
+    .post__title { font-size: var(--fs-h1); line-height: 1.15; }
+    .summary-note {
+      display: flex; gap: 8px; align-items: flex-start; margin-top: 18px; padding: 9px 14px;
+      background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px; font-size: 14px; line-height: 1.5; color: #92400e;
+    }
+    .summary-note svg { flex: none; width: 16px; height: 16px; margin-top: 2px; }
+
+    /* Article body — WordPress flow spacing: blocks share a 30.46px gap, headings get extra top space */
+    .post-body { margin-top: 19.2px; font-size: var(--fs-lead); line-height: 1.5; color: var(--text); }
+    .post-body > * { margin: 0 0 var(--pg); }
+    .post-body h2 { margin-top: clamp(40px, 4.23vw, 60.92px); font-size: var(--fs-h4); line-height: 1.2; }
+    .post-body h3 { margin-top: clamp(32px, 3.17vw, 45.69px); font-size: var(--fs-h3); line-height: 1.3; }
+    .post-body strong { color: var(--text); font-weight: 700; }
+    .post-body a { transition: color .2s; }
+    .post-body a:hover { color: var(--blue); }
+    .post-body ul { list-style: none; padding: 0; font-size: 16px; line-height: 1.5; }
+    .post-body ul li { position: relative; padding-left: 22px; }
+    .post-body ul li::before { content: ""; position: absolute; left: 0; top: 8px; width: 9px; height: 9px; border-radius: 50%; background: var(--blue); }
+    .post-body .tip-list { padding: 20px; border: 1px solid #d8d8fe; border-radius: 10px; background: #fbfbff; }
+    .post-body .tip-list li { padding-left: 45px; }
+    .post-body .tip-list li + li { margin-top: 30px; }
+    .post-body .tip-list li::before { top: 0; width: 29px; height: 30px; border-radius: 0; background: url("/assets/icons/tip-bulb.svg") 0 0 / 29px 30px no-repeat; }
+    .post-body .tip-list li:not(:last-child)::after { content: ""; position: absolute; left: 14px; top: 30px; bottom: -30px; width: 2px; background: #d8d8fe; }
+    .post-body .callout { padding: clamp(18px, 1.74vw, 25px) clamp(20px, 3.3vw, 47.5px); background: #f5f8ff; border: 1px solid #dbe6ff; border-radius: 10px; }
+    .post-body .btn-row { justify-content: center; }
+
+    /* Full-width comparison table (breaks out of the 760px column) */
+    .cmp { margin: 0 0 var(--pg); border: 1px solid #d3d3d3; border-radius: 10px; background: #f7f7ff; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .cmp table { width: 100%; min-width: 860px; border-collapse: collapse; table-layout: fixed; font-size: 12px; line-height: 1.5; color: #000; }
+    .cmp th, .cmp td { padding: 18px 28px; text-align: center; border-right: 1px solid #d8d8fe; }
+    .cmp th:last-child, .cmp td:last-child { border-right: 0; }
+    .cmp td:first-child { text-align: left; }
+    .cmp th { font-weight: 700; }
+    .cmp thead tr, .cmp tbody tr:nth-child(odd) { background: #f8fafc; }
+    .cmp tbody tr:nth-child(even) { background: #ededff; }
+    .cmp tbody tr { transition: background-color .2s; }
+    .cmp tbody tr:hover { background: #e2e2fd; }
+
+    .post__end { margin: clamp(56px, 6.4vw, 92px) 0 0; border: 0; border-top: 2px solid var(--line); }
+    .post__cat { display: flex; flex-wrap: wrap; gap: 19.2px; margin-top: clamp(40px, 4.23vw, 61px); font-size: var(--fs-body); line-height: 1.5; }
+    .post__cat a { transition: color .2s; }
+    .post__cat a:hover { color: var(--blue); }
+
+    /* Related posts band */
+    .related { background: #f6f6f6; padding-block: clamp(64px, 10.28vw, 148px); }
+    .related__head { text-align: center; }
+    .related__head p { max-width: 640px; margin: 28px auto 0; font-size: var(--fs-lead); }
+    .related .post-grid { list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gutter); margin-top: var(--sp-50); }
+    .post-card .cat {
+      display: inline-block; padding: 8px 16px; border: 1px solid var(--line); border-radius: var(--radius); background: #fff;
+      font-size: 14px; line-height: 1.3; color: var(--text); transition: border-color .2s, color .2s;
+    }
+    .post-card .cat:hover { border-color: #cbd5e1; color: var(--ink); }
+    .post-card h3 { margin-top: 20px; font-size: var(--fs-h6); line-height: 1.3; }
+    .post-card h3 a { transition: color .2s; }
+    .post-card h3 a:hover { color: var(--blue); }
+    .byline { display: flex; align-items: center; gap: 16px; margin-top: 20px; font-size: 16px; line-height: 1.5; color: var(--text); }
+    .avatar {
+      --s: 28px; flex: none; width: var(--s); height: var(--s); border-radius: 50%;
+      display: grid; place-items: center; background: linear-gradient(135deg, #3b82f6, #0054ff); color: #fff;
+      font-size: calc(var(--s) * .4); font-weight: 600; letter-spacing: .02em; line-height: 1;
+    }
+
+    @media (max-width: 600px) {
+      .post-body h2 { font-size: 26px; }
+    }
+    @media (max-width: 781px) {
+      .related .post-grid { grid-template-columns: 1fr; }
+      /* Comparison table: scrolls sideways with the feature column pinned */
+      .cmp table { min-width: 720px; }
+      .cmp th, .cmp td { padding: 14px 10px; }
+      .cmp th:first-child { width: 150px; }
+      .cmp th:first-child, .cmp td:first-child { position: sticky; left: 0; z-index: 1; background: inherit; padding-left: 14px; box-shadow: 1px 0 0 #d8d8fe; }
+    }
+  </style>
+</Fragment>
+
+<main id="main">
+  <article class="post">
+    <div class="post__col">
+      <figure class="post__hero">
+        <img src="/assets/img/CartPilot-Blog-for-StorePulse-1536x839.png" srcset="/assets/img/CartPilot-Blog-for-StorePulse-768x420.png 768w, /assets/img/CartPilot-Blog-for-StorePulse-1536x839.png 1536w" sizes="(max-width: 806px) 100vw, 760px" alt="Introducing CartPilot" width="1536" height="839" fetchpriority="high">
+      </figure>
+      <div class="post__meta">
+        <div class="post__meta-l">
+          <span>By Shakhawat Ullah</span>
+          <time datetime="2026-02-09">February 9, 2026</time>
+        </div>
+        <span>14 minutes</span>
+      </div>
+      <h1 class="post__title">Introducing CartPilot: The AI Sales Agent for eCommerce</h1>
+      <p class="summary-note"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="8" cy="8" r="6.5"/><path d="M8 7.2v3.8M8 4.9v.1"/></svg><span>Summary version — replace with the official text from the CMS before publishing.</span></p>
+
+      <div class="post-body">
+        <p>Picture a visitor browsing your store late at night. After a long search they finally spot a product that looks right — but one small question stands in the way: will it work with what they already have, will it arrive in time, which size fits?</p>
+        <p>Nobody is there to reply, so they leave. The product and the price were fine; the store simply wasn’t present at the moment of doubt.</p>
+        <p>That quiet drop-off happens on almost every eCommerce site, because most store tools can only react after the fact. CartPilot was built to step in at exactly that point and actively guide shoppers toward a purchase.</p>
+
+        <h2>Introducing CartPilot: Your Store’s Smart Salesperson</h2>
+        <p><a href="/"><strong>CartPilot</strong></a> is an AI sales agent that takes part in the buying process instead of waiting for support tickets. It works out what a shopper actually wants, answers product questions, helps them decide and can drop the chosen item straight into their cart — all within one natural conversation.</p>
+        <p>Unlike scripted bots or live chat that depends on someone being online, it learns your catalog and supports customers from first question to checkout.</p>
+        <p>Once it is live on your store, CartPilot helps you:</p>
+        <ul class="tip-list">
+          <li>Reply to shoppers instantly, at any hour</li>
+          <li>Give your store a built-in salesperson that knows your products, business and policies</li>
+          <li>Suggest products that match what each shopper describes</li>
+          <li>Walk customers through product comparisons</li>
+          <li>Add, change or remove cart items right from the chat</li>
+          <li>Keep visitors moving toward checkout instead of losing them</li>
+        </ul>
+        <p>The goal is more completed purchases without adding complexity for you or your shoppers.</p>
+        <p class="callout"><strong>📌 Note:</strong> CartPilot is in beta, so features may change as the team refines the product with feedback from early users.</p>
+
+        <h2>Why We Built CartPilot</h2>
+        <p>After more than 15 years building WordPress products at <a href="https://wedevs.com/" target="_blank" rel="noopener">weDevs</a>, the team kept seeing merchants pour effort into catalogs, product pages and campaigns — only for most of the resulting traffic to leave without buying.</p>
+        <p>Abandoned carts usually get the blame, but the real loss happens earlier: a shopper who is close to buying hits a question the product page can’t answer and decides waiting for support isn’t worth it. Live chat needs a person online, and FAQ bots can’t interpret intent or touch the cart.</p>
+        <p>CartPilot is meant to fill that missing layer — showing up for customers the way a store owner would if they could be there around the clock.</p>
+
+        <h2>Who Should Be Using CartPilot</h2>
+        <p>It is aimed at merchants whose stores are well set up and whose traffic is steady, yet who still watch most visitors leave after one unanswered question or a confusing comparison.</p>
+        <p>CartPilot is a strong fit if:</p>
+        <ul>
+          <li>You run a WooCommerce or Shopify store without dedicated sales staff</li>
+          <li>Cart abandonment is still your biggest leak, despite everything you’ve tried</li>
+          <li>Your current chatbot mostly points shoppers to help articles</li>
+          <li>The best AI sales tools you’ve found only support Shopify</li>
+          <li>You want a better buying experience without rebuilding your store or workflow</li>
+        </ul>
+        <p>Shopify support is in active development — Shopify merchants can join the waitlist at <a href="/">cartpilot.ai</a> to hear first when it ships.</p>
+
+        <h2>Key Features That Drive Conversions</h2>
+        <p>A good AI sales agent reads the moment and guides a shopper from curiosity to checkout without feeling scripted. Every CartPilot feature serves one goal: when someone arrives ready to buy, make sure the purchase actually happens. Here is what each feature does and how it helps your store.</p>
+
+        <h3>Autonomous Cart Actions</h3>
+        <p>Plenty of chat tools can talk about your products; CartPilot can act on them. Shoppers can manage their cart without ever leaving the conversation:</p>
+        <ul>
+          <li>Add products straight from the chat window</li>
+          <li>Change quantities or switch variants mid-conversation</li>
+          <li>Remove or adjust items in real time</li>
+          <li>Go from decision to cart in one continuous exchange</li>
+        </ul>
+        <p>This is what makes CartPilot a sales agent rather than a chat widget — like having a rep beside every shopper who can reach into the cart the moment they’re ready.</p>
+        <p><strong>What changes for your store:</strong> the friction between “I want this” and “added to cart” disappears, so ready-to-buy shoppers don’t drift away.</p>
+
+        <h3>Semantic Product Search</h3>
+        <p>Shoppers often know what they need but not what it’s called. CartPilot interprets everyday language and searches your whole catalog — variants, stock levels and current prices included — to surface the best match by meaning rather than keyword overlap.</p>
+        <ul>
+          <li>Handle vague or highly descriptive requests in plain language</li>
+          <li>Search every product, variant and stock status in real time</li>
+          <li>Rank results by shopper intent, not keyword similarity</li>
+          <li>Support open-ended conversations a search bar was never built for</li>
+        </ul>
+        <p><strong>What changes for your store:</strong> visitors who would have left empty-handed find what they came for, and the shoppers who describe their needs in detail — often the most motivated buyers — get real help.</p>
+
+        <h3>Custom Knowledge Base</h3>
+        <p>Every store has details that never make it onto a product page: return exceptions for sale items, compatibility rules, variant-specific lead times. You can upload that knowledge to CartPilot, and it stays in sync with your live catalog as products change — much like onboarding a new team member.</p>
+        <ul>
+          <li>Add policies, custom Q&amp;A, compatibility charts and product notes in minutes</li>
+          <li>Keep answers current automatically when the catalog updates</li>
+          <li>Give accurate, store-specific answers around the clock</li>
+          <li>Take repetitive questions off your support inbox</li>
+        </ul>
+        <p><strong>What changes for your store:</strong> the midnight questions and the ones your team answers twenty times a week — each a potential lost sale — get handled accurately without extra workload.</p>
+
+        <h3>Text and Voice Support</h3>
+        <p>Some shoppers prefer to type; others — especially on mobile or while multitasking — would rather just ask out loud. CartPilot handles both with the same quality on every device.</p>
+        <ul>
+          <li>Type or speak, whichever feels more natural</li>
+          <li>Get consistent answers in either mode</li>
+          <li>Complete the whole journey without switching modes</li>
+          <li>Use voice on mobile with no extra app or setup</li>
+        </ul>
+        <p><strong>What changes for your store:</strong> mobile visitors get an easy path to purchase without typing long questions on a small keyboard.</p>
+
+        <h3>2-Minute Setup</h3>
+        <p>No afternoon of configuration, API keys or developer back-and-forth. CartPilot connects to your store, syncs the full catalog and goes live in about two minutes — no code required.</p>
+        <ul>
+          <li>Connect to WooCommerce or Shopify without writing code</li>
+          <li>Sync every product, variant and stock status automatically on install</li>
+          <li>Go live the same day you decide to try it</li>
+          <li>See how it performs in your real store from day one</li>
+        </ul>
+        <p><strong>What changes for your store:</strong> the only thing between you and an AI sales agent is installing a plugin and clicking connect.</p>
+
+        <h2>CartPilot vs Everything Else: What Makes It Unique</h2>
+        <p>CartPilot was designed from the ground up to take part in the sale — reading intent, taking action and guiding the purchase — rather than being a support platform adapted for eCommerce. Here is how it compares with tools WooCommerce and Shopify merchants commonly evaluate:</p>
+      </div>
+    </div>
+
+    <div class="container">
+      <p class="scroll-hint" aria-hidden="true">Swipe to see every tool <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></p>
+      <figure class="cmp" role="region" aria-label="Feature comparison table" tabindex="0">
+        <table>
+          <thead>
+            <tr><th scope="col">Feature</th><th scope="col">CartPilot</th><th scope="col">Tidio</th><th scope="col">Tawk.to</th><th scope="col">Rep AI</th><th scope="col">WSChat</th><th scope="col">Gorgias</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Support Chat</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td></tr>
+            <tr><td>AI Product Recommendations</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✗</td><td>✓</td></tr>
+            <tr><td>Cart Interaction (Add/Update/Remove)</td><td>✓</td><td>✗</td><td>✗</td><td>✓ (Shopify only)</td><td>✗</td><td>✗</td></tr>
+            <tr><td>Sales Conversion Focus</td><td>✓</td><td>✓</td><td>✗</td><td>✓</td><td>✓</td><td>✓</td></tr>
+            <tr><td>WooCommerce Support</td><td>✓</td><td>✓</td><td>✓</td><td>✗</td><td>✓</td><td>Partial</td></tr>
+            <tr><td>AI Store Intelligence</td><td>✓</td><td>✓</td><td>✗</td><td>✓</td><td>Limited</td><td>✓</td></tr>
+            <tr><td>Knowledge Base Sync</td><td>✓</td><td>✓</td><td>✗</td><td>✓</td><td>Partial</td><td>✓</td></tr>
+            <tr><td>Easy Setup</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td></tr>
+            <tr><td>End-to-End Purchase Guidance</td><td>✓</td><td>✗</td><td>✗</td><td>✓ (Shopify only)</td><td>✗</td><td>✗</td></tr>
+          </tbody>
+        </table>
+      </figure>
+    </div>
+
+    <div class="post__col">
+      <div class="post-body">
+        <p>A few takeaways stand out from the table.</p>
+        <p><strong>Cart interaction</strong> and <strong>end-to-end purchase guidance</strong> are offered only by CartPilot and Rep AI — and Rep AI runs on Shopify alone, which leaves WooCommerce merchants without an option until now.</p>
+        <p>Gorgias (post-purchase support, orders and returns) and Tidio (live chat and support automation) are solid at the jobs they were built for, but neither is designed to update a cart or lead a shopper through a full buying decision.</p>
+        <p><strong>CartPilot is the only tool in this comparison that pairs intent understanding with direct cart actions and full purchase guidance for eCommerce.</strong></p>
+        <p>Three things set it apart:</p>
+        <p><strong>It acts, not just answers.</strong> When a shopper is ready, CartPilot completes the action inside the conversation instead of sending them somewhere else to finish it.</p>
+        <p><strong>It reads intent, not keywords.</strong> It understands shoppers who describe their needs in full sentences — typically the highest-value buyers in a catalog.</p>
+        <p><strong>It is built for conversions.</strong> Catalog integration, cart actions and knowledge-base sync all serve one outcome: completed purchases on WooCommerce or Shopify — not ticket routing.</p>
+
+        <h2>Pricing</h2>
+        <p>CartPilot is free during beta — every feature, no credit card and no trial expiry — so you can test it in your real store with zero commitment.</p>
+        <p>Beta users also get a <strong>launch discount locked in for life</strong> once beta ends, a <strong>direct line to the product team</strong> to help shape the roadmap, and <strong>early access to new features</strong>.</p>
+        <div class="btn-row"><a class="btn" href="https://app.cartpilot.ai/register">Try CartPilot for Free</a></div>
+
+        <h2>Conclusion</h2>
+        <p>Building an online store takes real time, money and conviction. <a href="/">CartPilot</a> exists so every merchant has a salesperson who never clocks out, never misses a question and never lets an interested shopper leave empty-handed.</p>
+        <p>With a free tier and a roughly two-minute setup, it is easy to try on your WooCommerce or Shopify store and see the difference for yourself.</p>
+      </div>
+
+      <hr class="post__end">
+      <p class="post__cat"><span>Category:</span><a href="/blog/">Agentic Commerce</a></p>
+    </div>
+  </article>
+
+  <!-- Related posts -->
+  <section class="related" aria-labelledby="related-title">
+    <div class="container">
+      <div class="related__head" data-reveal>
+        <h2 class="h3" id="related-title">Success Stories</h2>
+        <p>StorePulse is the backbone of your store, designed to make it smarter, faster and more efficient.</p>
+      </div>
+      <ul class="post-grid" role="list">
+        <li class="post-card" data-reveal>
+          <a class="cat" href="/blog/">Uncategorized</a>
+          <h3><a href="/hello-world/">Hello world!</a></h3>
+          <div class="byline"><span class="avatar" aria-hidden="true">T</span><span>tareq1988</span></div>
+        </li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+</Base>

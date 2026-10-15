@@ -1,0 +1,133 @@
+---
+import Base from "../layouts/Base.astro";
+const title = "CartPilot Privacy Policy";
+const description = "Read the CartPilot privacy policy to learn how data is collected, used, stored, and protected when you use CartPilot’s AI sales agent.";
+---
+<Base title={title} description={description} bodyClass="legal" fontWeights="400;500;600;700">
+<Fragment slot="head">
+  <style is:inline>
+    /* ---------- Legal page (shared by privacy / terms / refund) ---------- */
+    :root { --legal-bg: #f6f6f6; --frame: #e9eaec; }
+    body.legal { --header-bg: var(--legal-bg); }
+    body.legal--white { --legal-bg: #fff; }
+    /* Thin frame lines that run from under the announcement bar down to the footer */
+    .legal .site-header::after {
+      content: ""; position: absolute; top: 0; bottom: 0; left: 50%; translate: -50% 0; z-index: -1;
+      width: min(calc(var(--container) - 2 * var(--gutter)), calc(100% - 2 * var(--gutter)));
+      border-inline: 1px solid var(--frame); pointer-events: none;
+    }
+    .legal-frame { border-inline: 1px solid var(--frame); }
+    .legal-hero { background: var(--legal-bg); }
+    /* Live band: H1 sits 170px (110px on phones) below the announcement bar; our header is in flow, so subtract its height */
+    .legal-hero .legal-frame { padding: 61px 16px min(76.15px, calc(41.54px + 2.404vw)); text-align: center; }
+    @media (max-width: 1024px) { .legal-hero .legal-frame { padding-top: 86px; } }
+    @media (max-width: 767px) { .legal-hero .legal-frame { padding-block: 36px; } }
+    @media (max-width: 600px) { .legal-main .legal-card { padding: 28px 20px 36px; } .legal-main .legal-card h2 { font-size: 24px; } }
+    .legal-main { background: var(--legal-bg); border-block: 1px solid var(--frame); }
+    .legal-card {
+      background: #fff; border-inline: 1px solid var(--frame); padding: 40px;
+      font-size: 16px; line-height: 1.5; color: var(--text); overflow-wrap: break-word;
+    }
+    .legal-card > * + * { margin-top: 19.2px; }
+    .legal-card h2 { font-size: clamp(30px, calc(18px + 3.125vw), 42px); line-height: 1.2; scroll-margin-top: 24px; }
+    .legal-card strong { font-weight: 700; }
+    .legal-card a { color: inherit; text-decoration: underline; text-decoration-color: rgb(87 87 87 / .35); text-underline-offset: 3px; transition: color .2s, text-decoration-color .2s; }
+    .legal-card a:hover { color: var(--blue); text-decoration-color: currentColor; }
+    .legal-card ul { list-style: none; padding: 0; }
+    .legal-card li { position: relative; padding-left: 22px; }
+    .legal-card li::after { content: ""; position: absolute; left: 0; top: 8px; width: 10px; height: 10px; border-radius: 50%; background: var(--blue); }
+    .legal-note {
+      display: flex; align-items: flex-start; gap: 8px; width: fit-content; max-width: 100%;
+      padding: 7px 14px; border: 1px dashed var(--line-btn); border-radius: 6px; background: #f8fafc;
+      font-size: 14px; line-height: 1.5; color: var(--subtle);
+    }
+    .legal-note svg { flex: none; width: 16px; height: 16px; margin-top: 2.5px; }
+    .legal-card > .legal-note + * { margin-top: 24px; }
+    .legal-tail { background: var(--legal-bg); }
+    .legal-tail .legal-frame { height: clamp(36px, calc(10.667vw - 5.6px), 148px); }
+  </style>
+</Fragment>
+
+<main id="main">
+  <div class="legal-hero">
+    <div class="container"><div class="legal-frame"><h1 class="h1">Privacy Policy</h1></div></div>
+  </div>
+
+  <div class="legal-main">
+    <div class="container">
+      <article class="legal-card">
+        <p class="legal-note" role="note"><svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.4"/><path d="M8 7.2v4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><circle cx="8" cy="4.9" r=".9" fill="currentColor"/></svg>Summary version — replace with the official text from the CMS before publishing.</p>
+
+        <p><strong>Effective date:</strong> 12 June 2026<br><strong>Last updated:</strong> 1 July 2026</p>
+        <p>This policy explains what personal information CartPilot (“we”, “us”) collects, how we use and share it, and how we protect it — when you visit our website, create an account, buy a plan, or use the CartPilot AI sales agent on a WooCommerce or Shopify store.</p>
+        <p>CartPilot is a StorePulse product operated by weDevs Pte. Ltd., a Singapore company. This policy is part of our <a href="/terms-of-service/">Terms of Service</a>; if you don’t accept it, please don’t use CartPilot.</p>
+        <p>We play two roles. For merchants’ own account, billing and usage data we are the controller. For shopper data the AI agent handles on a merchant’s store, we are a processor (a “data intermediary” under Singapore law) acting on that merchant’s instructions — the merchant is the controller and owns its shopper-facing privacy notice.</p>
+
+        <h2 id="information-we-collect">1. Information We Collect</h2>
+        <p><strong>a. Information you provide</strong>. Account, company, billing, purchase and licence details, plus anything you send to support or when subscribing to updates.</p>
+        <p><strong>b. Information collected automatically</strong>. Device and usage data (IP address, browser, device IDs, time zone, referrers, pages viewed) via cookies, logs and analytics — see Section 4.</p>
+        <p><strong>c. Service data (conversations, voice, catalog, training)</strong>. Chat transcripts and logs, voice input converted to text (audio isn’t kept), catalog data from connected stores and merchants’ training items. It runs on our hosted backend and is sent to model providers to generate replies (Section 3). Please keep sensitive personal data out of training items.</p>
+        <p><strong>d. Payment information</strong>. Handled by <a href="https://stripe.com/" target="_blank" rel="noopener">Stripe, Inc.</a>, our payment provider and merchant of record, under its own <a href="https://stripe.com/privacy" target="_blank" rel="noopener">privacy statement</a>. We never store full card numbers.</p>
+
+        <h2 id="how-we-use-information">2. How We Use Information</h2>
+        <p>To run, secure and support the Service, generate AI responses, process purchases and licences, send account and transactional messages, share product news and marketing (opt out any time), and meet legal and accounting duties.</p>
+        <p>Under the GDPR or UK GDPR our legal bases are contract, legitimate interests (operating, securing and improving the Service, including cart and product-discovery analytics), consent (marketing email and non-essential cookies, withdrawable any time) and legal obligation.</p>
+
+        <h2 id="ai-model-providers">3. AI Model Providers and Your Data</h2>
+        <p>We don’t train our own models on your data, conversations or catalog.</p>
+        <p>Each request sends only the data it needs to our model providers — currently Google Gemini, and OpenAI where enabled — under their own terms: <a href="https://ai.google.dev/gemini-api/terms" target="_blank" rel="noopener">Google Gemini API terms</a> and <a href="https://openai.com/enterprise-privacy/" target="_blank" rel="noopener">OpenAI enterprise privacy</a>.</p>
+        <p>On a Lifetime BYOK plan you use your own key, and your contract with that provider applies.</p>
+
+        <h2 id="cookies-and-analytics">4. Cookies and Analytics</h2>
+        <p>We use cookies for core site functions, preferences and performance measurement. Where required, we ask consent for non-essential cookies; you can also manage them in your browser.</p>
+
+        <h2 id="how-we-share-information">5. How We Share Information</h2>
+        <p>Only as needed: with Stripe (payments), our AI model providers, processors for hosting, analytics, error monitoring, email and support, and authorities where the law or safety requires — or as part of a merger, acquisition or asset sale.</p>
+        <p>We don’t sell personal information or “share” it for cross-context behavioral advertising under the CCPA/CPRA.</p>
+        <p>A Data Processing Agreement is available to merchants on request.</p>
+
+        <h2 id="international-data-transfers">6. International Data Transfers</h2>
+        <p>We’re based in Singapore, so data may be processed there, in the United States and wherever our providers operate, where protection levels can differ from your country’s.</p>
+        <p>For EEA and UK data we use safeguards such as the EU Standard Contractual Clauses and the UK transfer addendum, backed by a transfer risk assessment. Contact us for a copy.</p>
+
+        <h2 id="data-retention">7. Data Retention</h2>
+        <p>We keep data only as long as the Service and our legal, accounting, security and dispute needs require. When a merchant closes their account, account data, transcripts, voice-derived text, catalog data and training items are deleted or de-identified within 90 days unless the law requires longer. You can request deletion at any time.</p>
+
+        <h2 id="your-rights">8. Your Rights</h2>
+        <p>Your rights depend on where you live, and we aim to honour them everywhere we reasonably can:</p>
+        <ul>
+          <li>EU / UK (GDPR, UK GDPR): access, correction, erasure, restriction, portability, objection, safeguards against solely automated decisions, withdrawing consent and complaining to a regulator (in the UK, the ICO).</li>
+          <li>California (CCPA/CPRA): to know, access, delete and correct; to opt out of sale or sharing (we do neither); to limit sensitive data use; and to equal treatment.</li>
+          <li>Singapore (PDPA): access, correction and withdrawing consent.</li>
+        </ul>
+        <p>Email <a href="mailto:support@storepulse.co">support@storepulse.co</a> to make a request. We’ll verify it and respond within legal timeframes; requests about shopper data go to the relevant merchant as controller.</p>
+
+        <h2 id="automated-processing">9. Automated Processing</h2>
+        <p>The AI searches catalogs, answers questions and suggests products before checkout. It makes no solely automated decisions with legal or similarly significant effects. Output can be imperfect, and merchants remain responsible for their storefront content.</p>
+
+        <h2 id="children">10. Children</h2>
+        <p>CartPilot is a business tool not intended for anyone under 18, and we don’t knowingly collect children’s data. Merchants handle age and consent rules for their own shoppers.</p>
+
+        <h2 id="security">11. Security</h2>
+        <p>We use reasonable technical and organizational measures to protect personal information, though no system can be guaranteed completely secure.</p>
+
+        <h2 id="communications-and-support">12. Communications and Support</h2>
+        <p>Expect account, transactional, product, marketing (unsubscribe any time) and support messages. Any support access to your site or logs is permission-based, limited to the issue, removed once it’s resolved and not kept longer than needed.</p>
+
+        <h2 id="changes-to-this-policy">13. Changes to This Policy</h2>
+        <p>We may update this policy and will refresh the “Last updated” date here, notifying you of material changes by email or in the dashboard where required.</p>
+
+        <h2 id="contact-us">14. Contact Us</h2>
+        <p>For any privacy question or request, contact us at <a href="mailto:support@storepulse.co">support@storepulse.co</a>.</p>
+        <p>weDevs Pte. Ltd., 160 Robinson Road, #14-04 SBF Centre, Singapore 068914</p>
+        <p>CartPilot is a StorePulse product, operated by weDevs Pte. Ltd.</p>
+      </article>
+    </div>
+  </div>
+
+  <div class="legal-tail" aria-hidden="true">
+    <div class="container"><div class="legal-frame"></div></div>
+  </div>
+</main>
+
+</Base>

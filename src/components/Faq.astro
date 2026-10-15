@@ -1,0 +1,30 @@
+---
+// Two-column FAQ: chip, title, lead and a button on the left; accordion cards on the right (first one open).
+// Answers are HTML strings, so they can hold links or several paragraphs.
+interface Props {
+  chip: string;
+  title: string;
+  lead: string;
+  button: { href: string; label: string };
+  items: { q: string; a: string }[];
+}
+const { chip, title, lead, button, items } = Astro.props;
+---
+<section class="section faqx">
+  <div class="container faqx__grid">
+    <div class="faqx__intro" data-reveal>
+      <p class="faqx__chip"><span class="faqx__chip-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.4a2.5 2.5 0 1 1 3.4 2.3c-.6.3-1 .8-1 1.4v.4"/><path d="M12 17h.01"/></svg></span><Fragment set:html={chip} /></p>
+      <h2 class="faqx__title" set:html={title} />
+      <p class="faqx__lead" set:html={lead} />
+      <div class="btn-row"><a class="btn" href={button.href} set:html={button.label} /></div>
+    </div>
+    <div class="faq-list faq-cards faqx__list" data-faq-single>
+      {items.map((item, i) => (
+        <div class={i === 0 ? "faq is-open" : "faq"}>
+          <button class="faq__q" type="button"><Fragment set:html={item.q} /><span class="faqx__tog" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span></button>
+          <div class="faq__a"><div set:html={item.a} /></div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,202 @@
+---
+import Base from "../layouts/Base.astro";
+import CtaSky from "../components/CtaSky.astro";
+const title = "CartPilot Contact: Get Help or Share Feedback";
+const description = "Contact the CartPilot team for questions, feedback, partnership ideas, technical help, or guidance on setting up your AI sales agent.";
+
+const cta = {
+  title: "Give Every Shopper a Smarter Way To Buy.",
+  text: "CartPilot is the AI agent that talks, types, and closes – right from the chat window, on any eCommerce platform.",
+};
+---
+<Base title={title} description={description} bodyClass="header-white">
+<Fragment slot="head">
+  <style is:inline>
+    /* ---------- Contact ---------- */
+    .contact { padding-block: clamp(24px, 4.24vw, 61px) 148px; }
+    .contact__head { text-align: center; }
+    .contact__head p { margin-top: 28px; font-size: var(--fs-body); }
+    .contact__grid { display: grid; grid-template-columns: minmax(0, 920fr) minmax(0, 455fr); gap: 19px; margin-top: var(--sp-50); }
+    .contact__card { background: #fff; border: 1px solid var(--line); border-radius: 6px; padding: clamp(24px, 2.78vw, 40px); }
+    .contact__side { display: grid; gap: 19px; align-content: start; }
+    .help-card { border: 1px solid var(--line); border-radius: 6px; padding: var(--sp-20); transition: box-shadow .3s var(--ease), transform .3s var(--ease); }
+    .help-card:hover { box-shadow: 0 18px 40px -28px rgb(15 23 42 / .35); }
+    .help-card--violet { background: #f5effc; }
+    .help-card--peach { background: #fcf3ef; }
+    .help-card p { margin-top: 12px; font-size: 16px; line-height: 1.5; color: var(--muted); }
+    .help-card .btn-line { margin-top: clamp(24px, 2.1vw, 30px); }
+    .btn-line {
+      display: inline-flex; align-items: center; justify-content: center; padding: 14px var(--sp-10);
+      border: 2px solid var(--blue); border-radius: var(--radius); background: #fff; color: var(--blue);
+      font-size: var(--fs-body); line-height: 1.5; white-space: nowrap;
+      transition: background-color .25s var(--ease), color .25s var(--ease), box-shadow .25s var(--ease);
+    }
+    .btn-line:hover { background: var(--blue); color: #fff; box-shadow: 0 8px 22px -10px rgb(0 84 255 / .65); }
+
+    /* ---------- Contact form (front-end only) ---------- */
+    .cform__row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+    .field { margin-bottom: 20px; }
+    .field label { display: inline-block; margin-bottom: 5px; font-size: var(--fs-body); line-height: 1.5; font-weight: 500; color: #000; }
+    .field label.is-req::after { content: " *"; margin-left: 3px; color: #f56c6c; }
+    .field input, .field textarea {
+      display: block; width: 100%; height: 45px; padding: 11px 15px;
+      border: 1px solid #dadbdd; border-radius: 7px; background: #f8fafc; color: #606266;
+      font: 18px/1 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out, background-color .15s;
+    }
+    .field textarea { height: 96px; min-height: 96px; line-height: 1.4; resize: vertical; }
+    .field input::placeholder, .field textarea::placeholder { color: #868e96; opacity: 1; }
+    .field input:hover, .field textarea:hover { border-color: #c4c6ca; }
+    .field input:focus, .field textarea:focus { outline: none; background: #fff; border-color: #1a7efb; box-shadow: 0 0 0 3px rgb(26 126 251 / .14); }
+    .field.is-error input, .field.is-error textarea { border-color: #f56c6c; }
+    .field.is-error input:focus, .field.is-error textarea:focus { box-shadow: 0 0 0 3px rgb(245 108 108 / .16); }
+    .field__err { margin-top: 6px; font-size: 14px; line-height: 1.4; color: #dc2626; }
+    .field__err:empty { display: none; }
+    .cform__submit {
+      display: inline-flex; align-items: center; justify-content: center; height: 42px; padding: 8px 20px;
+      border: 1px solid transparent; border-radius: 7px; background: var(--blue); color: #fff;
+      font-family: "Lato", var(--font); font-size: 16px; line-height: 24px; font-weight: 500;
+      transition: background-color .2s, box-shadow .2s, transform .2s var(--ease);
+    }
+    .cform__submit:hover { background: #0046d4; box-shadow: 0 8px 20px -10px rgb(0 84 255 / .7); }
+    .cform__submit:active { transform: translateY(1px); }
+    .cform__done {
+      display: flex; gap: 16px; align-items: flex-start; padding: 24px 26px;
+      border: 1px solid #bbf7d0; border-radius: 10px; background: #f0fdf4; color: #14532d;
+    }
+    .cform__done[hidden] { display: none; }
+    .cform__done:focus { outline: none; }
+    .cform__done-icon { flex: none; width: 40px; height: 40px; border-radius: 50%; background: #16a34a; display: grid; place-items: center; }
+    .cform__done-icon svg { width: 20px; height: 20px; }
+    .cform__done-title { font-size: 20px; line-height: 1.4; font-weight: 500; color: #14532d; }
+    .cform__done p + p { margin-top: 6px; font-size: 16px; color: #166534; }
+    .cform__done b { font-weight: 600; word-break: break-word; }
+    .cform__again { margin-top: 14px; font-size: 16px; color: var(--blue); text-decoration: underline; text-underline-offset: 3px; }
+    .cform__again:hover { color: #0046d6; }
+
+    @media (max-width: 781px) {
+      .contact { padding-bottom: var(--sp-50); }
+      .contact__grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+      .cform__row { grid-template-columns: 1fr; gap: 0; }
+    }
+    @media (max-width: 600px) {
+      .field input, .field textarea { font-size: 16px; }
+    }
+      .card-title { font-size: var(--fs-card); }
+  </style>
+</Fragment>
+
+<main id="main">
+  <section class="contact">
+    <div class="container">
+      <div class="contact__head">
+        <h1 class="h1">We’d Love to Hear From You</h1>
+        <p>Whether you have a question, feedback, or a partnership idea, our team is here to help.</p>
+      </div>
+
+      <div class="contact__grid">
+        <div class="contact__card">
+          <!-- Front-end only: validates and shows a success message, no request is sent. Wire to the real contact endpoint before launch. -->
+          <form class="cform" data-cform novalidate aria-label="Contact CartPilot">
+            <div class="cform__row">
+              <div class="field">
+                <label for="ct-first">First Name</label>
+                <input id="ct-first" name="first_name" type="text" placeholder="First Name" autocomplete="given-name">
+              </div>
+              <div class="field">
+                <label for="ct-last">Last Name</label>
+                <input id="ct-last" name="last_name" type="text" placeholder="Last Name" autocomplete="family-name">
+              </div>
+            </div>
+            <div class="field">
+              <label class="is-req" for="ct-email">Email</label>
+              <input id="ct-email" name="email" type="email" placeholder="Email Address" autocomplete="email" required aria-describedby="ct-email-err">
+              <p class="field__err" id="ct-email-err" aria-live="polite"></p>
+            </div>
+            <div class="field">
+              <label for="ct-subject">Subject</label>
+              <input id="ct-subject" name="subject" type="text" placeholder="Subject">
+            </div>
+            <div class="field">
+              <label class="is-req" for="ct-message">Your Message</label>
+              <textarea id="ct-message" name="message" rows="4" placeholder="Your Message" required aria-describedby="ct-message-err"></textarea>
+              <p class="field__err" id="ct-message-err" aria-live="polite"></p>
+            </div>
+            <button class="cform__submit" type="submit">Submit Form</button>
+          </form>
+          <div class="cform__done" role="status" tabindex="-1" hidden>
+            <span class="cform__done-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+            <div>
+              <p class="cform__done-title">Thanks for getting in touch!</p>
+              <p>We’ve got your message and will reply to <b data-done-email>your inbox</b> soon.</p>
+              <button class="cform__again" type="button">Send another message</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact__side">
+          <div class="help-card help-card--violet">
+            <h2 class="h5 card-title">I have a technical question?</h2>
+            <p>Find solutions to all technical problems that you are facing.</p>
+            <a class="btn-line" href="/support/">Submit a Ticket</a>
+          </div>
+          <div class="help-card help-card--peach">
+            <h2 class="h5 card-title">Explore Our Knowledgebase</h2>
+            <p>Find detailed setup guides, tutorials, and technical information for every plugin in our suite.</p>
+            <a class="btn-line" href="/docs/">Read the Docs</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <CtaSky {...cta}>
+    <a class="btn" href="https://app.cartpilot.ai/register">Try CartPilot Free</a>
+    <a class="btn btn--white" href="/pricing/">View Pricing Plans</a>
+  </CtaSky>
+</main>
+
+<Fragment slot="scripts">
+<script is:inline>
+  /* Contact/support form — front-end validation + inline success, no network request. */
+  document.querySelectorAll("[data-cform]").forEach((form) => {
+    const done = form.nextElementSibling;
+    const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const check = (el) => {
+      const v = el.value.trim();
+      let msg = "";
+      if (el.required && !v) msg = "This field is required.";
+      else if (el.type === "email" && v && !emailRe.test(v)) msg = "Please enter a valid email address.";
+      el.closest(".field").classList.toggle("is-error", !!msg);
+      el.setAttribute("aria-invalid", String(!!msg));
+      const err = document.getElementById(el.getAttribute("aria-describedby"));
+      if (err) err.textContent = msg;
+      return !msg;
+    };
+    form.querySelectorAll("[required]").forEach((el) => {
+      el.addEventListener("input", () => { if (el.closest(".field").classList.contains("is-error")) check(el); });
+      el.addEventListener("blur", () => { if (el.value.trim()) check(el); });
+    });
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const bad = [...form.querySelectorAll("[required]")].filter((el) => !check(el));
+      if (bad.length) { bad[0].focus(); return; }
+      const email = form.querySelector('[type="email"]').value.trim();
+      done.querySelector("[data-done-email]").textContent = email;
+      form.hidden = true;
+      done.hidden = false;
+      done.focus({ preventScroll: true });
+      form.reset();
+    });
+    done.querySelector(".cform__again").addEventListener("click", () => {
+      done.hidden = true;
+      form.hidden = false;
+      form.querySelector("input").focus();
+    });
+  });
+</script>
+</Fragment>
+</Base>

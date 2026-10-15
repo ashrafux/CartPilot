@@ -1,0 +1,152 @@
+---
+import Base from "../layouts/Base.astro";
+const title = "CartPilot Blog: AI Sales Agent Tips for eCommerce";
+const description = "Guides, product news and tips from the CartPilot team on using an AI sales agent to answer shoppers, recommend products and grow eCommerce sales.";
+---
+<Base title={title} description={description} bodyClass="header-white">
+<Fragment slot="head">
+  <style is:inline>
+    /* ---------- Blog index ---------- */
+    .blog-hero { padding-top: 60px; text-align: center; }
+    .blog-hero .lead-sm { margin-top: 28px; font-size: var(--fs-body); }
+    .nl-form { max-width: 760px; margin: var(--sp-40) auto 0; }
+    .nl-form .subscribe__form { margin-top: 0; }
+    .nl-form .subscribe__form button { width: 223px; align-self: flex-end; }
+    .nl-form .subscribe__msg { text-align: left; min-height: 0; }
+    .nl-form .subscribe__msg:empty { margin: 0; }
+
+    /* Featured post row */
+    .feat { margin-top: var(--sp-50); border-block: 1px solid var(--line); }
+    .feat__grid { display: grid; grid-template-columns: minmax(0, 751fr) minmax(0, 624fr); gap: 19.2px; }
+    .feat__media { display: block; overflow: hidden; background: #2741e8; }
+    .feat__media img { width: 100%; height: 100%; aspect-ratio: 751 / 422; object-fit: cover; transition: transform .6s var(--ease); }
+    .feat__media:hover img { transform: scale(1.03); }
+    .feat__card {
+      display: flex; flex-direction: column; align-items: flex-start; gap: 19.2px;
+      padding: var(--gutter); background: #fff; border-inline: 1px solid var(--line);
+    }
+    .badge {
+      display: inline-flex; align-items: center; min-height: 47px; padding: 8px 20px; border: 2px solid var(--blue); border-radius: var(--radius);
+      background: var(--blue); color: #fff; font-size: var(--fs-body); line-height: 1.5;
+    }
+    .feat__title { font-size: var(--fs-h4); line-height: 1.2; color: var(--text); }
+    .feat__title a { transition: color .2s; }
+    .feat__title a:hover { color: var(--ink); }
+    .feat__excerpt { font-size: 16px; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+    .feat__card .byline { margin-top: auto; }
+
+    /* Author byline + initials avatar */
+    .byline { display: flex; align-items: center; gap: 16px; font-size: 16px; line-height: 1.5; color: var(--text); }
+    .avatar {
+      --s: 28px; flex: none; width: var(--s); height: var(--s); border-radius: 50%;
+      display: grid; place-items: center; background: linear-gradient(135deg, #3b82f6, #0054ff); color: #fff;
+      font-size: calc(var(--s) * .4); font-weight: 600; letter-spacing: .02em; line-height: 1;
+    }
+    .avatar--36 { --s: 36px; }
+
+    /* Explore other blogs */
+    .explore { padding-block: var(--sp-50) var(--sp-30); }
+    .post-grid { list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 30px; margin-top: 46px; }
+    .post-card .cat {
+      display: inline-block; padding: 8px 16px; border: 1px solid var(--line); border-radius: var(--radius); background: #fff;
+      font-size: 14px; line-height: 1.3; color: var(--text); transition: border-color .2s, color .2s;
+    }
+    .post-card .cat:hover { border-color: #cbd5e1; color: var(--ink); }
+    .post-card h3 { margin-top: 20px; font-size: var(--fs-h6); line-height: 1.3; }
+    .post-card h3 a { transition: color .2s; }
+    .post-card h3 a:hover { color: var(--blue); }
+    .post-card .byline { margin-top: 20px; }
+
+    /* Newsletter band */
+    .nl-band {
+      background: var(--blue-2) url("/assets/img/cta-bg-illus-scaled.webp") center / cover no-repeat;
+      padding-block: clamp(64px, 8.34vw, 120px); text-align: center; color: #fff;
+    }
+    .nl-band h2 { color: #fff; max-width: 800px; margin-inline: auto; }
+    .nl-band p { max-width: 700px; margin: 28px auto 0; font-size: var(--fs-lead); }
+    .nl-band .nl-form { margin-top: var(--sp-30); }
+    .nl-band .subscribe__msg { color: #fff !important; }
+    .nl-band .subscribe__form button { background: var(--blue-2); }   /* sits on the blue band, keeps its old blue */
+    .nl-band .subscribe__form button:hover { background: #1d4fd8; }
+
+    @media (max-width: 900px) {
+      .feat__grid { grid-template-columns: 1fr; gap: 0; }
+      .feat__card { gap: 16px; padding-block: 24px; }
+      .feat__card .byline { margin-top: 12px; }
+    }
+    @media (max-width: 781px) {
+      .post-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+      .nl-form .subscribe__form button { width: 100%; }
+      .blog-hero { padding-top: 32px; }
+    }
+  </style>
+</Fragment>
+
+<main id="main">
+  <!-- Hero + subscribe -->
+  <section class="blog-hero">
+    <div class="container">
+      <h1 class="h1">Discover Blog</h1>
+      <p class="lead-sm">Join 150,000+ Subscribers. Get access to exclusive guides, tips, updates, ebooks, and more.</p>
+      <div class="nl-form">
+        <form class="subscribe__form" data-subscribe novalidate>
+          <label class="sr-only" for="blog-sub-email">Email address</label>
+          <input id="blog-sub-email" type="email" name="email" placeholder="Your Email Address" autocomplete="email" required>
+          <button type="submit">Subscribe</button>
+        </form>
+        <p class="subscribe__msg" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured post -->
+  <section class="feat" aria-label="Featured post">
+    <div class="container">
+      <article class="feat__grid">
+        <a class="feat__media" href="/introducing-cartpilot-ai-sales-agent/" tabindex="-1" aria-hidden="true">
+          <img src="/assets/img/CartPilot-Blog-for-StorePulse-768x420.png" srcset="/assets/img/CartPilot-Blog-for-StorePulse-768x420.png 768w, /assets/img/CartPilot-Blog-for-StorePulse-1536x839.png 1536w" sizes="(max-width: 900px) 100vw, 751px" alt="Introducing CartPilot: The AI Sales Agent for eCommerce" width="768" height="420">
+        </a>
+        <div class="feat__card">
+          <span class="badge">Featured</span>
+          <h2 class="feat__title"><a href="/introducing-cartpilot-ai-sales-agent/">Introducing CartPilot: The AI Sales Agent for eCommerce</a></h2>
+          <p class="feat__excerpt">A late-night shopper finds the perfect product, has one quick question, and nobody is around to answer it. CartPilot is the AI sales agent built to show up in exactly that moment — answering, recommending and adding items to the cart so the sale doesn’t slip away.</p>
+          <div class="byline"><span class="avatar avatar--36" aria-hidden="true">SU</span><span>Shakhawat Ullah</span></div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- Explore other blogs -->
+  <section class="explore">
+    <div class="container">
+      <h2 class="h3">Explore Other Blogs</h2>
+      <ul class="post-grid" role="list">
+        <li class="post-card" data-reveal>
+          <a class="cat" href="/blog/">Uncategorized</a>
+          <h3><a href="/hello-world/">Hello world!</a></h3>
+          <div class="byline"><span class="avatar" aria-hidden="true">T</span><span>tareq1988</span></div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Newsletter -->
+  <section class="nl-band">
+    <div class="container" data-reveal>
+      <h2 class="h3">Want More Savings? Join Our Newsletter To Get Early Deals.</h2>
+      <p>Sign up for our newsletter and be the first to know about exclusive discounts, flash sales, and upcoming offers. Don’t miss out on a chance to save!</p>
+      <div class="nl-form">
+        <form class="subscribe__form" data-subscribe novalidate>
+          <label class="sr-only" for="band-sub-email">Email address</label>
+          <input id="band-sub-email" type="email" name="email" placeholder="Your Email Address" autocomplete="email" required>
+          <button type="submit">Subscribe</button>
+        </form>
+        <p class="subscribe__msg" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+</main>
+
+</Base>
