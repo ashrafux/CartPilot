@@ -345,8 +345,10 @@ body.header-white { --header-bg: #fff; }
 /* Giant wordmark: dark at the top, melting into frosted glass towards the bottom */
 /* Full-bleed so the frosted layers never show a hard edge at the container sides */
 .footer-word { position: relative; height: 19cqw; margin-top: clamp(48px, 6vw, 96px); margin-inline: calc(50% - 50vw); overflow: hidden; display: flex; justify-content: center; }
-.footer-word span { display: block; font-size: 25.05cqw; line-height: .9; font-weight: 600; letter-spacing: -.05em; white-space: nowrap;
-  background: linear-gradient(180deg, #101014 0%, #2b2d35 30%, #6b7280 62%, #c4c8d0 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+/* the CartPilot logotype (cartpilot-wordmark.svg) as a mask over the dark-to-grey gradient, spanning the container width */
+.footer-word span { display: block; flex: none; width: 100cqw; aspect-ratio: 113 / 21; margin-top: .4cqw;
+  background: linear-gradient(180deg, #101014 0%, #2b2d35 30%, #6b7280 62%, #c4c8d0 100%);
+  -webkit-mask: url("/assets/img/cartpilot-wordmark.svg") center / 100% 100% no-repeat; mask: url("/assets/img/cartpilot-wordmark.svg") center / 100% 100% no-repeat; }
 .footer-word::before, .footer-word::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; pointer-events: none; }
 .footer-word::before { height: 60%; -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
   -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 45%); mask-image: linear-gradient(180deg, transparent 0%, #000 45%); }
