@@ -527,7 +527,7 @@ body.header-white { --header-bg: #fff; }
 .faqx__tog svg { width: 16px; height: 16px; }
 .faq-cards .faq.is-open .faqx__tog { transform: rotate(180deg); }
 .faq-cards .faq__q:hover .faqx__tog { background: var(--blue); color: #fff; }
-.faq-cards .faq__a p { padding: 0 72px 24px 24px; max-width: none; font-size: 16px; line-height: 1.6; color: #6b7280; }
+.faq-cards .faq__a p { padding: 0 72px 24px 24px; max-width: none; font-size: var(--fs-body); line-height: 1.6; color: #6b7280; }   /* 18px (16px on small phones) */
 @media (max-width: 1100px) {
   .faqx__grid { grid-template-columns: minmax(0, 1fr); grid-template-areas: "intro" "list"; row-gap: 32px; }
 }
