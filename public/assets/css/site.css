@@ -77,6 +77,17 @@ body {
 }
 img, video, svg { display: block; max-width: 100%; height: auto; }
 a { color: inherit; text-decoration: none; }
+
+/* ---------- Body copy in Lato ----------
+   Paragraphs and the text lists of articles/legal/docs/pricing use Lato at their existing sizes.
+   Headings, buttons, navigation, form labels, tags/chips, price and stat figures and the illustrations stay Poppins. */
+:root { --font-text: "Lato", system-ui, -apple-system, "Segoe UI", sans-serif; }
+p,
+:is(.legal-card, .terms__frame, .doc-body, .post-body, .rules, .plan__feats, .fcard__points, .f-hero__notes, .phero__trust) li { font-family: var(--font-text); }
+:is(.pill, .faqx__chip, .nf__code, .pcard__num, .plan__price, .plan__was, .footer-news__label, .dc-card__tag, .plan__feats-title,
+    .helpful__title, .cform__done-title, .soon, .chat-panel p, [aria-hidden="true"] p, p:is(.h1, .h2, .h3, .h4, .h5, .h6)) { font-family: inherit; }
+/* Lato has no 500/600: emphasis inside body copy uses its 700 */
+:is(p, .legal-card li, .terms__frame li, .doc-body li, .post-body li) :is(strong, b) { font-weight: 700; }
 button, input, select, textarea { font: inherit; color: inherit; }
 button { cursor: pointer; background: none; border: 0; padding: 0; }
 h1, h2, h3, h4, h5, h6 { margin: 0; color: var(--ink); font-weight: var(--fw-heading); }
