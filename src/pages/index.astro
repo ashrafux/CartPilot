@@ -140,7 +140,7 @@ const cta = {
     .jrow > * { padding: 18px 40px; }
     .jrow__num { font-family: var(--font); font-size: clamp(26px, calc(12px + 1.6vw), 36px); line-height: 1.2; font-weight: 400; color: var(--ink); transition: color .3s var(--ease); }
     .jrow__body { display: flex; flex-direction: column; justify-content: space-between; gap: 16px; padding-inline: 40px; border-inline: 1px solid var(--rule); }
-    .jrow__title { font-family: var(--font); font-size: var(--fs-card); line-height: 1.3; font-weight: var(--fw-heading); color: var(--ink); }
+    .jrow__title { font-family: var(--font); font-size: var(--fs-card); line-height: 1.3; font-weight: var(--fw-heading); color: var(--ink); transition: color .3s var(--ease); }
     .jrow__desc { max-width: 560px; font-size: 16px; line-height: 1.5; color: #6b7280; }
     .jrow__media { display: flex; justify-content: flex-end; align-items: flex-start; }
     .jrow__media { padding-left: 64px !important; }
@@ -150,7 +150,7 @@ const cta = {
     .jrow__art img + img { position: absolute; inset: 0; opacity: 0; transition: opacity .45s var(--ease); }
     .jrow:hover .jrow__art img + img { opacity: 1; }
     .jrow:hover { background: #fafbff; }
-    .jrow:hover .jrow__num { color: var(--blue-2); }
+    .jrow:hover :is(.jrow__num, .jrow__title) { color: var(--blue); }   /* number and title take the primary blue */
     /* hover: the thumbnail pops a little bigger and tilts slightly, lifted by a soft shadow */
     .jrow:hover .jrow__art { transform: scale(1.1) rotate(-3deg); box-shadow: 0 18px 34px -16px rgb(15 23 42 / .4); }
     @media (prefers-reduced-motion: reduce) { .jrow:hover .jrow__art { transform: scale(1.04); } }
