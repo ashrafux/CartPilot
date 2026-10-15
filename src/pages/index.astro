@@ -164,6 +164,7 @@ const cta = {
     .caps__title span { display: block; }
     .caps__lead { max-width: 1010px; font-size: var(--fs-lead); line-height: 1.5; color: #6b7280; }
     .caps__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .caps__cta { justify-content: center; }
     .cap { position: relative; isolation: isolate; overflow: hidden; min-height: 285px; padding: 32px; border-radius: 10px; background: #fff; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; gap: 32px; }
     .cap__ico { width: 80px; height: 80px; border-radius: 50%; display: grid; place-items: center; flex: none; }
     .cap__ico svg { width: 40px; height: 40px; }
@@ -264,6 +265,7 @@ const cta = {
       .cap__ico { width: 64px; height: 64px; }
       .cap__ico svg { width: 32px; height: 32px; }
       .caps__in { gap: 40px; }
+      .caps__cta { flex-direction: column; align-items: stretch; width: 100%; max-width: 340px; margin-inline: auto; }
     }
   </style>
 </Fragment>
@@ -408,6 +410,10 @@ const cta = {
           <span class="cap__ico" style="background:#f0fdf4"><svg class="" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v2.5a6 6 0 0 1-6 6.5 6 6 0 0 1-6-6.5z"/><path d="M6 21h12v-2.5a6 6 0 0 0-6-6.5 6 6 0 0 0-6 6.5z"/></svg></span>
           <div class="cap__text"><h3 class="cap__title">Live in minutes</h3><p class="cap__desc" style="max-width:480px">Install CartPilot on your store, add your policies and FAQs, and you’re ready to sell.</p></div>
         </div>
+      </div>
+      <div class="btn-row caps__cta" data-reveal>
+        <a class="btn" href="https://app.cartpilot.ai/register">Try CartPilot Free</a>
+        <a class="btn btn--secondary" href="/features/">Explore All Features →</a>
       </div>
     </div>
   </section>
