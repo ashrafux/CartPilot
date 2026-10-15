@@ -68,7 +68,7 @@ These are placeholders in the rebuild and must be finished first:
 
 ### 2. Pick how to host it
 
-**A. Static host (simplest).** Cloudflare Pages, Netlify or Vercel.
+**A. Static host (simplest).** Cloudflare Pages, Netlify or Vercel. Vercel reads `vercel.json` (Astro preset plus the same redirects as `public/_redirects`). Note that Vercel's free Hobby plan is for non-commercial use only, so a company site needs the Pro plan; Cloudflare Pages' free plan allows commercial use.
 
 1. Push this folder to a company GitHub repo.
 2. Create a project on the host and connect the repo. Use build command `npm run build` and output directory `dist`.
