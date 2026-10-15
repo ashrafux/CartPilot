@@ -193,20 +193,24 @@ const cta = {
     .dc__title { font-size: var(--fs-h3); line-height: 1.19; font-weight: 600; letter-spacing: -.02em; color: var(--ink); }
     .dc__lead { margin-top: 20px; max-width: 600px; font-size: var(--fs-lead); line-height: 1.6; color: #475569; }
     .dc__cta { margin: 24px 0 0 -8px; }
-    .dc-card { position: relative; flex: 0 0 min(481px, 86%); height: 480px; scroll-snap-align: start; border-radius: 10px; overflow: hidden; display: flex; background-size: cover; background-position: center; transition: transform .4s var(--ease); }
+    .dc-card { position: relative; flex: 0 0 min(481px, 86%); height: 480px; scroll-snap-align: start; border-radius: 10px; overflow: hidden; display: flex; background-size: cover; background-position: center; transition: background-color .45s var(--ease); }
     .dc.is-pinned .dc-card { flex: 0 0 481px; height: clamp(460px, calc(100vh - 150px), 564px); }
-    .dc-card:hover { transform: translateY(-6px); }
     .dc-card__in { display: flex; flex-direction: column; align-items: flex-start; width: 100%; padding: 52px 48px; }
     .dc-card__title { max-width: 340px; font-size: clamp(28px, 2.4vw, 34px); line-height: 1.2; font-weight: 600; letter-spacing: -.02em; color: var(--ink); }
     .dc-card__body { margin-top: 18px; max-width: 370px; font-size: 18px; line-height: 1.55; color: #475569; }
     .dc-card__tag { margin-top: 18px; font-size: 15px; line-height: 1.4; font-weight: 600; color: var(--ink); }
-    .dc-card__icon { margin-top: auto; width: 76px; height: 76px; color: var(--icon); transition: transform .4s var(--ease); }
+    .dc-card__icon { margin-top: auto; width: 76px; height: 76px; color: var(--icon); transition: color .45s var(--ease); }
     .dc-card__icon svg { width: 100%; height: 100%; }
-    .dc-card:hover .dc-card__icon { transform: translateY(-4px); }
-    .dc-card--sand { background-color: #f8e8c8; --icon: #8a4b0f; }
-    .dc-card--rose { background-color: #eae1e1; --icon: #7a2e3f; }
-    .dc-card--sky { background-color: #dfe9fb; --icon: #1e3a8a; }
-    .dc-card--mint { background-color: #ddf1e5; --icon: #14532d; }
+    /* hover: no lift — the card turns dark and the icon takes the card's own pastel */
+    .dc-card__title, .dc-card__body, .dc-card__tag { transition: color .45s var(--ease); }
+    .dc-card:not(.dc-card--photo):hover { background-color: #101014; }
+    .dc-card:not(.dc-card--photo):hover :is(.dc-card__title, .dc-card__tag) { color: #fff; }
+    .dc-card:not(.dc-card--photo):hover .dc-card__body { color: #a1a1aa; }
+    .dc-card:not(.dc-card--photo):hover .dc-card__icon { color: var(--soft); }
+    .dc-card--sand { background-color: #f8e8c8; --soft: #f8e8c8; --icon: #8a4b0f; }
+    .dc-card--rose { background-color: #eae1e1; --soft: #eae1e1; --icon: #7a2e3f; }
+    .dc-card--sky { background-color: #dfe9fb; --soft: #dfe9fb; --icon: #1e3a8a; }
+    .dc-card--mint { background-color: #ddf1e5; --soft: #ddf1e5; --icon: #14532d; }
     .dc-card--photo::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(to top, rgb(10 10 16 / .78) 0%, rgb(10 10 16 / .45) 34%, rgb(10 10 16 / 0) 62%); }
     .dc-card--photo .dc-card__in { position: relative; z-index: 1; justify-content: flex-end; }
     .dc-card--photo .dc-card__title, .dc-card--photo .dc-card__tag { color: #fff; }
