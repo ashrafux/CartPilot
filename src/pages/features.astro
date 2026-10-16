@@ -172,10 +172,14 @@ const cta = {
     .plat__lab { margin-top: 4px; font-size: var(--fs-sm); color: #6b7280; transition: color .45s var(--ease); }
     .plat__body { display: flex; flex-direction: column; align-items: flex-start; }
     .plat__text { max-width: 460px; font-size: var(--fs-lead); line-height: 1.55; color: #4b5563; transition: color .45s var(--ease); }
-    .plat .btn { margin: 20px 0 0 -8px; }
+    .plat .btn { margin-top: 28px; }
     .plat__link::after { content: ""; position: absolute; inset: 0; border-radius: inherit; }  /* whole box is the link */
     .plat:hover { background: var(--brand); }
-    .plat:hover .plat__title, .plat:hover .plat__link { color: var(--on); --fg: var(--on); }
+    .plat:hover .plat__title { color: var(--on); }
+    /* secondary button follows the box: outline in the box's text colour, and fills with it on hover */
+    .plat:hover .plat__link { --fg: var(--on); --bd: color-mix(in srgb, var(--on) 45%, transparent); }
+    .plat .plat__link:hover { --bg-c: var(--on); --fg: var(--brand); --bd: var(--on); }
+    .plat--shopify .plat__link:hover { --fg: #d9e8bd; }
     .plat:hover .plat__lab, .plat:hover .plat__text { color: var(--on-2); }
 
 
@@ -389,7 +393,7 @@ const cta = {
           </div>
           <div class="plat__body">
             <p class="plat__text">Install the free plugin from WordPress.org, then connect your CartPilot account.</p>
-            <a class="btn btn--tertiary plat__link" href="/woocommerce/">See CartPilot for WooCommerce →</a>
+            <a class="btn btn--secondary plat__link" href="/woocommerce/">See CartPilot for WooCommerce →</a>
           </div>
         </article>
         <article class="plat plat--shopify" data-reveal>
@@ -399,7 +403,7 @@ const cta = {
           </div>
           <div class="plat__body">
             <p class="plat__text">Install the app from the Shopify App Store. Your account is set up automatically.</p>
-            <a class="btn btn--tertiary plat__link" href="/shopify/">See CartPilot for Shopify →</a>
+            <a class="btn btn--secondary plat__link" href="/shopify/">See CartPilot for Shopify →</a>
           </div>
         </article>
       </div>
