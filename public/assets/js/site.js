@@ -168,7 +168,7 @@
 
   /* ---------- Load + scroll reveal ----------
      Every component (cards, headings, paragraphs, button rows, images, forms, tables…) eases in from a soft blur
-     while rising and fading in, one after another: the first screen as the page loads, the rest as they scroll
+     while rising and fading in, one after another: the first screen as the page loads, the rest every time they scroll
      into view. Mirrors the "Default loading site animation" reference. The <head> script hides <main>/footer until
      this runs (html.js-loading), so nothing flashes; reduced motion skips all of it. */
   const root = document.documentElement;
@@ -213,11 +213,19 @@
     const run = (els) => {
       const base = first ? 120 : 0;
       first = false;
-      els.sort(byOrder).forEach((el, i) => { pending.delete(el); io.unobserve(el); play(el, base + Math.min(i, 8) * 90); });
+      els.sort(byOrder).forEach((el, i) => { pending.delete(el); play(el, base + Math.min(i, 8) * 90); });
     };
     const io = new IntersectionObserver((entries) => run(entries.filter((e) => e.isIntersecting && pending.has(e.target)).map((e) => e.target)),
       { rootMargin: "0px 0px -6% 0px" });
-    marked.forEach((el) => io.observe(el));
+    // Always on: once a component has fully left the screen it resets, so it plays again every time it comes back
+    const out = new IntersectionObserver((entries) => entries.forEach((e) => {
+      const el = e.target;
+      if (e.isIntersecting || pending.has(el)) return;
+      el.getAnimations().forEach((a) => a.cancel());
+      el.classList.add("anim-pre");
+      pending.add(el);
+    }));
+    marked.forEach((el) => { io.observe(el); out.observe(el); });
     // The last few pixels of the page never cross the -6% line: at the bottom, play whatever is on screen
     addEventListener("scroll", () => {
       if (!pending.size || innerHeight + scrollY < root.scrollHeight - 4) return;
