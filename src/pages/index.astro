@@ -152,7 +152,8 @@ const cta = {
     .jrow:hover { background: #fafbff; }
     .jrow:hover :is(.jrow__num, .jrow__title) { color: var(--blue); }   /* number and title take the primary blue */
     /* hover: the thumbnail pops a little bigger and tilts slightly, lifted by a soft shadow */
-    .jrow:hover .jrow__art { transform: scale(1.1) rotate(-3deg); box-shadow: 0 18px 34px -16px rgb(15 23 42 / .4); }
+    .jrow:hover { position: relative; z-index: 2; }   /* lifts the hovered row so its enlarged art sits above the next row */
+    .jrow:hover .jrow__art { transform: scale(1.45) rotate(-3deg); box-shadow: 0 24px 44px -18px rgb(15 23 42 / .45); }
     @media (prefers-reduced-motion: reduce) { .jrow:hover .jrow__art { transform: scale(1.04); } }
     .jlist-foot { max-width: 640px; margin: 40px auto 0; text-align: center; font-size: 16px; line-height: 1.5; color: #6b7280; }
 
@@ -254,6 +255,7 @@ const cta = {
       .jrow__media { grid-area: media; }
       .jrow__media { padding: 16px 0 0 !important; justify-content: flex-start; }
       .jrow__art { width: 100%; max-width: none; }
+      .jrow:hover .jrow__art { transform: scale(1.03) rotate(-1.5deg); }   /* full-width art on phones: only a nudge */
       .jlist-foot { margin-top: 28px; }
       .hero { padding-top: calc(84px + 32px); }
       .hero__orb { --h: 46px; margin-block: -4px; }
