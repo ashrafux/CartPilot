@@ -500,11 +500,12 @@ body.header-white { --header-bg: #fff; }
   display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
   background: #5f98e4 url("/assets/img/cta-sky.jpg") center / cover no-repeat;
 }
-.cta-sky__card::before { content: ""; position: absolute; inset: 0; background: radial-gradient(50% 55% at 50% 52%, rgb(40 95 190 / .28), transparent 75%); pointer-events: none; }
+.cta-sky__card::before { content: ""; position: absolute; inset: 0; pointer-events: none;   /* deeper sky so the white title reads */
+  background: radial-gradient(55% 60% at 50% 50%, rgb(18 55 140 / .42), transparent 78%), linear-gradient(rgb(12 38 100 / .26), rgb(12 38 100 / .26)); }
 .cta-sky__card > * { position: relative; }
 .cta-sky__icon { width: 72px; height: 72px; border-radius: 10px; background: #fff; display: grid; place-items: center; box-shadow: 0 10px 30px -10px rgb(15 23 42 / .35), inset 0 0 0 1px rgb(255 255 255 / .8); }
 .cta-sky__icon img { width: 44px; height: 44px; }
-.cta-sky__title { margin-top: 28px; max-width: 1180px; font-size: var(--fs-h3); line-height: 1.1; letter-spacing: -.025em; font-weight: var(--fw-heading); color: #fff; text-wrap: balance; text-shadow: 0 2px 24px rgb(15 40 90 / .25); }
+.cta-sky__title { margin-top: 28px; max-width: 1180px; font-size: var(--fs-h3); line-height: 1.1; letter-spacing: -.025em; font-weight: var(--fw-heading); color: #fff; text-wrap: balance; text-shadow: 0 2px 28px rgb(10 30 80 / .4); }
 .cta-sky__text { margin-top: 18px; max-width: 600px; font-size: var(--fs-lead); line-height: 1.5; color: rgb(255 255 255 / .95); text-shadow: 0 1px 12px rgb(15 40 90 / .25); }
 .cta-sky .btn-row { margin-top: 32px; }
 .cta-sky .btn:not(.btn--white) { --bg-c: #101014; }   /* on the blue sky the primary stays black */
