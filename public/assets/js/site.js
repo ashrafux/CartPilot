@@ -166,11 +166,62 @@
     if (initial) show(initial.dataset.toggle);
   });
 
-  /* ---------- Reveal on scroll ---------- */
-  const els = $$("[data-reveal]");
-  if (reduce || !("IntersectionObserver" in window)) els.forEach((el) => el.classList.add("is-in"));
+  /* ---------- Load + scroll reveal ----------
+     Every component (cards, headings, paragraphs, button rows, images, forms, tables…) eases in from a soft blur
+     while rising and fading in, one after another: the first screen as the page loads, the rest as they scroll
+     into view. Mirrors the "Default loading site animation" reference. The <head> script hides <main>/footer until
+     this runs (html.js-loading), so nothing flashes; reduced motion skips all of it. */
+  const root = document.documentElement;
+  const done = () => root.classList.remove("js-loading");
+  if (reduce || !("IntersectionObserver" in window) || !Element.prototype.animate) done();
   else {
-    const io = new IntersectionObserver((entries) => entries.forEach((en) => { if (en.isIntersecting) { en.target.classList.add("is-in"); io.unobserve(en.target); } }), { rootMargin: "0px 0px -8% 0px" });
-    els.forEach((el) => io.observe(el));
+    // Whole components (animated as one piece, children stay put)
+    const UNITS = [".cap", ".pcard", ".dc-card", ".jrow", ".faq-cards .faq", ".plan", ".pack", ".promise", ".refund", ".fx", ".plat",
+      ".fcard", ".pcap", ".pstep", ".post-card", ".feat", ".help-card", ".tab", ".hero__media", ".phero__stage", ".hero__orb",
+      ".phero__orb", ".orb", ".footer-word", ".contrib", ".need-help", ".doc-foot", ".share", ".fca__tabs"].join(",");
+    // Plain blocks, used when they are not part of a unit above
+    const BLOCKS = "h1, h2, h3, h4, h5, h6, p, ul, ol, table, form, figure, blockquote, img, video, .btn-row, .pill, .works";
+    // Never animated: chrome, dialogs, and sections that run their own scroll motion
+    const SKIP = ".site-header, .drawer, .chat-panel, .chat-launch, .modal, .phow__steps, .phow__note, nav, .sr-only";
+    const scopes = [...$$("main"), ...$$(".site-footer")];
+    const visible = (el) => el.getClientRects().length > 0;
+    const marked = [];
+    const mark = (el) => { el.setAttribute("data-anim", ""); marked.push(el); };
+    scopes.forEach((s) => $$(UNITS, s).forEach((el) => {
+      if (!el.closest(SKIP) && visible(el) && !el.parentElement.closest("[data-anim]")) mark(el);
+    }));
+    scopes.forEach((s) => $$(BLOCKS, s).forEach((el) => {
+      if (el.closest(SKIP) || el.closest('[aria-hidden="true"]') || !visible(el)) return;
+      if (el.closest("[data-anim]") || el.querySelector("[data-anim]")) return;
+      mark(el);
+    }));
+    marked.forEach((el) => el.classList.add("anim-pre"));
+    done();   // <main> visible again; every component is still hidden by .anim-pre
+
+    const EASE = "cubic-bezier(.2, .7, .2, 1)";
+    let first = true;
+    const play = (el, delay) => {
+      const big = el.offsetHeight > 420 || el.offsetWidth > 900;
+      el.animate(
+        [{ opacity: 0, translate: "0 26px", filter: `blur(${big ? 6 : 12}px)` }, { opacity: 1, translate: "0 0", filter: "blur(0px)" }],
+        { duration: 760, delay, easing: EASE, fill: "backwards" }
+      );
+      el.classList.remove("anim-pre");
+    };
+    const pending = new Set(marked);
+    const byOrder = (a, b) => (a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1);
+    const run = (els) => {
+      const base = first ? 120 : 0;
+      first = false;
+      els.sort(byOrder).forEach((el, i) => { pending.delete(el); io.unobserve(el); play(el, base + Math.min(i, 8) * 90); });
+    };
+    const io = new IntersectionObserver((entries) => run(entries.filter((e) => e.isIntersecting && pending.has(e.target)).map((e) => e.target)),
+      { rootMargin: "0px 0px -6% 0px" });
+    marked.forEach((el) => io.observe(el));
+    // The last few pixels of the page never cross the -6% line: at the bottom, play whatever is on screen
+    addEventListener("scroll", () => {
+      if (!pending.size || innerHeight + scrollY < root.scrollHeight - 4) return;
+      run([...pending].filter((el) => el.getBoundingClientRect().top < innerHeight));
+    }, { passive: true });
   }
 })();

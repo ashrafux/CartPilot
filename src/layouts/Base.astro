@@ -19,6 +19,8 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- hide the content until site.js runs the load animation (skipped under reduced motion) -->
+  <script is:inline>if (!matchMedia("(prefers-reduced-motion: reduce)").matches) document.documentElement.classList.add("js-loading");</script>
   <title>{title}</title>
   <meta name="description" content={description}>
   <link rel="canonical" href={canonical}>
@@ -26,7 +28,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href={`https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400&family=Poppins:wght@${fontWeights}&display=swap`}>
-  <link rel="stylesheet" href="/assets/css/site.css?v=38">
+  <link rel="stylesheet" href="/assets/css/site.css?v=39">
   <slot name="head" />
 </head>
 <body class={bodyClass}>
@@ -34,6 +36,6 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
 <slot />
 <Footer />
 <slot name="scripts" />
-<script is:inline src="/assets/js/site.js?v=3" defer></script>
+<script is:inline src="/assets/js/site.js?v=4" defer></script>
 </body>
 </html>
