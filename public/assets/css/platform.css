@@ -173,7 +173,7 @@
 .pfeat__head h2 { max-width: 1000px; text-wrap: balance; }
 .pfeat__head h2 span, .psteps h2 span { display: block; color: var(--brand-ink); }
 .pfeat__head p { max-width: 900px; font-size: var(--fs-lead); line-height: 1.5; color: #6b7280; }
-.pfeat__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.pfeat__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; width: 100%; max-width: 1180px; margin-inline: auto; }   /* same width as the home capability cards */
 .pcap { position: relative; min-height: 285px; padding: 40px; border-radius: 10px; background: #fff; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; gap: 32px; transition: box-shadow .35s var(--ease), transform .35s var(--ease); }
 .pcap:hover { transform: translateY(-3px); box-shadow: 0 24px 50px -30px rgb(15 23 42 / .3); }
 .pcap__ico { width: 80px; height: 80px; flex: none; border-radius: 50%; display: grid; place-items: center; }
