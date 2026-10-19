@@ -49,8 +49,7 @@ const cta = {
     /* Gray band: hero + plans + credits + comparison */
     .price-band { background: var(--bg-page); padding-block: clamp(56px, 11.67vw, 168px) var(--gap-xl); }
     .price-hero { text-align: center; }
-    .price-hero__offer { width: 277px; height: auto; margin-inline: auto; }
-    .price-hero h1 { max-width: 720px; margin: 23px auto 0; }
+    .price-hero h1 { max-width: 720px; margin: 0 auto; }
     .price-hero .lead { max-width: 660px; margin: 40px auto 0; }
     .soon {
       display: inline-flex; align-items: center; gap: 7px; margin-top: var(--sp-40);
@@ -180,7 +179,6 @@ const cta = {
       .billing__go { display: none; }
       .billing button { padding-inline: 18px; }
       .refund, .promise { padding: 28px 20px; }
-      .price-hero h1 { margin-top: 20px; }
       .price-hero .lead { margin-top: 24px; }
       .compare { border-radius: 8px; }
       .compare th, .compare td { padding: 16px 12px; }
@@ -199,7 +197,6 @@ const cta = {
   <div class="price-band" data-toggle-scope>
     <!-- Hero + billing toggle -->
     <div class="container price-hero">
-      <img class="price-hero__offer" src="/assets/img/TryAura-Optin-Banner-.png" alt="Introductory offer: get up to 30% off" width="554" height="120" fetchpriority="high">
       <h1 class="h1">Pick The Plan That Fits Your Store</h1>
       <p class="lead lead--sm">Give your store an AI sales agent that helps shoppers find products, get answers, and add the right items to cart.</p>
       <p class="soon">Coming soon to Shopify <img src="/assets/img/Group-2085663532.png" alt="" width="74" height="69"></p>
