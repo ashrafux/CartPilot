@@ -211,7 +211,8 @@ body.header-white { --header-bg: #fff; }
 .nav__item.is-open .chev { transform: rotate(180deg); }
 .mega {
   position: absolute; top: calc(100% + 16px); left: 50%; width: 300px;
-  translate: -50% 0; padding: var(--sp-10); background: #fff; border-radius: 8px; box-shadow: var(--shadow-xl);
+  translate: -50% 0; padding: var(--sp-10); background: #fff; border-radius: 8px;
+  box-shadow: 0 32px 64px -12px rgb(16 24 40 / .22), 0 14px 28px -10px rgb(16 24 40 / .12), 0 0 0 1px rgb(16 24 40 / .04);   /* deeper drop shadow under the menu box */
   opacity: 0; visibility: hidden; transform: translateY(6px);
   transition: opacity .2s var(--ease), transform .2s var(--ease), visibility .2s;
 }
