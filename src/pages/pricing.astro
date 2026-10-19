@@ -51,13 +51,24 @@ const cta = {
     .price-hero { text-align: center; }
     .price-hero h1 { max-width: 720px; margin: 0 auto; }
     .price-hero .lead { max-width: 660px; margin: 40px auto 0; }
-    .soon {
-      display: inline-flex; align-items: center; gap: 7px; margin-top: var(--sp-40);
-      padding: 4px 5px 4px 14px; border-radius: 5px; background: #f3ffdd;
-      font-size: 16px; line-height: 1.2; font-weight: 500; color: #000;
-    }
-    .soon img { width: 37px; height: 35px; }
-    .billing-wrap { margin-top: 15px; }
+    /* platform picker: two radio cards, the chosen one gets a primary outline and a filled check */
+    .pick { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; max-width: 980px; margin: 40px auto 0; text-align: left; }
+    .pick__card { position: relative; display: flex; align-items: flex-start; gap: 18px; padding: 24px 60px 24px 24px; border: 0; border-radius: 10px; background: #fff;
+      box-shadow: inset 0 0 0 1px #e5e7eb; font: inherit; color: inherit; text-align: left; cursor: pointer; transition: box-shadow .25s var(--ease); }
+    .pick__card:hover { box-shadow: inset 0 0 0 1px #b9c8f5; }
+    .pick__card.is-on { box-shadow: inset 0 0 0 1.5px var(--blue), 0 14px 32px -24px rgb(0 84 255 / .55); }
+    .pick__card:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
+    .pick__logo { width: 52px; height: 52px; flex: none; border-radius: 50%; display: grid; place-items: center; background: #f4f4f5; }
+    .pick__logo img { width: 30px; height: 30px; object-fit: contain; }
+    .pick__logo--woo img { width: 38px; }
+    .pick__text b { display: block; font-family: var(--font); font-size: 20px; line-height: 1.3; font-weight: 600; color: var(--ink); }
+    .pick__text small { display: block; margin-top: 6px; font-family: var(--font-text); font-size: 16px; line-height: 1.55; color: #6b7280; }
+    .pick__radio { position: absolute; top: 24px; right: 24px; width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; color: #fff;
+      box-shadow: inset 0 0 0 1.5px #cbd5e1; transition: background-color .25s var(--ease), box-shadow .25s var(--ease); }
+    .pick__radio svg { width: 13px; height: 13px; opacity: 0; transition: opacity .2s; }
+    .pick__card.is-on .pick__radio { background: var(--blue); box-shadow: none; }
+    .pick__card.is-on .pick__radio svg { opacity: 1; }
+    .billing-wrap { margin-top: 40px; }
     .billing { position: relative; display: inline-flex; background: #fff; border-radius: 5px; }
     .billing button {
       padding: 13px 23px; border-radius: 5px; font-size: 18px; line-height: 27px; color: var(--ink-2);
@@ -173,6 +184,10 @@ const cta = {
       .promises { grid-template-columns: 1fr; }
     }
     @media (max-width: 640px) {
+      .pick { grid-template-columns: minmax(0, 1fr); gap: 12px; margin-top: 32px; }
+      .pick__card { padding: 18px 52px 18px 18px; gap: 14px; }
+      .pick__logo { width: 44px; height: 44px; }
+      .pick__radio { top: 18px; right: 18px; }
       .pack { flex-basis: 100%; }
       .plans--4 { grid-template-columns: minmax(0, 1fr); }
       .plan__price--free { margin-bottom: 0; }
@@ -199,7 +214,19 @@ const cta = {
     <div class="container price-hero">
       <h1 class="h1">Pick The Plan That Fits Your Store</h1>
       <p class="lead lead--sm">Give your store an AI sales agent that helps shoppers find products, get answers, and add the right items to cart.</p>
-      <p class="soon">Coming soon to Shopify <img src="/assets/img/Group-2085663532.png" alt="" width="74" height="69"></p>
+      <!-- platform picker (radio cards): Shopify hides Lifetime and sends plan buttons to the Shopify App Store -->
+      <div class="pick" role="radiogroup" aria-label="Choose your platform" data-platform-pick>
+        <button type="button" class="pick__card is-on" role="radio" aria-checked="true" data-platform="woocommerce">
+          <span class="pick__logo pick__logo--woo"><img src="/assets/img/woo-logo.png" alt="" width="248" height="64"></span>
+          <span class="pick__text"><b>WooCommerce</b><small>Install the free WordPress plugin and connect your store. Every plan works here, including Lifetime.</small></span>
+          <span class="pick__radio" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span>
+        </button>
+        <button type="button" class="pick__card" role="radio" aria-checked="false" data-platform="shopify">
+          <span class="pick__logo"><img src="/assets/img/shopify-logo.png" alt="" width="160" height="160"></span>
+          <span class="pick__text"><b>Shopify</b><small>Install from the Shopify App Store. Your plan is billed through your Shopify account.</small></span>
+          <span class="pick__radio" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span>
+        </button>
+      </div>
       <div class="billing-wrap">
         <div class="billing" role="group" aria-label="Billing period" data-toggle-group>
           <button type="button" class="is-active" data-toggle="monthly">Monthly</button>
@@ -522,4 +549,39 @@ const cta = {
   </CtaSky>
 </main>
 
+<Fragment slot="scripts">
+<script is:inline>
+  /* Platform picker: WooCommerce shows every plan; Shopify hides Lifetime (WooCommerce-only) and points the plan buttons at the
+     Shopify App Store, since Shopify plans are billed through the merchant's Shopify account. */
+  (() => {
+    const pick = document.querySelector("[data-platform-pick]");
+    if (!pick) return;
+    const SHOPIFY = "https://apps.shopify.com/search?q=cartpilot";
+    const cards = [...pick.querySelectorAll("[data-platform]")];
+    const life = document.querySelector('.billing [data-toggle="lifetime"]');
+    const monthly = document.querySelector('.billing [data-toggle="monthly"]');
+    const go = document.querySelector(".billing__go");
+    const btns = [...document.querySelectorAll(".plans .plan__btn")];
+    btns.forEach((b) => (b.dataset.href = b.getAttribute("href")));
+    const set = (key) => {
+      cards.forEach((c) => { const on = c.dataset.platform === key; c.classList.toggle("is-on", on); c.setAttribute("aria-checked", String(on)); });
+      const shop = key === "shopify";
+      if (life) { if (shop && life.classList.contains("is-active")) monthly?.click(); life.hidden = shop; }
+      if (go) go.hidden = shop;
+      btns.forEach((b) => {
+        b.setAttribute("href", shop ? SHOPIFY : b.dataset.href);
+        if (shop) { b.target = "_blank"; b.rel = "noopener"; } else { b.removeAttribute("target"); b.removeAttribute("rel"); }
+      });
+    };
+    cards.forEach((c) => c.addEventListener("click", () => set(c.dataset.platform)));
+    pick.addEventListener("keydown", (e) => {
+      if (!["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(e.key)) return;
+      e.preventDefault();
+      const i = cards.findIndex((c) => c.classList.contains("is-on"));
+      const next = cards[(i + (e.key === "ArrowLeft" || e.key === "ArrowUp" ? cards.length - 1 : 1)) % cards.length];
+      set(next.dataset.platform); next.focus();
+    });
+  })();
+</script>
+</Fragment>
 </Base>

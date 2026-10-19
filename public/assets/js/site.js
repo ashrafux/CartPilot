@@ -178,7 +178,7 @@
     // Whole components (animated as one piece, children stay put)
     const UNITS = [".cap", ".pcard", ".dc-card", ".jrow", ".faq-cards .faq", ".plan", ".pack", ".promise", ".refund", ".fx", ".plat",
       ".fcard", ".pcap", ".pstep", ".post-card", ".feat", ".help-card", ".tab", ".hero__media", ".phero__stage", ".hero__orb",
-      ".phero__orb", ".orb", ".footer-word", ".contrib", ".need-help", ".doc-foot", ".share", ".fca__tabs"].join(",");
+      ".phero__orb", ".orb", ".footer-word", ".contrib", ".need-help", ".doc-foot", ".share", ".fca__tabs", ".pick__card"].join(",");
     // Plain blocks, used when they are not part of a unit above
     const BLOCKS = "h1, h2, h3, h4, h5, h6, p, ul, ol, table, form, figure, blockquote, img, video, .btn-row, .pill, .works";
     // Never animated: chrome, dialogs, and sections that run their own scroll motion
