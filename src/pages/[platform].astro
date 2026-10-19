@@ -31,7 +31,7 @@ const faq = {
 ---
 <Base title={d.title} description={d.desc} bodyClass={`theme-dark-hero ${d.body}`} fontWeights="400;500;600;700">
 <Fragment slot="head">
-  <link rel="stylesheet" href="/assets/css/platform.css?v=20">
+  <link rel="stylesheet" href="/assets/css/platform.css?v=21">
 </Fragment>
 
 <main id="main">
@@ -140,11 +140,15 @@ const faq = {
         <h2 class="h3" set:html={d.steps_h2} />
         <p set:html={d.steps_p} />
       </div>
-      <ol class="psteps__grid">
-        {d.steps.map(([k, t, p], i) => (
-          <li class="pstep" data-reveal><span class="pstep__n"><Fragment set:html={ico(I[k], "1.8")} /><b>{i + 1}</b></span><h3 set:html={t} /><p set:html={p} /></li>
-        ))}
-      </ol>
+      <!-- zigzag: gradient-ring icons joined by a dotted curve, the middle step drops down -->
+      <div class="psteps__zz">
+        <svg class="psteps__path" viewBox="0 0 1180 220" preserveAspectRatio="none" aria-hidden="true"><path d="M200 60 C 400 60, 400 170, 590 170 S 780 60, 980 60" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="6 8" vector-effect="non-scaling-stroke"/></svg>
+        <ol class="psteps__grid">
+          {d.steps.map(([k, t, p], i) => (
+            <li class={`pstep pstep--${i + 1}`}><span class="pstep__ring"><span><Fragment set:html={ico(I[k], "1.8")} /></span><b>{i + 1}</b></span><h3 set:html={t} /><p set:html={p} /></li>
+          ))}
+        </ol>
+      </div>
       {d.steps_note && <p class="psteps__note"><span class="psteps__note-ico" aria-hidden="true"><Fragment set:html={NOTE_ICO} /></span><span set:html={d.steps_note} /></p>}
       <div class="psteps__cta">
         <Fragment set:html={installBtn} />
