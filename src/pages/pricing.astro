@@ -126,8 +126,7 @@ const cta = {
     @media (max-width: 1279px) { .pack { flex-basis: 30%; } }   /* 3 + 2 below laptop width: five in a row clip the Buy Pack buttons, four leave one alone */
     .pack__desc { flex-grow: 1; margin-top: 11px; font-size: 16px; line-height: 24px; color: var(--text); }
     .pack__price { margin-top: 23px; line-height: 1.2; color: var(--ink); }
-    .btn.pack__btn { --b: #000; width: 100%; min-height: 61px; margin-top: 23px; border-width: 1px; }
-    .btn.pack__btn:hover { box-shadow: 0 8px 22px -12px rgb(0 84 255 / .55); }   /* colour comes from the blue primary */
+    .btn.pack__btn { width: 100%; min-height: 61px; margin-top: 23px; }   /* secondary (outline) button; hover fill comes from .btn--secondary */
     .pack__unit { margin-top: 27px; font-size: 14px; line-height: 21px; color: var(--text); }
     .credits-note { margin-top: 31px; text-align: center; font-size: var(--fs-lead); line-height: 1.5; color: var(--text); }
 
@@ -450,11 +449,11 @@ const cta = {
     <div class="band-line packs-band">
       <div class="container">
         <div class="packs">
-          <div class="pack"><h3 class="h6">Mini</h3><p class="pack__desc">100 conversation credits</p><p class="h4 pack__price">$19</p><a class="btn pack__btn" href="https://app.cartpilot.ai/get-started?plan=cp-pack-mini">Buy Pack</a><p class="pack__unit">Per Credit $0.19</p></div>
-          <div class="pack"><h3 class="h6">Small</h3><p class="pack__desc">300 conversation credits</p><p class="h4 pack__price">$49</p><a class="btn pack__btn" href="https://app.cartpilot.ai/get-started?plan=cp-pack-small">Buy Pack</a><p class="pack__unit">Per Credit $0.16</p></div>
-          <div class="pack"><h3 class="h6">Medium</h3><p class="pack__desc">1,000 conversation credits</p><p class="h4 pack__price">$149</p><a class="btn pack__btn" href="https://app.cartpilot.ai/get-started?plan=cp-pack-medium">Buy Pack</a><p class="pack__unit">Per Credit $0.15</p></div>
-          <div class="pack"><h3 class="h6">Large</h3><p class="pack__desc">2,500 conversation credits</p><p class="h4 pack__price">$349</p><a class="btn pack__btn" href="https://app.cartpilot.ai/get-started?plan=cp-pack-large">Buy Pack</a><p class="pack__unit">Per Credit $0.14</p></div>
-          <div class="pack"><h3 class="h6">Bulk</h3><p class="pack__desc">5,000 conversation credits</p><p class="h4 pack__price">$599</p><a class="btn pack__btn" href="https://app.cartpilot.ai/get-started?plan=cp-pack-bulk">Buy Pack</a><p class="pack__unit">Per Credit $0.12</p></div>
+          <div class="pack"><h3 class="h6">Mini</h3><p class="pack__desc">100 conversation credits</p><p class="h4 pack__price">$19</p><a class="btn btn--secondary pack__btn" href="https://app.cartpilot.ai/get-started?plan=cp-pack-mini">Buy Pack</a><p class="pack__unit">Per Credit $0.19</p></div>
+          <div class="pack"><h3 class="h6">Small</h3><p class="pack__desc">300 conversation credits</p><p class="h4 pack__price">$49</p><a class="btn btn--secondary pack__btn" href="https://app.cartpilot.ai/get-started?plan=cp-pack-small">Buy Pack</a><p class="pack__unit">Per Credit $0.16</p></div>
+          <div class="pack"><h3 class="h6">Medium</h3><p class="pack__desc">1,000 conversation credits</p><p class="h4 pack__price">$149</p><a class="btn btn--secondary pack__btn" href="https://app.cartpilot.ai/get-started?plan=cp-pack-medium">Buy Pack</a><p class="pack__unit">Per Credit $0.15</p></div>
+          <div class="pack"><h3 class="h6">Large</h3><p class="pack__desc">2,500 conversation credits</p><p class="h4 pack__price">$349</p><a class="btn btn--secondary pack__btn" href="https://app.cartpilot.ai/get-started?plan=cp-pack-large">Buy Pack</a><p class="pack__unit">Per Credit $0.14</p></div>
+          <div class="pack"><h3 class="h6">Bulk</h3><p class="pack__desc">5,000 conversation credits</p><p class="h4 pack__price">$599</p><a class="btn btn--secondary pack__btn" href="https://app.cartpilot.ai/get-started?plan=cp-pack-bulk">Buy Pack</a><p class="pack__unit">Per Credit $0.12</p></div>
         </div>
       </div>
     </div>
