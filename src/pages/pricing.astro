@@ -70,14 +70,25 @@ const cta = {
     .pick__card.is-on .pick__radio { background: var(--blue); box-shadow: none; }
     .pick__card.is-on .pick__radio svg { opacity: 1; }
     .billing-wrap { margin-top: 60px; }
-    .billing { position: relative; display: inline-flex; background: #fff; border-radius: 5px; }
+    /* Billing: Monthly / Annual in an off-white pill (selected = white), Lifetime beside it as a gradient tertiary button */
+    .billing-row { position: relative; display: inline-flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 12px 20px; }
+    .billing { display: inline-flex; gap: 4px; padding: 5px; background: #ececef; border-radius: 999px; box-shadow: inset 0 0 0 1px rgb(15 23 42 / .05); }
     .billing button {
-      padding: 13px 23px; border-radius: 5px; font-size: 18px; line-height: 27px; color: var(--ink-2);
-      transition: background-color .25s var(--ease), color .25s var(--ease);
+      padding: 12px 28px; border-radius: 999px; font-size: 18px; line-height: 27px; color: #6b7280;
+      transition: background-color .25s var(--ease), color .25s var(--ease), box-shadow .25s var(--ease);
     }
-    .billing button:hover:not(.is-active) { background: #f4f4f5; }
-    .billing button.is-active { background: #000; color: #fff; }
-    .billing__go { position: absolute; left: calc(100% - 20px); top: -39px; width: 140px; height: 53px; pointer-events: none; }
+    .billing button:hover:not(.is-active) { color: var(--ink-2); }
+    .billing button.is-active { background: #fff; color: var(--ink-2); box-shadow: 0 1px 2px rgb(16 24 40 / .06), 0 4px 12px rgb(16 24 40 / .07); }
+    .btn.billing__life {
+      --life: linear-gradient(90deg, #0054ff, #7b3cff 55%, #e2489c);
+      height: 61px; padding: 0 24px 0 20px; gap: 10px; font-size: 18px; font-weight: 600;
+      border: 1.5px solid transparent; transition: background .25s var(--ease), box-shadow .25s var(--ease);
+    }
+    .billing__life svg { width: 24px; height: 24px; }
+    .billing__life .btn__label b { background: var(--life); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .btn.billing__life:hover { background: rgb(123 60 255 / .06); }
+    .btn.billing__life.is-active { background: linear-gradient(#fff, #fff) padding-box, var(--life) border-box; box-shadow: 0 4px 14px rgb(123 60 255 / .14); }
+    .billing__go { position: absolute; left: calc(100% - 34px); top: -40px; width: 140px; height: 53px; pointer-events: none; }
 
     /* Plan cards */
     .plans-band { margin-top: 46px; border-block: 1px solid var(--line); }
@@ -192,7 +203,7 @@ const cta = {
       .plans--4 { grid-template-columns: minmax(0, 1fr); }
       .plan__price--free { margin-bottom: 0; }
       .billing__go { display: none; }
-      .billing button { padding-inline: 18px; }
+      .billing button { padding-inline: 20px; }
       .refund, .promise { padding: 28px 20px; }
       .price-hero .lead { margin-top: 24px; }
       .compare { border-radius: 8px; }
@@ -203,7 +214,8 @@ const cta = {
       .compare th:first-child { box-shadow: 1px 0 0 var(--line); }
     }
     @media (max-width: 400px) {
-      .billing button { padding: 11px 14px; font-size: 16px; }
+      .billing button { padding: 10px 18px; font-size: 16px; }
+      .btn.billing__life { height: 55px; font-size: 16px; }
     }
   </style>
 </Fragment>
@@ -228,10 +240,12 @@ const cta = {
         </button>
       </div>
       <div class="billing-wrap">
-        <div class="billing" role="group" aria-label="Billing period" data-toggle-group>
-          <button type="button" class="is-active" data-toggle="monthly">Monthly</button>
-          <button type="button" data-toggle="annual">Annual</button>
-          <button type="button" data-toggle="lifetime">Lifetime</button>
+        <div class="billing-row" role="group" aria-label="Billing period" data-toggle-group>
+          <div class="billing">
+            <button type="button" class="is-active" data-toggle="monthly">Monthly</button>
+            <button type="button" data-toggle="annual">Annual</button>
+          </div>
+          <button type="button" class="btn btn--tertiary billing__life" data-toggle="lifetime"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><defs><linearGradient id="life-grad" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#0054ff"/><stop offset=".55" stop-color="#7b3cff"/><stop offset="1" stop-color="#e2489c"/></linearGradient></defs><path d="M12 12c-2-2.67-4-4-6-4a4 4 0 1 0 0 8c2 0 4-1.33 6-4Zm0 0c2 2.67 4 4 6 4a4 4 0 0 0 0-8c-2 0-4 1.33-6 4Z" stroke="url(#life-grad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Lifetime</button>
           <img class="billing__go" src="/assets/img/go-unlimited.gif" alt="" width="680" height="256">
         </div>
       </div>
@@ -558,7 +572,7 @@ const cta = {
     if (!pick) return;
     const SHOPIFY = "https://apps.shopify.com/search?q=cartpilot";
     const cards = [...pick.querySelectorAll("[data-platform]")];
-    const life = document.querySelector('.billing [data-toggle="lifetime"]');
+    const life = document.querySelector('.billing-row [data-toggle="lifetime"]');
     const monthly = document.querySelector('.billing [data-toggle="monthly"]');
     const go = document.querySelector(".billing__go");
     const btns = [...document.querySelectorAll(".plans .plan__btn")];
