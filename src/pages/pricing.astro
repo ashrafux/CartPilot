@@ -33,7 +33,7 @@ const cta = {
   text: "CartPilot is the AI agent that talks, types, and closes – right from the chat window, on any eCommerce platform.",
 };
 ---
-<Base title={title} description={description} bodyClass="header-white">
+<Base title={title} description={description} bodyClass="header-page">
 <Fragment slot="head">
   <style is:inline>
     /* ---------- Pricing ---------- */
@@ -47,6 +47,7 @@ const cta = {
     .lead--sm { font-size: var(--fs-body); }
 
     /* Gray band: hero + plans + credits + comparison */
+    body.header-page { --header-bg: #f6f6f6; }   /* header shares the hero band colour (no white strip) */
     .price-band { background: var(--bg-page); padding-block: clamp(56px, 11.67vw, 168px) var(--gap-xl); }
     .price-hero { text-align: center; }
     .price-hero h1 { max-width: 720px; margin: 0 auto; }
