@@ -80,7 +80,7 @@ export function chips(d: Platform) {
   const chip = ([kind, b, s]: string[], cls: string) => {
     let ic: string;
     if (kind === "brand") {
-      const inner = d.slug === "shopify" ? '<img src="/assets/icons/shopify.svg" alt="">' : '<img src="/assets/img/woo-logo.png" alt="">';
+      const inner = d.slug === "shopify" ? '<img src="/assets/img/shopify-logo.png" alt="">' : '<img src="/assets/img/woo-logo.png" alt="">';
       ic = `<span class="fchip__ico${d.slug === "woocommerce" ? " fchip__ico--woo" : ""}">${inner}</span>`;
     } else ic = `<span class="fchip__ico">${ico(I[kind], "2")}</span>`;
     return `<div class="fchip ${cls} fchip--${tone[kind]}" aria-hidden="true">${ic}<span><b>${b}</b><small>${s}</small></span></div>`;
