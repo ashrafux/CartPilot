@@ -154,7 +154,8 @@ const cta = {
     .jrow:hover :is(.jrow__num, .jrow__title) { color: var(--blue); }   /* number and title take the primary blue */
     /* hover: the thumbnail pops a little bigger and tilts slightly, lifted by a soft shadow */
     .jrow:hover { position: relative; z-index: 2; }   /* lifts the hovered row so its enlarged art sits above the next row */
-    .jrow:hover .jrow__art { transform: scale(1.45) rotate(-3deg); box-shadow: 0 24px 44px -18px rgb(15 23 42 / .45); }
+    .jrow__art { transform-origin: 85% 50%; }   /* grows mostly leftwards, so the bigger art stays on screen */
+    .jrow:hover .jrow__art { transform: scale(1.8) rotate(-3deg); box-shadow: 0 28px 50px -20px rgb(15 23 42 / .45); }
     @media (prefers-reduced-motion: reduce) { .jrow:hover .jrow__art { transform: scale(1.04); } }
     .jlist-foot { max-width: 640px; margin: 40px auto 0; text-align: center; font-size: 16px; line-height: 1.5; color: #6b7280; }
 
