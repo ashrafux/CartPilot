@@ -146,6 +146,8 @@ const faq = {
     .loffer { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px 14px; margin-top: 32px; font-size: 16px; color: #4b5563; }
     .loffer__deal { padding: 6px 12px; border-radius: 99px; background: #16a34a; font-family: var(--font); font-size: 13px; font-weight: 600; line-height: 1; color: #fff; }
     .loffer i { width: 4px; height: 4px; border-radius: 50%; background: #cbd5e1; }
+    .loffer__guard { display: inline-flex; align-items: center; gap: 6px; }
+    .loffer__guard svg { width: 18px; height: 18px; flex: none; color: #16a34a; }
 
 
     /* Who it's for */
@@ -341,9 +343,6 @@ const faq = {
     .lplan__feats .lplan__byok { color: var(--ink); font-weight: 700; }
     .lplan__feats svg { width: 20px; height: 20px; flex: none; margin-top: 2px; padding: 4px; border-radius: 50%; background: #ececec; color: #000; }   /* same tick as the /pricing/ plan lists */
     .lplan__feats .lplan__byok svg { background: var(--blue); color: #fff; }   /* the bring-your-own-key line gets a key */
-    .lplans__guard { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 32px; font-size: 16px; color: #4b5563; text-align: left; }
-    .lplans__guard b { font-family: var(--font); font-weight: 600; color: var(--ink); }
-    .lplans__guard svg { width: 22px; height: 22px; flex: none; color: #16a34a; }
     .lnote { display: flex; align-items: center; gap: 20px; width: fit-content; max-width: 860px; margin: 32px auto 0; padding: 28px 36px 28px 28px;
       border-radius: 10px; background: rgb(0 84 255 / .1); font-size: 16px; line-height: 1.55; color: #4b5563; text-align: left; }
     .lnote__ico { width: 48px; height: 48px; flex: none; border-radius: 50%; display: grid; place-items: center; background: #fff; color: var(--blue);
@@ -367,7 +366,6 @@ const faq = {
       .lhero { padding: 56px 0 64px; }
       .lplans { margin-top: 48px; }
       .loffer i { display: none; }   /* the separator dot would dangle at a line end */
-      .lplans__guard { align-items: flex-start; }
       .lhead p { margin-top: 14px; }
       .laud__grid, .lfeat__grid, .lvs__grid { margin-top: 36px; }
       .lhub { margin-top: 32px; gap: 20px; }
@@ -410,7 +408,7 @@ const faq = {
       <p class="pill">Lifetime Deal · <img src="/assets/img/woo-logo.png" alt="" width="48" height="12"><b class="lhero__woo">WooCommerce</b></p>
       <h1 class="h1">Pay Once. Bring <span class="lhero__l2">Your Own AI Key.</span></h1>
       <p class="lhero__lead">Get CartPilot for your WooCommerce store with a single payment. Connect your own AI provider key, pay the provider directly for what you use, and never pay CartPilot a monthly fee.</p>
-      <p class="loffer"><span class="loffer__deal">October Deals</span><span>30% off every Lifetime plan</span><i aria-hidden="true"></i><span>7-day money-back guarantee</span></p>
+      <p class="loffer"><span class="loffer__deal">October Deals</span><span>30% off every Lifetime plan</span><i aria-hidden="true"></i><span class="loffer__guard"><Fragment set:html={svg(I.shield, "2")} />7-day money-back guarantee</span></p>
     </div>
 
     <!-- Plans: inside the hero, on the same violet background -->
@@ -430,7 +428,6 @@ const faq = {
           </article>
         ))}
       </div>
-      <p class="lplans__guard"><Fragment set:html={svg(I.shield)} /><span><b>7-day money-back guarantee.</b> If Lifetime isn’t right for you, ask for a refund within 7 days.</span></p>
       <p class="lnote"><span class="lnote__ico" aria-hidden="true"><Fragment set:html={svg(I.info)} /></span><span><strong>A quick note on AI costs</strong>Your AI provider bills you for usage. What you pay depends on the provider you pick and how many conversations your store has, so check their pricing before you choose Lifetime.</span></p>
     </div>
   </section>
