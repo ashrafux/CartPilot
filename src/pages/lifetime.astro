@@ -7,7 +7,7 @@ import Faq from "../components/Faq.astro";
 import CtaSky from "../components/CtaSky.astro";
 
 const title = "Lifetime Deal: Pay Once, Bring Your Own AI Key | CartPilot";
-const description = "Get CartPilot for your WooCommerce store for life. Pay once, connect your own AI provider key and pay them directly for usage. 7-day money-back guarantee.";
+const description = "Get CartPilot for your WooCommerce store with a single payment. Connect your own AI provider key, pay the provider directly for what you use, and never pay CartPilot a monthly fee. 7-day money-back guarantee.";
 
 // Lucide-style 24px stroke icons
 const svg = (d: string, w = "1.9") => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`;
@@ -32,6 +32,7 @@ const I = {
   check: '<path d="M20 6 9 17l-5-5"/>',
   shield: '<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/>',
   send: '<path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/>',
+  grid: '<rect x="3" y="4" width="7" height="7" rx="1.5"/><rect x="14" y="4" width="7" height="7" rx="1.5"/><rect x="3" y="15" width="7" height="6" rx="1.5"/><rect x="14" y="15" width="7" height="6" rx="1.5"/>',
   info: '<circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/>',
 };
 const CHECK = svg(I.check, "2.6");
@@ -39,68 +40,72 @@ const CHECK = svg(I.check, "2.6");
 const INF = (id: string) => `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><defs><linearGradient id="${id}" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#3b7bff"/><stop offset=".55" stop-color="#8b5cff"/><stop offset="1" stop-color="#f05aa8"/></linearGradient></defs><path d="M12 12c-2-2.67-4-4-6-4a4 4 0 1 0 0 8c2 0 4-1.33 6-4Zm0 0c2 2.67 4 4 6 4a4 4 0 0 0 0-8c-2 0-4 1.33-6 4Z" stroke="url(#${id})" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 
 const audience = [
-  { ico: I.trend, tone: "blue", t: "High-Volume Stores", p: "Keep the platform cost fixed as your conversations grow." },
-  { ico: I.brief, tone: "violet", t: "Agencies Running Several Stores", p: "One purchase. Room for your clients and their next big idea." },
-  { ico: I.lock, tone: "pink", t: "Merchants Who Want a Fixed Cost", p: "Own your setup and pay your AI provider directly for usage." },
+  { ico: I.trend, tone: "blue", t: "Busy Stores", p: "Your CartPilot cost stays the same however many conversations you have. You only pay your AI provider for what you use." },
+  { ico: I.grid, tone: "violet", t: "Agencies With Client Stores", p: "One purchase covers up to 20 WooCommerce stores, so you can add CartPilot to client sites without a new subscription each time." },
+  { ico: I.key, tone: "pink", t: "Owners Who Like Control", p: "Choose your AI provider, keep an eye on usage in their dashboard, and decide how much to spend." },
 ];
 
 const steps = [
-  { ico: I.cart, t: "Buy Lifetime", p: "Pick the plan that fits your stores." },
-  { ico: I.key, t: "Connect Your AI Provider Key", p: "Add your key in your CartPilot settings." },
-  { ico: I.zap, t: "CartPilot Runs on Your Key", p: "Your provider bills you for AI usage." },
+  { ico: I.cart, t: "Pick your plan and pay once", p: "Choose the plan that covers your stores. There are no renewals and no monthly CartPilot fee." },
+  { ico: I.key, t: "Connect your store and your AI key", p: "Install the WordPress plugin, connect your store, then add your AI provider key in your CartPilot settings." },
+  { ico: I.zap, t: "Start selling", p: "CartPilot helps your shoppers using your key, and your provider bills you directly for what you use." },
 ];
 
-const feats: [string, string, string?][] = [
-  [I.search, "Natural language search"],
-  [I.cart, "Add to cart from chat"],
-  [I.ticket, "Coupons in chat"],
-  [I.spark, "Product recommendations"],
-  [I.mic, "Voice shopping"],
-  [I.chat, "Instant answers 24/7"],
-  [I.box, "Order tracking"],
-  [I.users, "Human handover", "Professional and Agency"],
-  [I.chart, "Conversation analytics"],
-  [I.sliders, "Setup and customisation"],
+// [icon, title, description, plan note]
+const feats: [string, string, string, string?][] = [
+  [I.search, "Natural language search", "Shoppers describe what they want, and CartPilot finds it."],
+  [I.spark, "Smart recommendations", "Suggests in-stock products that fit the shopper’s needs and budget."],
+  [I.cart, "Add to cart from chat", "The right size, color, and quantity, straight into the real cart."],
+  [I.ticket, "Coupons in chat", "Applies a coupon code the moment a shopper mentions it."],
+  [I.mic, "Voice shopping", "Shoppers hold to speak and hear a natural voice reply."],
+  [I.chat, "Answers day and night", "Shipping, returns, and product questions, answered from your own policies."],
+  [I.box, "Order tracking", "Signed-in customers can check their order status in the chat."],
+  [I.users, "Human Handover", "Shoppers can ask for a real person, and your team replies in the same chat.", "Professional and Agency"],
+  [I.chart, "Full analytics with export", "See what shoppers ask for, and export the data."],
+  [I.sliders, "Setup and customization", "Your agent’s name, voice, colors, and greeting, with no code."],
 ];
 
 const versus = {
-  life: ["Pay CartPilot once", "Bring and manage your own AI key", "Pay your provider for usage", "Best for control and predictable platform costs"],
-  sub: ["Pay monthly or annually", "Included conversation allowance", "No separate AI key needed", "Best for getting started with less setup"],
+  life: ["Pay CartPilot once", "Use your own AI provider key", "Pay your provider for what you use", "WooCommerce stores only"],
+  lifeBest: "owners who want control and a predictable platform cost",
+  sub: ["Pay monthly or yearly", "No AI key needed. Conversations are included", "The AI cost is part of your plan", "Works on WooCommerce and Shopify"],
+  subBest: "stores that want to start quickly with less setup",
 };
 
 // "A salesperson that gets things done": six action chips around a chat widget; each chip plays its own short conversation
 const CART = svg(I.cart, "2");
-const prod = (name: string, price: string) => `<div class="lprod"><i></i><b>${name}</b><small>${price}</small><em>${CART}Add to Cart</em></div>`;
+const prod = (name: string, meta: string) => `<div class="lprod"><i></i><b>${name}</b><small>${meta}</small><span class="lprod__btns"><span>View Details</span><em>${CART}Add to Cart</em></span></div>`;
 const me = (t: string) => `<span class="lm lm--me">${t}</span>`;
 const ai = (t: string) => `<span class="lm lm--ai">${t}</span>`;
 const yes = `<span class="lyes">${CHECK}</span>`, no = `<span class="lno">–</span>`;
 const actions = [
   { ico: I.search, t: "Find a Product",
-    chat: me("Do you have a black hoodie under $60 in size L?") + ai("Absolutely. Here are two you’ll love, both in size L.") + `<div class="lprods">${prod("Everyday Hoodie", "$49.00")}${prod("Weekend Hoodie", "$59.00")}</div>` },
+    chat: me("A black hoodie under $60 in size L?") + ai("Here are two that fit, both in stock in L.") + `<div class="lprods">${prod("Everyday Hoodie", "Black · L · $49.00")}${prod("Weekend Hoodie", "Black · L · $59.00")}</div>` },
   { ico: I.layers, t: "Compare Two Options",
-    chat: me("Which one is warmer?") + ai("The Weekend Hoodie. Here’s how the two compare:") +
-      `<div class="lcmp"><span></span><b>Everyday</b><b>Weekend</b><span>Fleece lined</span>${no}${yes}<span>Under $60</span>${yes}${yes}<span>Size L in stock</span>${yes}${yes}</div>` },
+    chat: me("What’s the difference between these two?") + ai("Here’s a quick side-by-side.") +
+      `<div class="lcmp"><span></span><b>Everyday</b><b>Weekend</b><span>Price</span><span class="lcmp__v">$49.00</span><span class="lcmp__v">$59.00</span><span>Fleece lined</span>${no}${yes}<span>Under $60</span>${yes}${yes}<span>Size L in stock</span>${yes}${yes}</div>` },
   { ico: I.bag, t: "Add to Cart",
-    chat: me("Add the Weekend Hoodie in size L.") + ai("Done! It’s in your cart.") +
-      `<div class="lcart"><i></i><span><b>Weekend Hoodie</b><small>Black / L · Qty 1</small></span><strong>$59.00</strong></div><div class="lcart__f"><span>${svg(I.bag, "2")}1 item in your cart</span><em>Checkout</em></div>` },
+    chat: me("Add the Weekend Hoodie in black, size L.") + ai("Done. It’s in your cart.") +
+      `<div class="lcart"><i></i><span><b>Weekend Hoodie</b><small>Black / L · Qty 1</small></span><strong>$59.00</strong></div><div class="lcart__f"><em>Checkout</em></div>` },
   { ico: I.ticket, t: "Apply a Coupon",
-    chat: me("I have a code: SAVE10") + ai("SAVE10 is applied. You save $5.90.") +
-      `<div class="ltotal"><span class="lcoupon">${svg(I.ticket, "2")}SAVE10 · 10% off</span><span class="ltotal__p"><s>$59.00</s><b>$53.10</b></span></div>` },
+    chat: me("I have a code: SAVE10") + ai("Applied. You saved 10%.") +
+      `<div class="lsum"><div><span>Subtotal</span><span><s>$59.00</s> <b>$53.10</b></span></div><div><span>Coupon SAVE10</span><span class="lsum__off">−10%</span></div></div>` },
   { ico: I.box, t: "Track an Order",
-    chat: me("Where’s my order #1042?") + ai("It shipped yesterday and arrives on Friday.") +
-      `<ol class="ltrack"><li class="is-done">${CHECK}Ordered</li><li class="is-done">${CHECK}Shipped</li><li><i></i>Arrives Friday</li></ol>` },
+    chat: me("Where’s my order #1042?") + ai("It shipped yesterday and should arrive Friday.") +
+      `<ol class="ltrack"><li class="is-done">${CHECK}Ordered</li><li class="is-done">${CHECK}Shipped</li><li><i>3</i>Arrives Friday</li></ol>` },
   { ico: I.mic, t: "Talk by Voice",
     chat: `<span class="lm lm--me lm--voice">${svg(I.mic, "2")}<span class="lwave">${[6,12,18,10,22,14,8,16,20,12,8,14,10,6].map((h) => `<i style="height:${h}px"></i>`).join("")}</span><small>0:04</small></span>` +
-      ai("I heard “running shoes under $80”. Here’s my best match.") + `<div class="lprods lprods--one">${prod("Trail Runner", "$74.00")}</div>` },
+      ai("Here’s the Trail Runner in your size.") + `<div class="lprods lprods--one">${prod("Trail Runner", "Grey · 9 · $74.00")}</div>` },
 ];
 
+const BYOK = "Unlimited conversations with your own AI key";
 const plans = [
-  { name: "Starter", desc: "Best for solo stores ready to sell smarter", was: "$199", amt: "$139", plan: "cp-starter-ltd",
-    feats: ["1 store", "10 conversations / month included", "Unlimited with your own key", "Product updates"] },
-  { name: "Professional", desc: "Best for growing teams and larger catalogs", was: "$399", amt: "$279", plan: "cp-professional-ltd", pick: true,
-    feats: ["5 stores", "20 conversations / month included", "Unlimited with your own key", "Product updates", "Human handover"] },
-  { name: "Agency", desc: "Best for scaling stores with serious traffic", was: "$699", amt: "$489", plan: "cp-agency-ltd",
-    feats: ["20 stores", "50 conversations / month included", "Unlimited with your own key", "Product updates", "Human handover"] },
+  { name: "Starter", desc: "Best for one store that wants a fixed cost", was: "$199", amt: "$139", plan: "cp-starter-ltd",
+    feats: ["1 Shop", "10 conversations/month included", BYOK, "Unlimited products", "Unlimited training items", "Voice Agent", "Full Analytics + Export", "Priority Support", "Product updates"] },
+  { name: "Professional", desc: "Best for up to 5 stores, with Human Handover", was: "$399", amt: "$279", plan: "cp-professional-ltd", pick: true,
+    feats: ["5 Shops", "20 conversations/month included", BYOK, "Unlimited products", "Unlimited training items", "Voice Agent", "Human Handover", "Full Analytics + Export", "Priority Support", "Product updates"] },
+  { name: "Agency", desc: "Best for agencies running many client stores", was: "$699", amt: "$489", plan: "cp-agency-ltd",
+    feats: ["20 Shops", "50 conversations/month included", BYOK, "Unlimited products", "Unlimited training items", "Voice Agent", "Human Handover", "Full Analytics + Export", "Priority Support", "Product updates"] },
 ];
 
 const faq = {
@@ -109,11 +114,12 @@ const faq = {
   lead: "Curious about something else? Our team is just a conversation away.",
   button: { href: "/contact/", label: "Talk to a Real Person" },
   items: [
-    { q: "Which AI providers work?", a: "<p>Lifetime plans run on your own AI provider key. Tell our team which provider you use before purchasing, and we’ll confirm it’s supported.</p>" },
-    { q: "What if my key runs out of credit?", a: "<p>Add credit with your AI provider to continue usage on that key. Your CartPilot plan itself never expires.</p>" },
-    { q: "Are updates included?", a: "<p>Yes. Lifetime plans include CartPilot product updates.</p>" },
-    { q: "How do refunds work?", a: "<p>The Lifetime offer includes a 7-day money-back guarantee. Contact our team within that window to request a refund.</p>" },
-    { q: "Can I use this on Shopify?", a: "<p>No. Lifetime plans are for WooCommerce stores only. Shopify stores can start with the free <a href=\"/shopify/\">Shopify app</a>.</p>" },
+    { q: "Which AI providers work with CartPilot?", a: "<p>Tell us which provider you use before you buy, and we’ll confirm it works with CartPilot.</p>" },
+    { q: "Can I use CartPilot before I add my own key?", a: "<p>Yes. Each plan includes a set number of conversations every month: 10 on Starter, 20 on Professional, and 50 on Agency. Add your own AI key whenever you want unlimited conversations.</p>" },
+    { q: "What happens if my AI key runs out of credit?", a: "<p>Top up your account with your AI provider, and CartPilot carries on. Your Lifetime plan itself never expires.</p>" },
+    { q: "Are updates included?", a: "<p>Yes. Lifetime plans include product updates.</p>" },
+    { q: "How do refunds work?", a: "<p>Every Lifetime plan has a 7-day money-back guarantee, no questions asked. If it isn’t right for you, contact our team within 7 days of buying.</p>" },
+    { q: "Can I get Lifetime for a Shopify store?", a: "<p>No. Lifetime plans are for WooCommerce stores only. On Shopify, you can start free with the CartPilot app and move to a monthly or annual plan when you’re ready. <a href=\"/shopify/\">See CartPilot for Shopify →</a></p>" },
   ],
 };
 ---
@@ -133,18 +139,22 @@ const faq = {
     .lhero__in { display: flex; flex-direction: column; align-items: center; text-align: center; }
     .lhero .pill { background: #fff; border: 1px solid #ececef; color: var(--ink); }
     .lhero .pill img { width: auto; height: 12px; margin-right: 2px; }
-    .lhero .pill svg { width: 22px; height: 22px; margin-left: 2px; }
+    .lhero__woo { font-weight: 600; color: var(--blue); }
     .lhero h1 { margin-top: 20px; max-width: 1040px; text-wrap: balance; }
     .lhero h1 .lhero__l2 { display: block; }   /* second line, same ink as the first (no gradient) */
     .lhero__lead { margin-top: 28px; max-width: 760px; font-size: var(--fs-lead); line-height: 1.5; color: #4b5563; }
-    .lhero__note { margin-top: 26px; font-size: 16px; color: #6b7280; }
+    .lhero .btn-row { margin-top: 40px; justify-content: center; }
+    .loffer { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px 14px; margin-top: 24px; font-size: 16px; color: #4b5563; }
+    .loffer__deal { padding: 6px 12px; border-radius: 99px; background: #16a34a; font-family: var(--font); font-size: 13px; font-weight: 600; line-height: 1; color: #fff; }
+    .loffer i { width: 4px; height: 4px; border-radius: 50%; background: #cbd5e1; }
+    .lhero__note { margin-top: 20px; font-size: 16px; color: #6b7280; }
     .lhero__note a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgb(15 23 42 / .3); transition: text-decoration-color .2s; }
     .lhero__note a:hover { text-decoration-color: var(--ink); }
 
 
     /* Who it's for */
     .laud__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-top: 56px; }
-    .lcard { min-height: 300px; padding: 40px; border-radius: 10px; background: #f4f4f5; display: flex; flex-direction: column; justify-content: space-between; gap: 40px; transition: background-color .35s var(--ease); }
+    .lcard { min-height: 300px; padding: 40px; border-radius: 10px; background: #f4f4f5; display: flex; flex-direction: column; justify-content: flex-start; gap: 40px; transition: background-color .35s var(--ease); }   /* titles line up across the row */
     .lcard__ico { width: 72px; height: 72px; border-radius: 50%; display: grid; place-items: center; transition: background-color .35s var(--ease), color .35s var(--ease); }
     .lcard__ico svg { width: 32px; height: 32px; }
     .lcard--blue .lcard__ico { background: #e1eaff; color: #0054ff; }
@@ -189,15 +199,17 @@ const faq = {
     .lfeat .lhead h2 { color: #fff; }
     .lfeat .lhead p { color: rgb(255 255 255 / .6); }
     .lfeat__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 56px; list-style: none; }
-    .lfi { display: flex; align-items: center; gap: 16px; min-height: 80px; padding: 16px 22px 16px 16px; border-radius: 10px; border: 1px solid #222228; background: #121217; transition: border-color .3s var(--ease), background-color .3s var(--ease), box-shadow .3s var(--ease); }
+    .lfi { display: flex; align-items: center; gap: 16px; min-height: 96px; padding: 18px 22px 18px 18px; border-radius: 10px; border: 1px solid #222228; background: #121217; transition: border-color .3s var(--ease), background-color .3s var(--ease), box-shadow .3s var(--ease); }
     .lfi:hover { border-color: var(--blue); background: var(--blue); box-shadow: 0 20px 40px -22px rgb(0 84 255 / .7); }
     .lfi:hover .lfi__ico { background: rgb(255 255 255 / .18); color: #fff; }
     .lfi:hover .lfi__t small { color: rgb(255 255 255 / .78); }
     .lfi:hover .lfi__ok { background: #fff; color: #000; }
     .lfi__ico { width: 48px; height: 48px; flex: none; border-radius: 50%; display: grid; place-items: center; background: rgb(0 84 255 / .18); color: #8fb0ff; transition: background-color .3s var(--ease), color .3s var(--ease); }
     .lfi__ico svg { width: 22px; height: 22px; }
-    .lfi__t { flex: 1; min-width: 0; font-family: var(--font); font-size: 18px; font-weight: 500; line-height: 1.35; color: #fff; }
-    .lfi__t small { display: block; margin-top: 2px; font-family: var(--font-text); font-size: 15px; font-weight: 400; color: rgb(255 255 255 / .5); transition: color .3s var(--ease); }
+    .lfi__t { flex: 1; min-width: 0; color: #fff; }
+    .lfi__t b { display: block; font-family: var(--font); font-size: 18px; font-weight: 500; line-height: 1.35; }
+    .lfi__tier { display: inline-block; margin-left: 8px; padding: 4px 9px; border-radius: 99px; background: #faedcd; font-family: var(--font); font-size: 12px; font-weight: 500; font-style: normal; line-height: 1; color: #8a5a00; vertical-align: 2px; }
+    .lfi__t small { display: block; margin-top: 4px; font-family: var(--font-text); font-size: 15px; font-weight: 400; line-height: 1.45; color: rgb(255 255 255 / .55); transition: color .3s var(--ease); }
     .lfi__ok { width: 28px; height: 28px; flex: none; border-radius: 50%; display: grid; place-items: center; background: rgb(255 255 255 / .1); color: #e4e4e7; transition: background-color .3s var(--ease), color .3s var(--ease); }
     .lfi__ok svg { width: 14px; height: 14px; }
 
@@ -216,6 +228,11 @@ const faq = {
     .lvs__card--life .lvs__list li { color: rgb(255 255 255 / .78); }
     .lvs__list svg { width: 22px; height: 22px; flex: none; margin-top: 2px; padding: 4px; border-radius: 50%; background: #e1eaff; color: var(--blue); }
     .lvs__card--life .lvs__list svg { background: rgb(74 222 128 / .16); color: #4ade80; }
+    .lvs__list { margin-bottom: 0; }
+    .lvs__best { width: 100%; margin: 28px 0 36px; padding-top: 22px; border-top: 1px solid #ececef; font-size: 16px; line-height: 1.5; color: #6b7280; }
+    .lvs__best b { font-family: var(--font); font-weight: 600; color: var(--ink); }
+    .lvs__card--life .lvs__best { border-top-color: rgb(255 255 255 / .12); color: rgb(255 255 255 / .7); }
+    .lvs__card--life .lvs__best b { color: #fff; }
     .lvs__card .btn { margin-top: auto; }
     .lvs__card--life .btn:not(.btn--secondary) { --bg-c: var(--blue); }
 
@@ -258,10 +275,13 @@ const faq = {
     .lprod i, .lcart i { grid-row: span 2; width: 40px; height: 40px; border-radius: 8px; background: linear-gradient(135deg, #1f2937, #4b5563); }
     .lprod b { font-family: var(--font); font-size: 12.5px; font-weight: 600; color: var(--ink); }
     .lprod small { font-size: 12.5px; color: #6b7280; }
-    .lprod em { grid-column: 1 / -1; display: inline-flex; align-items: center; justify-content: center; gap: 5px; margin-top: 8px; padding: 6px; border-radius: 6px; border: 1px solid #bfd1ff; font-style: normal; font-family: var(--font); font-size: 11.5px; color: var(--blue); }
+    .lprod__btns { grid-column: 1 / -1; display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 6px; margin-top: 8px; }
+    .lprod__btns > span { font-family: var(--font); font-size: 11px; color: #6b7280; text-decoration: underline; text-underline-offset: 2px; }
+    .lprod em { display: inline-flex; align-items: center; justify-content: center; gap: 4px; padding: 6px 4px; border-radius: 6px; border: 1px solid #bfd1ff; font-style: normal; font-family: var(--font); font-size: 11px; white-space: nowrap; color: var(--blue); }
     .lprod em svg { width: 12px; height: 12px; }
     .lcmp { display: grid; grid-template-columns: 1fr 72px 72px; align-items: center; row-gap: 8px; padding: 12px 14px; border-radius: 8px; background: #fff; box-shadow: 0 0 0 1px #eceef3; font-size: 13px; color: #4b5563; }
     .lcmp b { font-family: var(--font); font-size: 12.5px; font-weight: 600; color: var(--ink); text-align: center; }
+    .lcmp__v { text-align: center; font-family: var(--font); font-size: 12.5px; color: var(--ink); }
     .lyes, .lno { justify-self: center; width: 20px; height: 20px; border-radius: 50%; display: grid; place-items: center; }
     .lyes { background: #dcfce7; color: #16a34a; } .lyes svg { width: 11px; height: 11px; }
     .lno { color: #9ca3af; }
@@ -269,10 +289,15 @@ const faq = {
     .lcart b { display: block; font-family: var(--font); font-size: 13px; font-weight: 600; color: var(--ink); }
     .lcart small { font-size: 12.5px; color: #6b7280; }
     .lcart strong { font-family: var(--font); font-size: 14px; font-weight: 600; color: var(--ink); }
-    .lcart__f { display: flex; align-items: center; justify-content: space-between; font-family: var(--font); font-size: 12.5px; color: #4b5563; }
+    .lcart__f { display: flex; align-items: center; justify-content: flex-end; font-family: var(--font); font-size: 12.5px; color: #4b5563; }
     .lcart__f span { display: inline-flex; align-items: center; gap: 6px; }
     .lcart__f svg { width: 14px; height: 14px; color: #16a34a; }
     .lcart__f em { padding: 7px 14px; border-radius: 99px; background: var(--blue); color: #fff; font-style: normal; font-weight: 500; }
+    .lsum { display: grid; gap: 8px; padding: 12px 14px; border-radius: 8px; background: #fff; box-shadow: 0 0 0 1px #eceef3; font-size: 13px; color: #4b5563; }
+    .lsum div { display: flex; align-items: center; justify-content: space-between; }
+    .lsum s { color: #9ca3af; }
+    .lsum b { font-family: var(--font); font-size: 15px; font-weight: 600; color: var(--ink); }
+    .lsum__off { font-family: var(--font); font-weight: 600; color: #16a34a; }
     .ltotal { display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; border-radius: 8px; background: #fff; box-shadow: 0 0 0 1px #eceef3; }
     .lcoupon { display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: 99px; background: #dcfce7; color: #15803d; font-family: var(--font); font-size: 12px; font-weight: 600; }
     .lcoupon svg { width: 13px; height: 13px; }
@@ -282,14 +307,12 @@ const faq = {
     .ltrack li { display: flex; align-items: center; gap: 10px; }
     .ltrack svg, .ltrack i { width: 20px; height: 20px; flex: none; border-radius: 50%; }
     .ltrack svg { padding: 4px; background: var(--blue); color: #fff; }
-    .ltrack i { box-shadow: inset 0 0 0 2px #cbd5e1; }
+    .ltrack i { display: grid; place-items: center; box-shadow: inset 0 0 0 2px #cbd5e1; font-style: normal; font-size: 11px; font-weight: 600; color: #6b7280; }
     .ltrack .is-done { color: var(--ink); font-weight: 500; }
     .lwid__in { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; border-top: 1px solid #eceef3; font-size: 13px; color: #9ca3af; }
     .lwid__in i { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; background: var(--blue); color: #fff; }
     .lwid__in svg { width: 14px; height: 14px; }
-    .lshow__cap { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px 20px; margin-top: 24px; font-size: 16px; color: #374151; }
-    .lshow__cap span:first-child { display: inline-flex; align-items: center; gap: 8px; color: var(--ink); }
-    .lshow__cap span:first-child::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: #4ade80; box-shadow: 0 0 0 4px rgb(74 222 128 / .18); }
+    .lshow__cap { margin-top: 24px; text-align: center; font-size: 16px; color: #374151; }
     /* under 1100px the chips leave the orbit: a centred row above the widget */
     @media (max-width: 1100px) {
       .lhub { height: auto; display: flex; flex-direction: column; align-items: center; gap: 28px; }
@@ -298,13 +321,14 @@ const faq = {
       .lwid { position: relative; left: auto; top: auto; translate: none; width: min(400px, 100%); }
     }
     /* Plans */
-    .lplans { position: relative; margin-top: 64px; scroll-margin-top: 24px; }
+    .lplans { position: relative; margin-top: 96px; scroll-margin-top: 24px; }
+    .lplans__head { margin-bottom: 48px; }
     .lplans__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; align-items: stretch; }
     .lplan { position: relative; display: flex; flex-direction: column; padding: 40px; border-radius: 10px; background: #fff; border: 1px solid #e9e9e9; }
     .lplan--pick { border: 1.5px solid transparent; background: linear-gradient(#fff, #fff) padding-box, var(--life) border-box; }
     .lplan__head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
     .lplan__head h3 { font-size: var(--fs-h6); line-height: 1.3; }
-    .lplan__tag { padding: 6px 12px; border-radius: 99px; background: var(--life); font-family: var(--font); font-size: 14px; font-weight: 500; line-height: 1.3; color: #fff; }
+    .lplan__tag { padding: 6px 12px; border-radius: 45px; background: #faedcd; font-family: var(--font); font-size: 14px; font-weight: 500; line-height: 1.3; color: #8a5a00; }   /* same cream tag as /pricing/ */
     .lplan__desc { margin-top: 10px; min-height: 3em; font-size: 16px; line-height: 1.5; color: var(--text); }   /* two lines, so the prices line up */
     .lplan__was { display: flex; align-items: center; gap: 12px; margin-top: 28px; }
     .lplan__was s { font-size: 20px; line-height: 30px; color: var(--muted); }
@@ -313,19 +337,23 @@ const faq = {
     .lplan__amt { font-family: var(--font); font-size: var(--fs-h2); font-weight: 500; line-height: 1.1; color: var(--ink); }
     .lplan__per { padding-bottom: 8px; font-size: 16px; color: var(--text); }
     .lplan .btn { width: 100%; min-height: 61px; margin-top: 32px; }
-    .lplan__feats { list-style: none; display: grid; gap: 14px; margin-top: 32px; padding-top: 28px; border-top: 1px solid #f0f0f2; }
+    .lplan__flab { margin-top: 32px; padding-top: 28px; border-top: 1px solid #f0f0f2; font-family: var(--font); font-size: 16px; font-weight: 600; color: var(--ink); }
+    .lplan__feats { list-style: none; display: grid; gap: 12px; margin-top: 18px; }
     .lplan__feats li { display: flex; align-items: flex-start; gap: 10px; font-size: 16px; line-height: 1.5; color: #4b5563; }
-    .lplan__feats li:first-child { color: var(--ink); font-weight: 700; }
+    .lplan__feats li:first-child { color: var(--ink); }
+    .lplan__feats .lplan__byok { color: var(--ink); font-weight: 700; }
     .lplan__feats svg { width: 20px; height: 20px; flex: none; margin-top: 2px; padding: 4px; border-radius: 50%; background: #ececec; color: #000; }   /* same tick as the /pricing/ plan lists */
-    .lplans__guard { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 32px; font-family: var(--font); font-size: 16px; font-weight: 500; color: var(--ink); }
-    .lplans__guard svg { width: 22px; height: 22px; color: #16a34a; }
+    .lplan__feats .lplan__byok svg { background: var(--blue); color: #fff; }   /* the bring-your-own-key line gets a key */
+    .lplans__guard { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 32px; font-size: 16px; color: #4b5563; text-align: left; }
+    .lplans__guard b { font-family: var(--font); font-weight: 600; color: var(--ink); }
+    .lplans__guard svg { width: 22px; height: 22px; flex: none; color: #16a34a; }
     .lnote { display: flex; align-items: center; gap: 20px; width: fit-content; max-width: 860px; margin: 32px auto 0; padding: 28px 36px 28px 28px;
       border-radius: 10px; background: rgb(0 84 255 / .1); font-size: 16px; line-height: 1.55; color: #4b5563; text-align: left; }
     .lnote__ico { width: 48px; height: 48px; flex: none; border-radius: 50%; display: grid; place-items: center; background: #fff; color: var(--blue);
       box-shadow: 0 0 0 1px #e3e9f8, 0 6px 14px -8px rgb(0 84 255 / .5); }
     .lnote__ico svg { width: 22px; height: 22px; }
-    .lnote strong { font-weight: 700; color: var(--ink); }
-    .lnote__br { display: block; }   /* "so check your…" starts the second line */
+    .lnote strong { display: block; margin-bottom: 4px; font-family: var(--font); font-weight: 600; color: var(--ink); }
+    .lnote > span:last-child { text-wrap: balance; }
 
     @media (max-width: 1024px) {
       .laud__grid { grid-template-columns: 1fr; }
@@ -340,7 +368,11 @@ const faq = {
     }
     @media (max-width: 640px) {
       .lhero { padding: 56px 0 64px; }
-      .lplans { margin-top: 40px; }
+      .lplans { margin-top: 64px; }
+      .lplans__head { margin-bottom: 32px; }
+      .lhero .btn-row { margin-top: 32px; }
+      .loffer i { display: none; }   /* the separator dot would dangle at a line end */
+      .lplans__guard { align-items: flex-start; }
       .lhead p { margin-top: 14px; }
       .laud__grid, .lfeat__grid, .lvs__grid { margin-top: 36px; }
       .lhub { margin-top: 32px; gap: 20px; }
@@ -349,7 +381,7 @@ const faq = {
       .lchip__ico { width: 30px; height: 30px; }
       .lchip__ico svg { width: 15px; height: 15px; }
       .lwid__b { height: 330px; }
-      .lshow__cap { justify-content: center; text-align: center; font-size: 15px; }
+      .lshow__cap { font-size: 15px; }
       .lcard { flex-direction: column; align-items: flex-start; padding: 28px 22px; gap: 24px; }
       .lcard__ico { width: 60px; height: 60px; }
       .lcard__ico svg { width: 26px; height: 26px; }
@@ -362,7 +394,8 @@ const faq = {
       .lfi { min-height: 0; padding: 12px 16px 12px 12px; gap: 12px; }
       .lfi__ico { width: 40px; height: 40px; }
       .lfi__ico svg { width: 19px; height: 19px; }
-      .lfi__t { font-size: 16px; }
+      .lfi__t b { font-size: 16px; }
+      .lfi__t small { font-size: 14px; }
       .lvs__card { padding: 28px 22px; }
       .lvs__card .btn { width: 100%; }
       .lplan { padding: 28px 22px; }
@@ -370,7 +403,6 @@ const faq = {
       .lnote { margin-top: 24px; align-items: flex-start; gap: 14px; padding: 16px 18px 16px 14px; }
       .lnote__ico { width: 40px; height: 40px; }
       .lnote__ico svg { width: 19px; height: 19px; }
-      .lnote__br { display: none; }
     }
   </style>
 </Fragment>
@@ -379,28 +411,37 @@ const faq = {
   <!-- Hero -->
   <section class="lhero">
     <div class="container lhero__in">
-      <p class="pill"><img src="/assets/img/woo-logo.png" alt="WooCommerce" width="48" height="12"> Lifetime Deal <Fragment set:html={INF("inf-pill")} /></p>
+      <p class="pill"><img src="/assets/img/woo-logo.png" alt="" width="48" height="12"> Lifetime Deal · <b class="lhero__woo">WooCommerce</b></p>
       <h1 class="h1">Pay Once. <span class="lhero__l2">Bring Your Own AI Key.</span></h1>
-      <p class="lhero__lead">Get CartPilot for your WooCommerce store for life. Connect your own AI provider key and pay them directly for usage.</p>
-      <p class="lhero__note">On Shopify? Lifetime plans are for WooCommerce stores. <a href="/shopify/">Start free on Shopify →</a></p>
+      <p class="lhero__lead">Get CartPilot for your WooCommerce store with a single payment. Connect your own AI provider key, pay the provider directly for what you use, and never pay CartPilot a monthly fee.</p>
+      <div class="btn-row"><a class="btn btn--lg" href="#plans">See Lifetime Plans</a></div>
+      <p class="loffer"><span class="loffer__deal">October Deals</span><span>30% off every Lifetime plan</span><i aria-hidden="true"></i><span>7-day money-back guarantee</span></p>
+      <p class="lhero__note">On Shopify? Lifetime is for WooCommerce stores, but you can <a href="/shopify/">start free with the Shopify app →</a></p>
     </div>
 
     <!-- Plans: inside the hero, on the same violet background -->
     <div class="container lwrap lplans" id="plans" role="region" aria-label="Lifetime plans">
+      <div class="lhead lplans__head" data-reveal>
+        <h2 class="h3">Choose Your Lifetime Plan</h2>
+        <p>One payment, no renewals. Pick the plan that covers the number of stores you run.</p>
+      </div>
       <div class="lplans__grid">
         {plans.map((p) => (
           <article class={p.pick ? "lplan lplan--pick" : "lplan"} data-reveal>
-            <div class="lplan__head"><h3>{p.name}</h3>{p.pick && <span class="lplan__tag">Most Popular</span>}</div>
+            <div class="lplan__head"><h3>{p.name}</h3>{p.pick && <span class="lplan__tag">Recommended</span>}</div>
             <p class="lplan__desc">{p.desc}</p>
             <p class="lplan__was"><s><span class="sr-only">Regular price </span>{p.was}</s><span class="lplan__off">30% OFF</span></p>
             <p class="lplan__price"><span class="lplan__amt">{p.amt}</span><span class="lplan__per">/one-time</span></p>
             <a class={p.pick ? "btn" : "btn btn--secondary"} href={`https://app.cartpilot.ai/get-started?plan=${p.plan}&coupon=CPLAUNCHOFFERLTD`}>Choose {p.name}</a>
-            <ul class="lplan__feats">{p.feats.map((f) => <li><Fragment set:html={CHECK} />{f}</li>)}</ul>
+            <p class="lplan__flab">Features</p>
+            <ul class="lplan__feats">{p.feats.map((f) => f === BYOK
+              ? <li class="lplan__byok"><Fragment set:html={svg(I.key, "2.4")} />{f}</li>
+              : <li><Fragment set:html={CHECK} />{f}</li>)}</ul>
           </article>
         ))}
       </div>
-      <p class="lplans__guard"><Fragment set:html={svg(I.shield)} />7-day money-back guarantee</p>
-      <p class="lnote"><span class="lnote__ico" aria-hidden="true"><Fragment set:html={svg(I.info)} /></span><span><strong>A quick note on AI costs.</strong> AI provider costs depend on your provider and volume,<br class="lnote__br"> so check your provider’s pricing before you choose.</span></p>
+      <p class="lplans__guard"><Fragment set:html={svg(I.shield)} /><span><b>7-day money-back guarantee.</b> If Lifetime isn’t right for you, ask for a refund within 7 days.</span></p>
+      <p class="lnote"><span class="lnote__ico" aria-hidden="true"><Fragment set:html={svg(I.info)} /></span><span><strong>A quick note on AI costs</strong>Your AI provider bills you for usage. What you pay depends on the provider you pick and how many conversations your store has, so check their pricing before you choose Lifetime.</span></p>
     </div>
   </section>
 
@@ -409,7 +450,7 @@ const faq = {
     <div class="container lwrap">
       <div class="lhead" data-reveal>
         <h2 class="h3">Your Store. Your Key. Your Call.</h2>
-        <p>Lifetime is a different way to grow. Pay for CartPilot once, connect your own AI key and keep the platform cost fixed.</p>
+        <p>Lifetime works best when you’d rather own your setup than rent it.</p>
       </div>
       <div class="laud__grid">
         {audience.map((a) => (
@@ -419,7 +460,7 @@ const faq = {
           </div>
         ))}
       </div>
-      <div class="laud__more"><a class="btn btn--tertiary" href="/pricing/">Want zero setup? A monthly plan may suit you better →</a></div>
+      <div class="laud__more"><a class="btn btn--tertiary" href="/pricing/">Prefer not to manage an AI key? A monthly plan includes everything you need →</a></div>
     </div>
   </section>
 
@@ -428,7 +469,7 @@ const faq = {
     <div class="container lwrap">
       <div class="lhead" data-reveal>
         <h2 class="h3">Three Steps. Then It’s Yours.</h2>
-        <p>Bring your own key. CartPilot runs on it, and your AI provider bills you directly for what you use.</p>
+        <p>You pay CartPilot once. Your AI provider bills you separately for usage, so you always know where your money goes.</p>
       </div>
       <div class="lsteps__zz">
         <svg class="lsteps__path" viewBox="0 0 1180 220" preserveAspectRatio="none" aria-hidden="true"><path d="M200 60 C 400 60, 400 170, 590 170 S 780 60, 980 60" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="6 8" vector-effect="non-scaling-stroke"/></svg>
@@ -441,7 +482,7 @@ const faq = {
       <div class="lbill" aria-label="Who you pay">
         <span class="lbill__item"><span><img src="/assets/img/favicon.png" alt="" width="36" height="36"></span><b>CartPilot</b><em>Pay once</em></span>
         <span class="lbill__plus" aria-hidden="true">+</span>
-        <span class="lbill__item"><span class="lbill__ai"><Fragment set:html={svg(I.zap)} /></span><b>Your AI provider</b><em>Pay per use</em></span>
+        <span class="lbill__item"><span class="lbill__ai"><Fragment set:html={svg(I.zap)} /></span><b>Your AI provider</b><em>Pay for what you use</em></span>
       </div>
     </div>
   </section>
@@ -450,12 +491,12 @@ const faq = {
   <section class="section lfeat">
     <div class="container lwrap">
       <div class="lhead" data-reveal>
-        <h2 class="h3">All the Good Stuff. For Life.</h2>
-        <p>Everything you need to sell inside a conversation, included with every Lifetime plan.</p>
+        <h2 class="h3">Everything It Takes to Sell. For Life.</h2>
+        <p>Every Lifetime plan comes with the full shopping assistant, from the first question to the cart.</p>
       </div>
       <ul class="lfeat__grid">
-        {feats.map(([ico, t, sub]) => (
-          <li class="lfi"><span class="lfi__ico"><Fragment set:html={svg(ico)} /></span><span class="lfi__t">{t}{sub && <small>{sub}</small>}</span><span class="lfi__ok" aria-label="Included"><Fragment set:html={CHECK} /></span></li>
+        {feats.map(([ico, t, d, tier]) => (
+          <li class="lfi"><span class="lfi__ico"><Fragment set:html={svg(ico)} /></span><span class="lfi__t"><b>{t}{tier && <em class="lfi__tier">{tier}</em>}</b><small>{d}</small></span><span class="lfi__ok" aria-label="Included"><Fragment set:html={CHECK} /></span></li>
         ))}
       </ul>
     </div>
@@ -466,19 +507,21 @@ const faq = {
     <div class="container lwrap">
       <div class="lhead" data-reveal>
         <h2 class="h3">Lifetime or Subscription?</h2>
-        <p>Choose your approach. Both give your store the same AI sales agent.</p>
+        <p>Both plans give you the same AI sales agent. The difference is how you pay for it.</p>
       </div>
       <div class="lvs__grid">
         <div class="lvs__card lvs__card--life" data-reveal>
           <span class="lvs__tag"><Fragment set:html={INF("inf-vs")} />Lifetime</span>
-          <h3>A Fixed Platform Cost.</h3>
+          <h3>A Fixed Platform Cost</h3>
           <ul class="lvs__list">{versus.life.map((t) => <li><Fragment set:html={CHECK} />{t}</li>)}</ul>
+          <p class="lvs__best"><b>Best for</b> {versus.lifeBest}</p>
           <a class="btn" href="#plans">See Lifetime Plans</a>
         </div>
         <div class="lvs__card" data-reveal>
-          <span class="lvs__tag">Subscription</span>
-          <h3>Less to Manage.</h3>
+          <span class="lvs__tag">Monthly or annual</span>
+          <h3>Less to Manage</h3>
           <ul class="lvs__list">{versus.sub.map((t) => <li><Fragment set:html={CHECK} />{t}</li>)}</ul>
+          <p class="lvs__best"><b>Best for</b> {versus.subBest}</p>
           <a class="btn btn--secondary" href="/pricing/">View Monthly Plans</a>
         </div>
       </div>
@@ -491,7 +534,7 @@ const faq = {
     <div class="container lwrap">
       <div class="lhead" data-reveal>
         <h2 class="h3">A Salesperson That Gets Things Done.</h2>
-        <p>See what you’re getting: real products, real actions, one conversation.</p>
+        <p>Click through a few real tasks and see how CartPilot handles them in one chat.</p>
       </div>
       <div class="lhub" data-show>
         <ul class="lhub__chips">
@@ -500,7 +543,7 @@ const faq = {
           ))}
         </ul>
         <div class="lwid">
-          <div class="lwid__h"><img src="/assets/img/favicon.png" alt="" width="34" height="34"><span><b>CartPilot</b><small>Your personal AI agent</small></span></div>
+          <div class="lwid__h"><img src="/assets/img/favicon.png" alt="" width="34" height="34"><span><b>Oakline Assistant</b><small>Connected to your catalog</small></span></div>
           <div class="lwid__b" aria-live="polite">
             {actions.map((a, i) => (
               <div class={i === 0 ? "lwid__pane is-on" : "lwid__pane"} aria-hidden={i === 0 ? "false" : "true"} set:html={a.chat} />
@@ -509,15 +552,15 @@ const faq = {
           <div class="lwid__in" aria-hidden="true"><span>Ask anything here…</span><i><Fragment set:html={svg(I.send, "2")} /></i></div>
         </div>
       </div>
-      <p class="lshow__cap"><span>Connected to your catalog</span><span>Real products. Real actions. One conversation.</span></p>
+      <p class="lshow__cap">Real products. Real actions. One conversation.</p>
     </div>
   </section>
 
   <Faq {...faq} />
 
-  <CtaSky title="Start Free. Upgrade When Your Store Needs More." text="Free plan · No card · Live in about 2 minutes.">
-    <a class="btn" href="https://app.cartpilot.ai/register">Try CartPilot Free</a>
-    <a class="btn btn--white" href="/pricing/">View Pricing Plans</a>
+  <CtaSky title="Pay Once. Let CartPilot Keep Selling." text="Give your WooCommerce store an AI salesperson for a single payment, backed by a 7-day money-back guarantee." note="Free plan · No card · Live in minutes">
+    <a class="btn" href="#plans">See Lifetime Plans</a>
+    <a class="btn btn--white" href="https://app.cartpilot.ai/register">Try CartPilot Free</a>
   </CtaSky>
 </main>
 

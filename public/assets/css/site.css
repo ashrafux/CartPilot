@@ -515,6 +515,7 @@ html.js-loading :is(main, .site-footer) { opacity: 0; animation: cp-failsafe .01
 .cta-sky__title { margin-top: 28px; max-width: 1180px; font-size: var(--fs-h3); line-height: 1.1; letter-spacing: -.025em; font-weight: var(--fw-heading); color: #fff; text-wrap: balance; text-shadow: 0 2px 28px rgb(10 30 80 / .4); }
 .cta-sky__text { margin-top: 18px; max-width: 600px; font-size: var(--fs-lead); line-height: 1.5; color: rgb(255 255 255 / .95); text-shadow: 0 1px 12px rgb(15 40 90 / .25); }
 .cta-sky .btn-row { margin-top: 32px; }
+.cta-sky__note { margin-top: 18px; font-size: 15px; color: rgb(255 255 255 / .88); text-shadow: 0 1px 12px rgb(15 40 90 / .25); }
 .cta-sky .btn:not(.btn--white) { --bg-c: #101014; }   /* on the blue sky the primary stays black */
 .cta-sky .btn:not(.btn--white):hover { --bg-c: #22222a; }
 /* ---------- FAQ: intro on the left, accordion cards on the right ---------- */
