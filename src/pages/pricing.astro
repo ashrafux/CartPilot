@@ -87,14 +87,12 @@ const cta = {
     .billing__life svg { width: 24px; height: 24px; }
     .billing__life .btn__label b { background: var(--life); -webkit-background-clip: text; background-clip: text; color: transparent; }
     .btn.billing__life:hover { background: rgb(123 60 255 / .06); }
-    .btn.billing__life.is-active { background: linear-gradient(#fff, #fff) padding-box, var(--life) border-box; box-shadow: 0 4px 14px rgb(123 60 255 / .14); }
     .billing__go { position: absolute; left: calc(100% - 34px); top: -40px; width: 140px; height: 53px; pointer-events: none; }
 
     /* Plan cards */
     .plans-band { margin-top: 46px; border-block: 1px solid var(--line); }
     .plans { display: grid; gap: 1px; background: var(--line); border-inline: 1px solid var(--line); }
     .plans--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-    .plans--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     .plan {
       display: flex; flex-direction: column; justify-content: space-between; gap: 19.2px;
       padding: var(--sp-10); background: var(--bg-page); transition: background-color .3s var(--ease);
@@ -113,7 +111,6 @@ const cta = {
     .plan__price--free { margin-bottom: 49px; }
     .btn.plan__btn { width: 100%; min-height: 61px; margin-top: var(--sp-10); border-width: 1px; border-color: var(--line); }
     .btn.plan__btn:hover { border-color: #000; background: #000; color: #fff; }
-    .plans--3 .plan__btn { max-width: 364px; }
     .plan__feats { margin-top: var(--sp-10); }
     .plan__feats-title { font-size: 16px; line-height: 24px; font-weight: 600; color: var(--ink-2); }
     .plan__feats ul { list-style: none; margin-top: 23px; display: grid; gap: 10px; }
@@ -188,8 +185,6 @@ const cta = {
       .plans--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
     @media (max-width: 860px) {
-      .plans--3 { grid-template-columns: minmax(0, 1fr); }
-      .plans--3 .plan__btn { max-width: none; }
     }
     @media (max-width: 781px) {
       .promises { grid-template-columns: 1fr; }
@@ -245,7 +240,7 @@ const cta = {
             <button type="button" class="is-active" data-toggle="monthly">Monthly</button>
             <button type="button" data-toggle="annual">Annual</button>
           </div>
-          <button type="button" class="btn btn--tertiary billing__life" data-toggle="lifetime"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><defs><linearGradient id="life-grad" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#0054ff"/><stop offset=".55" stop-color="#7b3cff"/><stop offset="1" stop-color="#e2489c"/></linearGradient></defs><path d="M12 12c-2-2.67-4-4-6-4a4 4 0 1 0 0 8c2 0 4-1.33 6-4Zm0 0c2 2.67 4 4 6 4a4 4 0 0 0 0-8c-2 0-4 1.33-6 4Z" stroke="url(#life-grad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Lifetime</button>
+          <a class="btn btn--tertiary billing__life" href="/lifetime/"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><defs><linearGradient id="life-grad" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#0054ff"/><stop offset=".55" stop-color="#7b3cff"/><stop offset="1" stop-color="#e2489c"/></linearGradient></defs><path d="M12 12c-2-2.67-4-4-6-4a4 4 0 1 0 0 8c2 0 4-1.33 6-4Zm0 0c2 2.67 4 4 6 4a4 4 0 0 0 0-8c-2 0-4 1.33-6 4Z" stroke="url(#life-grad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>Lifetime</a>
           <img class="billing__go" src="/assets/img/go-unlimited.gif" alt="" width="680" height="256">
         </div>
       </div>
@@ -364,83 +359,6 @@ const cta = {
                   <li><img src="/assets/icons/shop.svg" alt="">Human Handover</li>
                   <li><img src="/assets/icons/shop.svg" alt="">Full Analytics + Export</li>
                   <li><img src="/assets/icons/shop.svg" alt="">Priority Support</li>
-                </ul>
-              </div>
-            </div>
-            <a class="plan__all" href="#features">See all features</a>
-          </article>
-        </div>
-
-        <!-- Lifetime -->
-        <div class="plans plans--3" data-show-for="lifetime" hidden>
-          <article class="plan">
-            <div>
-              <div class="plan__head"><h2 class="h6">Starter</h2></div>
-              <p class="plan__desc">Best for solo stores ready to sell smarter</p>
-              <p class="plan__was"><s><span class="sr-only">Regular price </span>$199</s><span class="plan__off">30% OFF</span></p>
-              <p class="plan__price"><span class="plan__amt">$139</span><span class="plan__per">/one-time</span></p>
-              <a class="btn btn--soft plan__btn" href="https://app.cartpilot.ai/get-started?plan=cp-starter-ltd&amp;coupon=CPLAUNCHOFFERLTD">Get Started</a>
-              <div class="plan__feats">
-                <p class="plan__feats-title">Features</p>
-                <ul>
-                  <li><img src="/assets/icons/shop.svg" alt="">1 Shop</li>
-                  <li><img src="/assets/icons/shop.svg" alt="">Unlimited conversations with your own API</li>
-                  <li><img src="/assets/icons/shop.svg" alt="">Unlimited products</li>
-                  <li><img src="/assets/icons/shop.svg" alt="">Unlimited training items</li>
-                  <li><img src="/assets/icons/shop.svg" alt="">Voice Agent</li>
-                  <li><img src="/assets/icons/shop.svg" alt="">Full Analytics + Export</li>
-                  <li><img src="/assets/icons/shop.svg" alt="">Priority Support</li>
-                  <li><img src="/assets/icons/shop.svg" alt="">Bring Your Own API Key</li>
-                </ul>
-              </div>
-            </div>
-            <a class="plan__all" href="#features">See all features</a>
-          </article>
-
-          <article class="plan plan--pick">
-            <div>
-              <div class="plan__head"><h2 class="h6">Professional</h2><span class="plan__tag">Recommended</span></div>
-              <p class="plan__desc">Best for growing teams and larger catalogs</p>
-              <p class="plan__was"><s><span class="sr-only">Regular price </span>$399</s><span class="plan__off">30% OFF</span></p>
-              <p class="plan__price"><span class="plan__amt">$279</span><span class="plan__per">/one-time</span></p>
-              <a class="btn btn--soft plan__btn" href="https://app.cartpilot.ai/get-started?plan=cp-professional-ltd&amp;coupon=CPLAUNCHOFFERLTD">Get Started</a>
-              <div class="plan__feats">
-                <p class="plan__feats-title">Features</p>
-                <ul>
-                  <li><img src="/assets/icons/shop.svg" alt="">5 Shops</li>
-                  <li><img src="/assets/icons/shop.svg" alt="">Unlimited conversations with your own API</li>
-                  <li><img src="/assets/icons/shop.svg" alt="">Unlimited products</li>
-                  <li><img src="/assets/icons/shop.svg" alt="">Unlimited training items</li>
-                  <li><img src="/assets/icons/shop.svg" alt="">Voice Agent</li>
-                  <li><img src="/assets/icons/shop.svg" alt="">Human Handover</li>
-                  <li><img src="/assets/icons/shop.svg" alt="">Full Analytics + Export</li>
-                  <li><img src="/assets/icons/shop.svg" alt="">Priority Support</li>
-                  <li><img src="/assets/icons/shop.svg" alt="">Bring Your Own API Key</li>
-                </ul>
-              </div>
-            </div>
-            <a class="plan__all" href="#features">See all features</a>
-          </article>
-
-          <article class="plan">
-            <div>
-              <div class="plan__head"><h2 class="h6">Agency</h2></div>
-              <p class="plan__desc">Best for scaling stores with serious traffic</p>
-              <p class="plan__was"><s><span class="sr-only">Regular price </span>$699</s><span class="plan__off">30% OFF</span></p>
-              <p class="plan__price"><span class="plan__amt">$489</span><span class="plan__per">/one-time</span></p>
-              <a class="btn btn--soft plan__btn" href="https://app.cartpilot.ai/get-started?plan=cp-agency-ltd&amp;coupon=CPLAUNCHOFFERLTD">Get Started</a>
-              <div class="plan__feats">
-                <p class="plan__feats-title">Features</p>
-                <ul>
-                  <li><img src="/assets/icons/shop.svg" alt="">20 Shops</li>
-                  <li><img src="/assets/icons/shop.svg" alt="">Unlimited conversations with your own API</li>
-                  <li><img src="/assets/icons/shop.svg" alt="">Unlimited products</li>
-                  <li><img src="/assets/icons/shop.svg" alt="">Unlimited training items</li>
-                  <li><img src="/assets/icons/shop.svg" alt="">Voice Agent</li>
-                  <li><img src="/assets/icons/shop.svg" alt="">Human Handover</li>
-                  <li><img src="/assets/icons/shop.svg" alt="">Full Analytics + Export</li>
-                  <li><img src="/assets/icons/shop.svg" alt="">Priority Support</li>
-                  <li><img src="/assets/icons/shop.svg" alt="">Bring Your Own API Key</li>
                 </ul>
               </div>
             </div>
@@ -572,15 +490,14 @@ const cta = {
     if (!pick) return;
     const SHOPIFY = "https://apps.shopify.com/search?q=cartpilot";
     const cards = [...pick.querySelectorAll("[data-platform]")];
-    const life = document.querySelector('.billing-row [data-toggle="lifetime"]');
-    const monthly = document.querySelector('.billing [data-toggle="monthly"]');
+    const life = document.querySelector(".billing__life");
     const go = document.querySelector(".billing__go");
     const btns = [...document.querySelectorAll(".plans .plan__btn")];
     btns.forEach((b) => (b.dataset.href = b.getAttribute("href")));
     const set = (key) => {
       cards.forEach((c) => { const on = c.dataset.platform === key; c.classList.toggle("is-on", on); c.setAttribute("aria-checked", String(on)); });
       const shop = key === "shopify";
-      if (life) { if (shop && life.classList.contains("is-active")) monthly?.click(); life.hidden = shop; }
+      if (life) life.hidden = shop;
       if (go) go.hidden = shop;
       btns.forEach((b) => {
         b.setAttribute("href", shop ? SHOPIFY : b.dataset.href);

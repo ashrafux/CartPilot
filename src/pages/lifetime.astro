@@ -1,0 +1,536 @@
+---
+// /lifetime/ — the WooCommerce Lifetime deal (pay once, bring your own AI key).
+// Reached from the "Lifetime" button beside the Monthly / Annual toggle on /pricing/.
+// The plan cards use the same checkout links and launch coupon as the old Lifetime tab on the pricing page.
+import Base from "../layouts/Base.astro";
+import Faq from "../components/Faq.astro";
+import CtaSky from "../components/CtaSky.astro";
+
+const title = "Lifetime Deal: Pay Once, Bring Your Own AI Key | CartPilot";
+const description = "Get CartPilot for your WooCommerce store for life. Pay once, connect your own AI provider key and pay them directly for usage. 7-day money-back guarantee.";
+
+// Lucide-style 24px stroke icons
+const svg = (d: string, w = "1.9") => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`;
+const I = {
+  trend: '<path d="m22 7-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/>',
+  brief: '<rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>',
+  lock: '<rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>',
+  cart: '<circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/>',
+  key: '<path d="m15.5 7.5 2.3 2.3a1 1 0 0 0 1.4 0l2.1-2.1a1 1 0 0 0 0-1.4L19 4"/><path d="m21 2-9.6 9.6"/><circle cx="7.5" cy="15.5" r="5.5"/>',
+  zap: '<path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/>',
+  search: '<circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>',
+  bag: '<path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/>',
+  ticket: '<path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M13 5v2"/><path d="M13 17v2"/><path d="M13 11v2"/>',
+  spark: '<path d="M12 3l1.9 5.8L20 11l-6.1 2.2L12 19l-1.9-5.8L4 11l6.1-2.2z"/><path d="M19 3v4"/><path d="M17 5h4"/>',
+  mic: '<path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><path d="M12 19v3"/>',
+  chat: '<path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/>',
+  box: '<path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/>',
+  users: '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+  chart: '<path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/>',
+  sliders: '<path d="M4 21v-7"/><path d="M4 10V3"/><path d="M12 21v-9"/><path d="M12 8V3"/><path d="M20 21v-5"/><path d="M20 12V3"/><path d="M1 14h6"/><path d="M9 8h6"/><path d="M17 16h6"/>',
+  layers: '<path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/>',
+  check: '<path d="M20 6 9 17l-5-5"/>',
+  shield: '<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/>',
+  info: '<circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/>',
+};
+const CHECK = svg(I.check, "2.6");
+// gradient infinity mark (blue → violet → pink, same as the Lifetime button on /pricing/)
+const INF = (id: string) => `<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><defs><linearGradient id="${id}" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#3b7bff"/><stop offset=".55" stop-color="#8b5cff"/><stop offset="1" stop-color="#f05aa8"/></linearGradient></defs><path d="M12 12c-2-2.67-4-4-6-4a4 4 0 1 0 0 8c2 0 4-1.33 6-4Zm0 0c2 2.67 4 4 6 4a4 4 0 0 0 0-8c-2 0-4 1.33-6 4Z" stroke="url(#${id})" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+
+const audience = [
+  { ico: I.trend, tone: "blue", t: "High-Volume Stores", p: "Keep the platform cost fixed as your conversations grow." },
+  { ico: I.brief, tone: "violet", t: "Agencies Running Several Stores", p: "One purchase. Room for your clients and their next big idea." },
+  { ico: I.lock, tone: "pink", t: "Merchants Who Want a Fixed Cost", p: "Own your setup and pay your AI provider directly for usage." },
+];
+
+const steps = [
+  { ico: I.cart, t: "Buy Lifetime", p: "Pick the plan that fits your stores." },
+  { ico: I.key, t: "Connect Your AI Provider Key", p: "Add your key in your CartPilot settings." },
+  { ico: I.zap, t: "CartPilot Runs on Your Key", p: "Your provider bills you for AI usage." },
+];
+
+const feats: [string, string, string?][] = [
+  [I.search, "Natural language search"],
+  [I.cart, "Add to cart from chat"],
+  [I.ticket, "Coupons in chat"],
+  [I.spark, "Product recommendations"],
+  [I.mic, "Voice shopping"],
+  [I.chat, "Instant answers 24/7"],
+  [I.box, "Order tracking"],
+  [I.users, "Human handover", "Professional and Agency"],
+  [I.chart, "Conversation analytics"],
+  [I.sliders, "Setup and customisation"],
+];
+
+const versus = {
+  life: ["Pay CartPilot once", "Bring and manage your own AI key", "Pay your provider for usage", "Best for control and predictable platform costs"],
+  sub: ["Pay monthly or annually", "Included conversation allowance", "No separate AI key needed", "Best for getting started with less setup"],
+};
+
+// "A salesperson that gets things done": each action shows its art from the home journey list
+const actions = [
+  { ico: I.search, t: "Find a Product", p: "Shoppers describe it in their own words. CartPilot finds the match in your live catalog.", img: "journey-02" },
+  { ico: I.layers, t: "Compare Two Options", p: "Puts products side by side on request, so shoppers can pick with confidence.", img: "journey-04" },
+  { ico: I.bag, t: "Add to Cart", p: "Adds the selected items straight to the cart, right inside the chat.", img: "journey-05" },
+  { ico: I.ticket, t: "Apply a Coupon", p: "Applies discount codes and coupons from the conversation.", img: "journey-06" },
+  { ico: I.box, t: "Track an Order", p: "Lets logged-in customers check their order status in seconds.", img: "journey-08" },
+  { ico: I.mic, t: "Talk by Voice", p: "Shoppers can simply speak. CartPilot listens, answers and acts.", img: "journey-01" },
+];
+
+const plans = [
+  { name: "Starter", desc: "Best for solo stores ready to sell smarter", was: "$199", amt: "$139", plan: "cp-starter-ltd",
+    feats: ["1 store", "10 conversations / month included", "Unlimited with your own key", "Product updates"] },
+  { name: "Professional", desc: "Best for growing teams and larger catalogs", was: "$399", amt: "$279", plan: "cp-professional-ltd", pick: true,
+    feats: ["5 stores", "20 conversations / month included", "Unlimited with your own key", "Product updates", "Human handover"] },
+  { name: "Agency", desc: "Best for scaling stores with serious traffic", was: "$699", amt: "$489", plan: "cp-agency-ltd",
+    feats: ["20 stores", "50 conversations / month included", "Unlimited with your own key", "Product updates", "Human handover"] },
+];
+
+const faq = {
+  chip: "Lifetime FAQ",
+  title: "A Few Good Questions",
+  lead: "Curious about something else? Our team is just a conversation away.",
+  button: { href: "/contact/", label: "Talk to a Real Person" },
+  items: [
+    { q: "Which AI providers work?", a: "<p>Lifetime plans run on your own AI provider key. Tell our team which provider you use before purchasing, and we’ll confirm it’s supported.</p>" },
+    { q: "What if my key runs out of credit?", a: "<p>Add credit with your AI provider to continue usage on that key. Your CartPilot plan itself never expires.</p>" },
+    { q: "Are updates included?", a: "<p>Yes. Lifetime plans include CartPilot product updates.</p>" },
+    { q: "How do refunds work?", a: "<p>The Lifetime offer includes a 7-day money-back guarantee. Contact our team within that window to request a refund.</p>" },
+    { q: "Can I use this on Shopify?", a: "<p>No. Lifetime plans are for WooCommerce stores only. Shopify stores can start with the free <a href=\"/shopify/\">Shopify app</a>.</p>" },
+  ],
+};
+---
+<Base title={title} description={description} bodyClass="lifetime-page theme-dark-hero" fontWeights="400;500;600;700">
+<Fragment slot="head">
+  <style is:inline>
+    /* ---------- Lifetime deal ---------- */
+    .lifetime-page { --life: linear-gradient(90deg, #0054ff, #7b3cff 55%, #e2489c); --life-v: #7b3cff; }
+    .lgrad { background: linear-gradient(90deg, #6f9bff, #a07bff 50%, #ff7cc0); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .lhead { max-width: 900px; margin-inline: auto; text-align: center; }
+    .lhead h2 { text-wrap: balance; }
+    .lhead p { margin-top: 20px; font-size: var(--fs-lead); line-height: 1.5; color: #6b7280; text-wrap: pretty; }
+    .lwrap { max-width: 1180px; margin-inline: auto; }
+
+    /* Hero: dark, violet "mist" behind the floating header, with a lifetime licence card */
+    .lhero { position: relative; isolation: isolate; overflow: hidden; background: #000; color: #fff; padding: calc(109px + 100px) 0 120px; }
+    .lhero__bg { position: absolute; inset: 0; z-index: -1; background: #000; }
+    .lhero__bg canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+    .lhero__in { display: flex; flex-direction: column; align-items: center; text-align: center; }
+    .lhero .pill { background: rgb(255 255 255 / .08); border: 1px solid rgb(255 255 255 / .16); color: #e4e4e7; -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+    .lhero .pill img { width: auto; height: 12px; margin-right: 2px; }
+    .lhero .pill svg { width: 22px; height: 22px; margin-left: 2px; }
+    .lhero h1 { margin-top: 20px; max-width: 1040px; color: #fff; text-wrap: balance; }
+    .lhero h1 .lgrad { display: block; }
+    .lhero__lead { margin-top: 28px; max-width: 760px; font-size: var(--fs-lead); line-height: 1.5; color: rgb(255 255 255 / .74); }
+    .lhero .btn-row { margin-top: 48px; gap: 15px; justify-content: center; }
+    .lhero .btn:not(.btn--secondary) { --bg-c: var(--blue); --fg: #fff; }
+    .lhero .btn:not(.btn--secondary):hover { --bg-c: #0046d4; }
+    .lhero .btn--secondary { --fg: #fff; --bd: rgb(255 255 255 / .32); }
+    .lhero .btn--secondary:hover { --bg-c: #fff; --fg: #101014; --bd: #fff; }
+    .lhero__note { margin-top: 26px; font-size: 16px; color: rgb(255 255 255 / .5); }
+    .lhero__note a { color: #fff; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgb(255 255 255 / .35); transition: text-decoration-color .2s; }
+    .lhero__note a:hover { text-decoration-color: #fff; }
+
+    .pass { position: relative; width: 100%; max-width: 760px; margin-top: 88px; padding: 1px; border-radius: 10px; text-align: left;
+      background: linear-gradient(135deg, rgb(111 155 255 / .7), rgb(160 123 255 / .35) 45%, rgb(255 124 192 / .7)); box-shadow: 0 40px 90px -30px rgb(123 60 255 / .55); }
+    .pass__card { border-radius: 9px; padding: 28px 32px 30px; background: rgb(14 11 26 / .78); -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px); }
+    .pass__top { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .pass__brand { display: inline-flex; align-items: center; gap: 12px; white-space: nowrap; font-family: var(--font); font-size: 20px; font-weight: 600; color: #fff; }
+    .pass__brand img { width: 36px; height: 36px; border-radius: 8px; }
+    .pass__brand svg { width: 26px; height: 26px; }
+    .pass__paid { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; padding: 6px 14px; border-radius: 99px; background: rgb(74 222 128 / .12); color: #86efac; font-family: var(--font); font-size: 14px; font-weight: 500; }
+    .pass__paid svg { width: 14px; height: 14px; }
+    .pass__grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: 26px; border-block: 1px solid rgb(255 255 255 / .1); }
+    .pass__grid div { padding: 18px 0 18px 20px; border-left: 1px solid rgb(255 255 255 / .1); }
+    .pass__grid div:first-child { padding-left: 0; border-left: 0; }
+    .pass__grid small { display: block; font-size: 14px; color: rgb(255 255 255 / .5); }
+    .pass__grid b { display: block; margin-top: 4px; font-family: var(--font); font-size: 18px; font-weight: 500; color: #fff; }
+    .pass__key { display: flex; align-items: center; gap: 14px; margin-top: 22px; padding: 14px 16px; border-radius: 10px; background: rgb(255 255 255 / .06); border: 1px solid rgb(255 255 255 / .08); }
+    .pass__key-ico { width: 40px; height: 40px; flex: none; border-radius: 50%; display: grid; place-items: center; background: rgb(160 123 255 / .18); color: #c4b0ff; }
+    .pass__key-ico svg { width: 19px; height: 19px; }
+    .pass__key small { display: block; font-size: 14px; color: rgb(255 255 255 / .5); }
+    .pass__key code { display: block; margin-top: 2px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 15px; color: #fff; letter-spacing: .02em; }
+    .pass__ok { margin-left: auto; display: inline-flex; align-items: center; gap: 8px; font-family: var(--font); font-size: 14px; font-weight: 500; color: #86efac; white-space: nowrap; }
+    .pass__ok::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: #4ade80; box-shadow: 0 0 0 4px rgb(74 222 128 / .18); }
+
+    /* Who it's for */
+    .laud__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-top: 56px; }
+    .lcard { min-height: 300px; padding: 40px; border-radius: 10px; background: #f4f4f5; display: flex; flex-direction: column; justify-content: space-between; gap: 40px; transition: background-color .35s var(--ease); }
+    .lcard__ico { width: 72px; height: 72px; border-radius: 50%; display: grid; place-items: center; transition: background-color .35s var(--ease), color .35s var(--ease); }
+    .lcard__ico svg { width: 32px; height: 32px; }
+    .lcard--blue .lcard__ico { background: #e1eaff; color: #0054ff; }
+    .lcard--violet .lcard__ico { background: #ece4ff; color: #6b2fd6; }
+    .lcard--pink .lcard__ico { background: #fde4f1; color: #c2367f; }
+    .lcard h3 { font-size: var(--fs-h6); line-height: 1.3; color: #18181b; transition: color .35s var(--ease); }
+    .lcard p { margin-top: 14px; font-size: var(--fs-lead); line-height: 1.5; color: #828282; transition: color .35s var(--ease); }
+    .lcard:hover { background: #0e0e12; }   /* hover = dark mode, no lift (same as the home comparison cards) */
+    .lcard:hover h3 { color: #fff; }
+    .lcard:hover p { color: rgb(255 255 255 / .62); }
+    .lcard:hover .lcard__ico { background: rgb(255 255 255 / .1); color: #fff; }
+    .laud__more { display: flex; justify-content: center; margin-top: 40px; }
+
+    /* Three steps: gradient rings on a dotted zigzag (same build as the platform pages) */
+    .lsteps { background: #f4f4f5; }
+    .lsteps__zz { position: relative; margin-top: 64px; }
+    .lsteps__path { position: absolute; left: 0; top: 0; width: 100%; height: 220px; color: #b9a3f5; pointer-events: none; }
+    .lsteps__grid { position: relative; list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; }
+    .lstep { display: flex; flex-direction: column; align-items: center; text-align: center; }
+    .lstep:nth-child(2) { padding-top: 110px; }
+    .lstep__ring { position: relative; width: 120px; height: 120px; flex: none; border-radius: 50%; display: grid; place-items: center;
+      background: conic-gradient(from 200deg, #9ec0ff, #0054ff, #7b3cff, #e2489c, #9ec0ff); }
+    .lstep__ring > span { width: 104px; height: 104px; border-radius: 50%; display: grid; place-items: center; background: #fff; color: var(--life-v); }
+    .lstep__ring svg { width: 36px; height: 36px; }
+    .lstep__ring b { position: absolute; right: 2px; top: 2px; width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; background: #101014; color: #fff; font-size: 14px; font-weight: 600; }
+    .lstep h3 { margin-top: 22px; font-size: var(--fs-h6); line-height: 1.3; }
+    .lstep p { margin-top: 12px; max-width: 340px; font-size: var(--fs-lead); line-height: 1.55; color: #6b7280; }
+    /* who pays for what: soft primary card, like the notes on the home and platform pages */
+    .lbill { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 16px; width: fit-content; max-width: 100%; margin: 56px auto 0; padding: 20px 28px; border-radius: 10px; background: rgb(0 84 255 / .1); }
+    .lbill__item { display: inline-flex; align-items: center; gap: 12px; padding: 10px 18px 10px 10px; border-radius: 99px; background: #fff; box-shadow: 0 0 0 1px #e3e9f8; }
+    .lbill__item > span:first-child { width: 36px; height: 36px; flex: none; border-radius: 50%; display: grid; place-items: center; }
+    .lbill__item img { width: 36px; height: 36px; border-radius: 50%; }
+    .lbill__ai { background: #ece4ff; color: #6b2fd6; }
+    .lbill__ai svg { width: 18px; height: 18px; }
+    .lbill__item b { font-family: var(--font); font-size: 16px; font-weight: 600; color: var(--ink); }
+    .lbill__item em { margin-left: 2px; padding-left: 12px; border-left: 1px solid #e5e7eb; font-style: normal; font-size: 16px; color: #6b7280; }
+    .lbill__plus { font-size: 22px; font-weight: 500; color: #6b7280; }
+
+    /* Everything included */
+    .lfeat__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 56px; list-style: none; }
+    .lfi { display: flex; align-items: center; gap: 16px; min-height: 80px; padding: 16px 22px 16px 16px; border-radius: 10px; border: 1px solid #ececef; background: #fff; transition: border-color .25s var(--ease), box-shadow .25s var(--ease); }
+    .lfi:hover { border-color: #d7dcf0; box-shadow: 0 18px 40px -30px rgb(15 23 42 / .35); }
+    .lfi__ico { width: 48px; height: 48px; flex: none; border-radius: 50%; display: grid; place-items: center; background: #eef3ff; color: var(--blue); }
+    .lfi__ico svg { width: 22px; height: 22px; }
+    .lfi__t { flex: 1; min-width: 0; font-family: var(--font); font-size: 18px; font-weight: 500; line-height: 1.35; color: var(--ink); }
+    .lfi__t small { display: block; margin-top: 2px; font-family: var(--font-text); font-size: 15px; font-weight: 400; color: #8b8b95; }
+    .lfi__ok { width: 28px; height: 28px; flex: none; border-radius: 50%; display: grid; place-items: center; background: #dcfce7; color: #16a34a; }
+    .lfi__ok svg { width: 14px; height: 14px; }
+
+    /* Lifetime or subscription */
+    .lvs { background: #f4f4f5; }
+    .lvs__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 56px; }
+    .lvs__card { position: relative; isolation: isolate; overflow: hidden; display: flex; flex-direction: column; align-items: flex-start; padding: 48px; border-radius: 10px; background: #fff; }
+    .lvs__card--life { background: radial-gradient(90% 70% at 100% 0%, rgb(123 60 255 / .38), transparent 62%), radial-gradient(70% 60% at 0% 100%, rgb(0 84 255 / .28), transparent 60%), #0c0b14; color: #fff; }
+    .lvs__tag { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: 99px; background: #f4f4f5; font-family: var(--font); font-size: 14px; font-weight: 500; color: #3f3f46; }
+    .lvs__card--life .lvs__tag { background: rgb(255 255 255 / .08); border: 1px solid rgb(255 255 255 / .14); color: #fff; }
+    .lvs__tag svg { width: 18px; height: 18px; }
+    .lvs__card h3 { margin-top: 24px; font-size: var(--fs-h5); line-height: 1.25; }
+    .lvs__card--life h3 { color: #fff; }
+    .lvs__list { list-style: none; display: grid; gap: 14px; margin-top: 28px; margin-bottom: 40px; }
+    .lvs__list li { display: flex; align-items: flex-start; gap: 12px; font-size: var(--fs-lead); line-height: 1.45; color: #4b5563; }
+    .lvs__card--life .lvs__list li { color: rgb(255 255 255 / .78); }
+    .lvs__list svg { width: 22px; height: 22px; flex: none; margin-top: 2px; padding: 4px; border-radius: 50%; background: #e1eaff; color: var(--blue); }
+    .lvs__card--life .lvs__list svg { background: rgb(74 222 128 / .16); color: #4ade80; }
+    .lvs__card .btn { margin-top: auto; }
+    .lvs__card--life .btn:not(.btn--secondary) { --bg-c: var(--blue); }
+
+    /* Salesperson showcase: action list + art (dark band, like the features page) */
+    .lshow { background: #000; color: #fff; }
+    .lshow .lhead h2 { color: #fff; }
+    .lshow .lhead p { color: rgb(255 255 255 / .6); }
+    .lshow__grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 24px; align-items: center; margin-top: 56px; }
+    .lshow__list { list-style: none; display: grid; gap: 6px; }
+    .lshow__btn { width: 100%; display: flex; align-items: flex-start; gap: 16px; padding: 16px 18px; border-radius: 10px; text-align: left; color: rgb(255 255 255 / .6); transition: background-color .3s var(--ease), color .3s var(--ease); }
+    .lshow__btn:hover { color: #fff; background: rgb(255 255 255 / .04); }
+    .lshow__btn.is-on { color: #fff; background: rgb(255 255 255 / .08); }
+    .lshow__ico { width: 44px; height: 44px; flex: none; border-radius: 50%; display: grid; place-items: center; background: rgb(255 255 255 / .06); transition: background-color .3s var(--ease), color .3s var(--ease); }
+    .lshow__ico svg { width: 20px; height: 20px; }
+    .lshow__btn.is-on .lshow__ico { background: var(--blue); color: #fff; }
+    .lshow__btn b { display: block; font-family: var(--font); font-size: 18px; font-weight: 500; line-height: 44px; }
+    .lshow__btn small { display: grid; grid-template-rows: 0fr; font-size: 16px; line-height: 1.5; color: rgb(255 255 255 / .62); transition: grid-template-rows .4s var(--ease); }
+    .lshow__btn small > span { overflow: hidden; }
+    .lshow__btn.is-on small { grid-template-rows: 1fr; }
+    .lshow__btn.is-on b { line-height: 1.35; padding-top: 10px; }
+    .lshow__stage { position: relative; aspect-ratio: 960 / 594; border-radius: 10px; overflow: hidden; background: #0b1020; box-shadow: 0 40px 90px -40px rgb(0 84 255 / .55); }
+    .lshow__stage img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: scale(1.04); transition: opacity .55s var(--ease), transform .8s var(--ease); }
+    .lshow__stage img.is-on { opacity: 1; transform: none; }
+    .lshow__cap { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px 20px; margin-top: 18px; font-size: 16px; color: rgb(255 255 255 / .55); }
+    .lshow__cap span:first-child { display: inline-flex; align-items: center; gap: 8px; color: #fff; }
+    .lshow__cap span:first-child::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: #4ade80; box-shadow: 0 0 0 4px rgb(74 222 128 / .18); }
+
+    /* Plans */
+    .lplans { background: #f4f4f5; scroll-margin-top: 0; }
+    .lplans__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; align-items: stretch; margin-top: 56px; }
+    .lplan { position: relative; display: flex; flex-direction: column; padding: 40px; border-radius: 10px; background: #fff; border: 1px solid #e9e9e9; }
+    .lplan--pick { border: 1.5px solid transparent; background: linear-gradient(#fff, #fff) padding-box, var(--life) border-box; box-shadow: 0 30px 60px -36px rgb(123 60 255 / .55); }
+    .lplan__head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .lplan__head h3 { font-size: var(--fs-h6); line-height: 1.3; }
+    .lplan__tag { padding: 6px 12px; border-radius: 99px; background: var(--life); font-family: var(--font); font-size: 14px; font-weight: 500; line-height: 1.3; color: #fff; }
+    .lplan__desc { margin-top: 10px; min-height: 3em; font-size: 16px; line-height: 1.5; color: var(--text); }   /* two lines, so the prices line up */
+    .lplan__was { display: flex; align-items: center; gap: 12px; margin-top: 28px; }
+    .lplan__was s { font-size: 20px; line-height: 30px; color: var(--muted); }
+    .lplan__off { padding: 6px 12px; border-radius: 25px; background: #d6f1a2; font-size: 14px; line-height: 18.2px; color: var(--text); }
+    .lplan__price { display: flex; align-items: flex-end; gap: 8px; margin-top: 8px; }
+    .lplan__amt { font-family: var(--font); font-size: var(--fs-h2); font-weight: 500; line-height: 1.1; color: var(--ink); }
+    .lplan__per { padding-bottom: 8px; font-size: 16px; color: var(--text); }
+    .lplan .btn { width: 100%; min-height: 61px; margin-top: 32px; }
+    .lplan__feats { list-style: none; display: grid; gap: 14px; margin-top: 32px; padding-top: 28px; border-top: 1px solid #f0f0f2; }
+    .lplan__feats li { display: flex; align-items: flex-start; gap: 10px; font-size: 16px; line-height: 1.5; color: #4b5563; }
+    .lplan__feats li:first-child { color: var(--ink); font-weight: 700; }
+    .lplan__feats svg { width: 20px; height: 20px; flex: none; margin-top: 2px; padding: 4px; border-radius: 50%; background: #dcfce7; color: #16a34a; }
+    .lplans__guard { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 32px; font-family: var(--font); font-size: 16px; font-weight: 500; color: var(--ink); }
+    .lplans__guard svg { width: 22px; height: 22px; color: #16a34a; }
+    .lnote { display: flex; align-items: center; gap: 20px; width: fit-content; max-width: 860px; margin: 32px auto 0; padding: 28px 36px 28px 28px;
+      border-radius: 10px; background: rgb(0 84 255 / .1); font-size: 16px; line-height: 1.55; color: #4b5563; text-align: left; }
+    .lnote__ico { width: 48px; height: 48px; flex: none; border-radius: 50%; display: grid; place-items: center; background: #fff; color: var(--blue);
+      box-shadow: 0 0 0 1px #e3e9f8, 0 6px 14px -8px rgb(0 84 255 / .5); }
+    .lnote__ico svg { width: 22px; height: 22px; }
+    .lnote strong { font-weight: 700; color: var(--ink); }
+
+    @media (max-width: 1024px) {
+      .laud__grid { grid-template-columns: 1fr; }
+      .lcard { min-height: 0; flex-direction: row; align-items: center; gap: 24px; padding: 28px; }
+      .lplans__grid { grid-template-columns: 1fr; max-width: 560px; margin-inline: auto; }
+      .lshow__grid { grid-template-columns: 1fr; }
+      .lshow__grid > div { order: -1; }   /* art above the list once they stack */
+    }
+    @media (max-width: 781px) {
+      .lsteps__path { display: none; }
+      .lsteps__grid { grid-template-columns: 1fr; gap: 48px; }
+      .lstep:nth-child(2) { padding-top: 0; }
+      .lfeat__grid, .lvs__grid { grid-template-columns: 1fr; }
+      .pass__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .pass__grid div:nth-child(3) { padding-left: 0; border-left: 0; border-top: 1px solid rgb(255 255 255 / .1); }
+      .pass__grid div:nth-child(4) { border-top: 1px solid rgb(255 255 255 / .1); }
+    }
+    @media (max-width: 640px) {
+      .lhero { padding: calc(88px + 48px) 0 64px; }
+      .lhero .btn-row { flex-direction: column; align-items: stretch; width: 100%; max-width: 340px; }
+      .pass { margin-top: 56px; }
+      .pass__card { padding: 20px 18px 22px; }
+      .pass__brand { font-size: 17px; gap: 10px; }
+      .pass__brand img { width: 30px; height: 30px; }
+      .pass__brand svg { display: none; }
+      .pass__paid { padding: 5px 10px; font-size: 13px; }
+      .pass__key { flex-wrap: wrap; gap: 10px 12px; }
+      .pass__ok { margin-left: 54px; }
+      .lhead p { margin-top: 14px; }
+      .laud__grid, .lfeat__grid, .lvs__grid, .lshow__grid, .lplans__grid { margin-top: 36px; }
+      .lcard { flex-direction: column; align-items: flex-start; padding: 28px 22px; gap: 24px; }
+      .lcard__ico { width: 60px; height: 60px; }
+      .lcard__ico svg { width: 26px; height: 26px; }
+      .lsteps__zz { margin-top: 40px; }
+      .lbill { margin-top: 40px; padding: 16px; flex-direction: column; width: 100%; }
+      .lbill__plus { line-height: 1; }
+      .lbill__item { width: 100%; }
+      .lbill__item b, .lbill__item em { white-space: nowrap; }
+      .lbill__item em { margin-left: auto; }
+      .lfi { min-height: 0; padding: 12px 16px 12px 12px; gap: 12px; }
+      .lfi__ico { width: 40px; height: 40px; }
+      .lfi__ico svg { width: 19px; height: 19px; }
+      .lfi__t { font-size: 16px; }
+      .lvs__card { padding: 28px 22px; }
+      .lvs__card .btn { width: 100%; }
+      .lshow__btn { padding: 12px; gap: 12px; }
+      .lshow__btn b { font-size: 16px; }
+      .lplan { padding: 28px 22px; }
+      .lplan__desc { min-height: 0; }
+      .lnote { margin-top: 24px; align-items: flex-start; gap: 14px; padding: 16px 18px 16px 14px; }
+      .lnote__ico { width: 40px; height: 40px; }
+      .lnote__ico svg { width: 19px; height: 19px; }
+    }
+  </style>
+</Fragment>
+
+<main id="main">
+  <!-- Hero -->
+  <section class="lhero">
+    <div class="lhero__bg" data-mist data-speed="0.55" data-opacity="0.85" data-color="#5b2bd9" data-highlight="#8f6bff" data-glow="#ff86c8" aria-hidden="true"><canvas></canvas></div>
+    <div class="container lhero__in">
+      <p class="pill"><img src="/assets/img/woo-logo.png" alt="WooCommerce" width="48" height="12"> Lifetime Deal <Fragment set:html={INF("inf-pill")} /></p>
+      <h1 class="h1">Pay Once. <span class="lgrad">Bring Your Own AI Key.</span></h1>
+      <p class="lhero__lead">Get CartPilot for your WooCommerce store for life. Connect your own AI provider key and pay them directly for usage.</p>
+      <div class="btn-row">
+        <a class="btn btn--lg" href="#plans">See Lifetime Plans</a>
+        <button class="btn btn--secondary btn--lg" type="button" data-modal-src="https://www.youtube.com/embed/tH1m-FmcM3g">Watch demo</button>
+      </div>
+      <p class="lhero__note">On Shopify? Lifetime plans are for WooCommerce stores. <a href="/shopify/">Start free on Shopify →</a></p>
+
+      <div class="pass" aria-hidden="true">
+        <div class="pass__card">
+          <div class="pass__top">
+            <span class="pass__brand"><img src="/assets/img/favicon.png" alt="" width="36" height="36">CartPilot Lifetime <Fragment set:html={INF("inf-pass")} /></span>
+            <span class="pass__paid"><Fragment set:html={CHECK} />Paid once</span>
+          </div>
+          <div class="pass__grid">
+            <div><small>Plan</small><b>Professional</b></div>
+            <div><small>Stores</small><b>5</b></div>
+            <div><small>Updates</small><b>Included</b></div>
+            <div><small>Renews</small><b>Never</b></div>
+          </div>
+          <div class="pass__key">
+            <span class="pass__key-ico"><Fragment set:html={svg(I.key)} /></span>
+            <span><small>Your AI provider key</small><code>sk-••••••••••••••••4f2a</code></span>
+            <span class="pass__ok">Connected</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Who it's for -->
+  <section class="section laud">
+    <div class="container lwrap">
+      <div class="lhead" data-reveal>
+        <h2 class="h3">Your Store. Your Key. Your Call.</h2>
+        <p>Lifetime is a different way to grow. Pay for CartPilot once, connect your own AI key and keep the platform cost fixed.</p>
+      </div>
+      <div class="laud__grid">
+        {audience.map((a) => (
+          <div class={`lcard lcard--${a.tone}`} data-reveal>
+            <span class="lcard__ico"><Fragment set:html={svg(a.ico)} /></span>
+            <div><h3>{a.t}</h3><p>{a.p}</p></div>
+          </div>
+        ))}
+      </div>
+      <div class="laud__more"><a class="btn btn--tertiary" href="/pricing/">Want zero setup? A monthly plan may suit you better →</a></div>
+    </div>
+  </section>
+
+  <!-- Three steps -->
+  <section class="section lsteps">
+    <div class="container lwrap">
+      <div class="lhead" data-reveal>
+        <h2 class="h3">Three Steps. Then It’s Yours.</h2>
+        <p>Bring your own key. CartPilot runs on it, and your AI provider bills you directly for what you use.</p>
+      </div>
+      <div class="lsteps__zz">
+        <svg class="lsteps__path" viewBox="0 0 1180 220" preserveAspectRatio="none" aria-hidden="true"><path d="M200 60 C 400 60, 400 170, 590 170 S 780 60, 980 60" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="6 8" vector-effect="non-scaling-stroke"/></svg>
+        <ol class="lsteps__grid">
+          {steps.map((s, i) => (
+            <li class="lstep"><span class="lstep__ring"><span><Fragment set:html={svg(s.ico, "1.8")} /></span><b>{i + 1}</b></span><h3>{s.t}</h3><p>{s.p}</p></li>
+          ))}
+        </ol>
+      </div>
+      <div class="lbill" aria-label="Who you pay">
+        <span class="lbill__item"><span><img src="/assets/img/favicon.png" alt="" width="36" height="36"></span><b>CartPilot</b><em>Pay once</em></span>
+        <span class="lbill__plus" aria-hidden="true">+</span>
+        <span class="lbill__item"><span class="lbill__ai"><Fragment set:html={svg(I.zap)} /></span><b>Your AI provider</b><em>Pay per use</em></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Everything included -->
+  <section class="section lfeat">
+    <div class="container lwrap">
+      <div class="lhead" data-reveal>
+        <h2 class="h3">All the Good Stuff. For Life.</h2>
+        <p>Everything you need to sell inside a conversation, included with every Lifetime plan.</p>
+      </div>
+      <ul class="lfeat__grid">
+        {feats.map(([ico, t, sub]) => (
+          <li class="lfi"><span class="lfi__ico"><Fragment set:html={svg(ico)} /></span><span class="lfi__t">{t}{sub && <small>{sub}</small>}</span><span class="lfi__ok" aria-label="Included"><Fragment set:html={CHECK} /></span></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- Lifetime or subscription -->
+  <section class="section lvs">
+    <div class="container lwrap">
+      <div class="lhead" data-reveal>
+        <h2 class="h3">Lifetime or Subscription?</h2>
+        <p>Choose your approach. Both give your store the same AI sales agent.</p>
+      </div>
+      <div class="lvs__grid">
+        <div class="lvs__card lvs__card--life" data-reveal>
+          <span class="lvs__tag"><Fragment set:html={INF("inf-vs")} />Lifetime</span>
+          <h3>A Fixed Platform Cost.</h3>
+          <ul class="lvs__list">{versus.life.map((t) => <li><Fragment set:html={CHECK} />{t}</li>)}</ul>
+          <a class="btn" href="#plans">See Lifetime Plans</a>
+        </div>
+        <div class="lvs__card" data-reveal>
+          <span class="lvs__tag">Subscription</span>
+          <h3>Less to Manage.</h3>
+          <ul class="lvs__list">{versus.sub.map((t) => <li><Fragment set:html={CHECK} />{t}</li>)}</ul>
+          <a class="btn btn--secondary" href="/pricing/">View Monthly Plans</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- What you're getting -->
+  <section class="section lshow">
+    <div class="container lwrap">
+      <div class="lhead" data-reveal>
+        <h2 class="h3">A Salesperson That Gets Things Done.</h2>
+        <p>See what you’re getting: real products, real actions, one conversation.</p>
+      </div>
+      <div class="lshow__grid" data-show>
+        <ul class="lshow__list">
+          {actions.map((a, i) => (
+            <li><button class={i === 0 ? "lshow__btn is-on" : "lshow__btn"} type="button" aria-pressed={i === 0 ? "true" : "false"} data-show-i={i}>
+              <span class="lshow__ico"><Fragment set:html={svg(a.ico)} /></span>
+              <span><b>{a.t}</b><small><span>{a.p}</span></small></span>
+            </button></li>
+          ))}
+        </ul>
+        <div>
+          <div class="lshow__stage">
+            {actions.map((a, i) => (
+              <img class={i === 0 ? "is-on" : undefined} src={`/assets/img/journey/${a.img}.jpg`} alt={i === 0 ? a.t : ""} width="960" height="594" loading="lazy" decoding="async">
+            ))}
+          </div>
+          <p class="lshow__cap"><span>Connected to your catalog</span><span>Real products. Real actions. One conversation.</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Plans -->
+  <section class="section lplans" id="plans">
+    <div class="container lwrap">
+      <div class="lhead" data-reveal>
+        <h2 class="h3">Choose Your Lifetime Plan.</h2>
+        <p>One payment. A long partnership. For WooCommerce stores, with AI provider usage billed separately.</p>
+      </div>
+      <div class="lplans__grid">
+        {plans.map((p) => (
+          <article class={p.pick ? "lplan lplan--pick" : "lplan"} data-reveal>
+            <div class="lplan__head"><h3>{p.name}</h3>{p.pick && <span class="lplan__tag">Most Popular</span>}</div>
+            <p class="lplan__desc">{p.desc}</p>
+            <p class="lplan__was"><s><span class="sr-only">Regular price </span>{p.was}</s><span class="lplan__off">30% OFF</span></p>
+            <p class="lplan__price"><span class="lplan__amt">{p.amt}</span><span class="lplan__per">/one-time</span></p>
+            <a class={p.pick ? "btn" : "btn btn--secondary"} href={`https://app.cartpilot.ai/get-started?plan=${p.plan}&coupon=CPLAUNCHOFFERLTD`}>Choose {p.name}</a>
+            <ul class="lplan__feats">{p.feats.map((f) => <li><Fragment set:html={CHECK} />{f}</li>)}</ul>
+          </article>
+        ))}
+      </div>
+      <p class="lplans__guard"><Fragment set:html={svg(I.shield)} />7-day money-back guarantee</p>
+      <p class="lnote"><span class="lnote__ico" aria-hidden="true"><Fragment set:html={svg(I.info)} /></span><span><strong>A quick note on AI costs.</strong> AI provider costs depend on your provider and volume, so check your provider’s pricing before you choose.</span></p>
+    </div>
+  </section>
+
+  <Faq {...faq} />
+
+  <CtaSky title="Start Free. Upgrade When Your Store Needs More." text="Free plan · No card · Live in about 2 minutes.">
+    <a class="btn" href="https://app.cartpilot.ai/register">Try CartPilot Free</a>
+    <a class="btn btn--white" href="/pricing/">View Pricing Plans</a>
+  </CtaSky>
+</main>
+
+<Fragment slot="scripts">
+<script is:inline src="/assets/js/hero-gradient.js?v=2" defer></script>
+<script is:inline>
+  /* "A salesperson that gets things done": pick an action to show its art. While the section is on screen it steps
+     through the actions on its own until the visitor picks one; reduced motion keeps it still. */
+  (() => {
+    const box = document.querySelector("[data-show]");
+    if (!box) return;
+    const btns = [...box.querySelectorAll("[data-show-i]")];
+    const imgs = [...box.querySelectorAll(".lshow__stage img")];
+    let cur = 0, timer = 0, auto = !matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const show = (i) => {
+      cur = i;
+      btns.forEach((b, k) => { b.classList.toggle("is-on", k === i); b.setAttribute("aria-pressed", String(k === i)); });
+      imgs.forEach((im, k) => { im.classList.toggle("is-on", k === i); im.alt = k === i ? btns[k].querySelector("b").textContent : ""; });
+    };
+    const stop = () => { auto = false; clearInterval(timer); };
+    btns.forEach((b, i) => b.addEventListener("click", () => { stop(); show(i); }));
+    if (auto) new IntersectionObserver(([e]) => {
+      clearInterval(timer);
+      if (e.isIntersecting && auto) timer = setInterval(() => show((cur + 1) % btns.length), 3800);
+    }, { threshold: 0.35 }).observe(box);
+  })();
+</script>
+</Fragment>
+</Base>
