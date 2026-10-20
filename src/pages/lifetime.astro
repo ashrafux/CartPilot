@@ -31,6 +31,7 @@ const I = {
   layers: '<path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/>',
   check: '<path d="M20 6 9 17l-5-5"/>',
   shield: '<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/>',
+  send: '<path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/>',
   info: '<circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/>',
 };
 const CHECK = svg(I.check, "2.6");
@@ -67,14 +68,30 @@ const versus = {
   sub: ["Pay monthly or annually", "Included conversation allowance", "No separate AI key needed", "Best for getting started with less setup"],
 };
 
-// "A salesperson that gets things done": each action shows its art from the home journey list
+// "A salesperson that gets things done": six action chips around a chat widget; each chip plays its own short conversation
+const CART = svg(I.cart, "2");
+const prod = (name: string, price: string) => `<div class="lprod"><i></i><b>${name}</b><small>${price}</small><em>${CART}Add to Cart</em></div>`;
+const me = (t: string) => `<span class="lm lm--me">${t}</span>`;
+const ai = (t: string) => `<span class="lm lm--ai">${t}</span>`;
+const yes = `<span class="lyes">${CHECK}</span>`, no = `<span class="lno">–</span>`;
 const actions = [
-  { ico: I.search, t: "Find a Product", p: "Shoppers describe it in their own words. CartPilot finds the match in your live catalog.", img: "journey-02" },
-  { ico: I.layers, t: "Compare Two Options", p: "Puts products side by side on request, so shoppers can pick with confidence.", img: "journey-04" },
-  { ico: I.bag, t: "Add to Cart", p: "Adds the selected items straight to the cart, right inside the chat.", img: "journey-05" },
-  { ico: I.ticket, t: "Apply a Coupon", p: "Applies discount codes and coupons from the conversation.", img: "journey-06" },
-  { ico: I.box, t: "Track an Order", p: "Lets logged-in customers check their order status in seconds.", img: "journey-08" },
-  { ico: I.mic, t: "Talk by Voice", p: "Shoppers can simply speak. CartPilot listens, answers and acts.", img: "journey-01" },
+  { ico: I.search, t: "Find a Product",
+    chat: me("Do you have a black hoodie under $60 in size L?") + ai("Absolutely. Here are two you’ll love, both in size L.") + `<div class="lprods">${prod("Everyday Hoodie", "$49.00")}${prod("Weekend Hoodie", "$59.00")}</div>` },
+  { ico: I.layers, t: "Compare Two Options",
+    chat: me("Which one is warmer?") + ai("The Weekend Hoodie. Here’s how the two compare:") +
+      `<div class="lcmp"><span></span><b>Everyday</b><b>Weekend</b><span>Fleece lined</span>${no}${yes}<span>Under $60</span>${yes}${yes}<span>Size L in stock</span>${yes}${yes}</div>` },
+  { ico: I.bag, t: "Add to Cart",
+    chat: me("Add the Weekend Hoodie in size L.") + ai("Done! It’s in your cart.") +
+      `<div class="lcart"><i></i><span><b>Weekend Hoodie</b><small>Black / L · Qty 1</small></span><strong>$59.00</strong></div><div class="lcart__f"><span>${svg(I.bag, "2")}1 item in your cart</span><em>Checkout</em></div>` },
+  { ico: I.ticket, t: "Apply a Coupon",
+    chat: me("I have a code: SAVE10") + ai("SAVE10 is applied. You save $5.90.") +
+      `<div class="ltotal"><span class="lcoupon">${svg(I.ticket, "2")}SAVE10 · 10% off</span><span class="ltotal__p"><s>$59.00</s><b>$53.10</b></span></div>` },
+  { ico: I.box, t: "Track an Order",
+    chat: me("Where’s my order #1042?") + ai("It shipped yesterday and arrives on Friday.") +
+      `<ol class="ltrack"><li class="is-done">${CHECK}Ordered</li><li class="is-done">${CHECK}Shipped</li><li><i></i>Arrives Friday</li></ol>` },
+  { ico: I.mic, t: "Talk by Voice",
+    chat: `<span class="lm lm--me lm--voice">${svg(I.mic, "2")}<span class="lwave">${[6,12,18,10,22,14,8,16,20,12,8,14,10,6].map((h) => `<i style="height:${h}px"></i>`).join("")}</span><small>0:04</small></span>` +
+      ai("I heard “running shoes under $80”. Here’s my best match.") + `<div class="lprods lprods--one">${prod("Trail Runner", "$74.00")}</div>` },
 ];
 
 const plans = [
@@ -104,7 +121,7 @@ const faq = {
 <Fragment slot="head">
   <style is:inline>
     /* ---------- Lifetime deal ---------- */
-    .lifetime-page { --lift: 240px; --life: linear-gradient(90deg, #0054ff, #7b3cff 55%, #e2489c); --life-v: #7b3cff; }
+    .lifetime-page { --life: linear-gradient(90deg, #0054ff, #7b3cff 55%, #e2489c); --life-v: #7b3cff; }
     .lgrad { background: linear-gradient(90deg, #6f9bff, #a07bff 50%, #ff7cc0); -webkit-background-clip: text; background-clip: text; color: transparent; }
     .lhead { max-width: 900px; margin-inline: auto; text-align: center; }
     .lhead h2 { text-wrap: balance; }
@@ -112,7 +129,7 @@ const faq = {
     .lwrap { max-width: 1180px; margin-inline: auto; }
 
     /* Hero: dark, violet "mist" behind the floating header, with a lifetime licence card */
-    .lhero { position: relative; isolation: isolate; overflow: hidden; background: #000; color: #fff; padding: calc(109px + 100px) 0 calc(var(--lift) + 72px); }
+    .lhero { position: relative; isolation: isolate; overflow: hidden; background: #000; color: #fff; padding: calc(109px + 100px) 0 120px; }
     .lhero__bg { position: absolute; inset: 0; z-index: -1; background: #000; }
     .lhero__bg canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
     .lhero__in { display: flex; flex-direction: column; align-items: center; text-align: center; }
@@ -197,34 +214,88 @@ const faq = {
     .lvs__card .btn { margin-top: auto; }
     .lvs__card--life .btn:not(.btn--secondary) { --bg-c: var(--blue); }
 
-    /* Salesperson showcase: action list + art (dark band, like the features page) */
-    .lshow { background: #000; color: #fff; }
-    .lshow .lhead h2 { color: #fff; }
-    .lshow .lhead p { color: rgb(255 255 255 / .6); }
-    .lshow__grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 24px; align-items: center; margin-top: 56px; }
-    .lshow__list { list-style: none; display: grid; gap: 6px; }
-    .lshow__btn { width: 100%; display: flex; align-items: flex-start; gap: 16px; padding: 16px 18px; border-radius: 10px; text-align: left; color: rgb(255 255 255 / .6); transition: background-color .3s var(--ease), color .3s var(--ease); }
-    .lshow__btn:hover { color: #fff; background: rgb(255 255 255 / .04); }
-    .lshow__btn.is-on { color: #fff; background: rgb(255 255 255 / .08); }
-    .lshow__ico { width: 44px; height: 44px; flex: none; border-radius: 50%; display: grid; place-items: center; background: rgb(255 255 255 / .06); transition: background-color .3s var(--ease), color .3s var(--ease); }
-    .lshow__ico svg { width: 20px; height: 20px; }
-    .lshow__btn.is-on .lshow__ico { background: var(--blue); color: #fff; }
-    .lshow__btn b { display: block; font-family: var(--font); font-size: 18px; font-weight: 500; line-height: 44px; }
-    .lshow__btn small { display: grid; grid-template-rows: 0fr; font-size: 16px; line-height: 1.5; color: rgb(255 255 255 / .62); transition: grid-template-rows .4s var(--ease); }
-    .lshow__btn small > span { overflow: hidden; }
-    .lshow__btn.is-on small { grid-template-rows: 1fr; }
-    .lshow__btn.is-on b { line-height: 1.35; padding-top: 10px; }
-    .lshow__stage { position: relative; aspect-ratio: 960 / 594; border-radius: 10px; overflow: hidden; background: #0b1020; box-shadow: 0 40px 90px -40px rgb(0 84 255 / .55); }
-    .lshow__stage img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: scale(1.04); transition: opacity .55s var(--ease), transform .8s var(--ease); }
-    .lshow__stage img.is-on { opacity: 1; transform: none; }
-    .lshow__cap { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px 20px; margin-top: 18px; font-size: 16px; color: rgb(255 255 255 / .55); }
-    .lshow__cap span:first-child { display: inline-flex; align-items: center; gap: 8px; color: #fff; }
+    /* Salesperson showcase: a chat widget on a photo with the six actions floating around it; each chip plays its conversation */
+    .lshow { position: relative; isolation: isolate; overflow: hidden; background: #e9eef8; }
+    .lshow__bg { position: absolute; inset: 0; z-index: -1;
+      background: linear-gradient(180deg, rgb(255 255 255 / .92), rgb(255 255 255 / .6) 40%, rgb(255 255 255 / .55)), url("/assets/img/how/how-3.jpg") center / cover no-repeat; }
+    .lhub { position: relative; height: 560px; margin-top: 40px; }
+    .lhub__chips { list-style: none; }
+    .lhub__chips li { position: absolute; translate: -50% -50%; }
+    .lhub__chips li:nth-child(1) { left: 16%; top: 22%; } .lhub__chips li:nth-child(2) { left: 10%; top: 50%; } .lhub__chips li:nth-child(3) { left: 17%; top: 78%; }
+    .lhub__chips li:nth-child(4) { left: 84%; top: 22%; } .lhub__chips li:nth-child(5) { left: 90%; top: 50%; } .lhub__chips li:nth-child(6) { left: 83%; top: 78%; }
+    .lchip { display: inline-flex; align-items: center; gap: 10px; width: max-content; padding: 12px 20px 12px 12px; border-radius: 99px; background: rgb(255 255 255 / .92);
+      -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); box-shadow: 0 20px 40px -18px rgb(15 23 42 / .45); font-family: var(--font); font-size: 16px; font-weight: 600; color: var(--ink);
+      transition: box-shadow .3s var(--ease), transform .3s var(--ease); }
+    .lchip:hover { transform: translateY(-2px); }
+    .lchip__ico { width: 36px; height: 36px; flex: none; border-radius: 50%; display: grid; place-items: center; background: #eef3ff; color: var(--blue); transition: background-color .3s var(--ease), color .3s var(--ease); }
+    .lchip__ico svg { width: 18px; height: 18px; }
+    .lchip.is-on { box-shadow: 0 0 0 2px var(--blue), 0 20px 40px -18px rgb(0 84 255 / .55); }
+    .lchip.is-on .lchip__ico { background: var(--blue); color: #fff; }
+    .lwid { position: absolute; left: 50%; top: 50%; width: 400px; translate: -50% -50%; border-radius: 10px; overflow: hidden; background: #fff; box-shadow: 0 60px 120px -40px rgb(15 23 42 / .6); text-align: left; }
+    .lwid__h { display: flex; align-items: center; gap: 10px; padding: 14px 16px; background: var(--blue); color: #fff; }
+    .lwid__h img { width: 34px; height: 34px; border-radius: 50%; background: #fff; padding: 4px; }
+    .lwid__h b { display: block; font-family: var(--font); font-size: 15px; font-weight: 600; }
+    .lwid__h small { display: block; font-size: 12px; opacity: .8; }
+    .lwid__b { position: relative; height: 312px; background: #f7f8fb; }
+    .lwid__pane { position: absolute; inset: 0; display: flex; flex-direction: column; gap: 10px; padding: 16px; opacity: 0; transform: translateY(8px); transition: opacity .45s var(--ease), transform .45s var(--ease); pointer-events: none; }
+    .lwid__pane.is-on { opacity: 1; transform: none; pointer-events: auto; }
+    .lm { max-width: 85%; padding: 10px 14px; border-radius: 10px; font-size: 14px; line-height: 1.45; }
+    .lm--me { align-self: flex-end; background: var(--blue); color: #fff; }
+    .lm--ai { align-self: flex-start; background: #fff; color: var(--ink); box-shadow: 0 0 0 1px #eceef3; }
+    .lm--voice { display: inline-flex; align-items: center; gap: 10px; }
+    .lm--voice > svg { width: 16px; height: 16px; }
+    .lm--voice small { font-size: 12px; opacity: .8; }
+    .lwave { display: inline-flex; align-items: center; gap: 3px; height: 22px; }
+    .lwave i { width: 3px; border-radius: 2px; background: rgb(255 255 255 / .85); }
+    .lprods { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .lprods--one { grid-template-columns: minmax(0, 200px); }
+    .lprod { display: grid; grid-template-columns: 40px 1fr; column-gap: 10px; align-items: center; padding: 8px; border-radius: 8px; background: #fff; box-shadow: 0 0 0 1px #eceef3; }
+    .lprod i, .lcart i { grid-row: span 2; width: 40px; height: 40px; border-radius: 8px; background: linear-gradient(135deg, #1f2937, #4b5563); }
+    .lprod b { font-family: var(--font); font-size: 12.5px; font-weight: 600; color: var(--ink); }
+    .lprod small { font-size: 12.5px; color: #6b7280; }
+    .lprod em { grid-column: 1 / -1; display: inline-flex; align-items: center; justify-content: center; gap: 5px; margin-top: 8px; padding: 6px; border-radius: 6px; border: 1px solid #bfd1ff; font-style: normal; font-family: var(--font); font-size: 11.5px; color: var(--blue); }
+    .lprod em svg { width: 12px; height: 12px; }
+    .lcmp { display: grid; grid-template-columns: 1fr 72px 72px; align-items: center; row-gap: 8px; padding: 12px 14px; border-radius: 8px; background: #fff; box-shadow: 0 0 0 1px #eceef3; font-size: 13px; color: #4b5563; }
+    .lcmp b { font-family: var(--font); font-size: 12.5px; font-weight: 600; color: var(--ink); text-align: center; }
+    .lyes, .lno { justify-self: center; width: 20px; height: 20px; border-radius: 50%; display: grid; place-items: center; }
+    .lyes { background: #dcfce7; color: #16a34a; } .lyes svg { width: 11px; height: 11px; }
+    .lno { color: #9ca3af; }
+    .lcart { display: grid; grid-template-columns: 40px 1fr auto; column-gap: 10px; align-items: center; padding: 10px; border-radius: 8px; background: #fff; box-shadow: 0 0 0 1px #eceef3; }
+    .lcart b { display: block; font-family: var(--font); font-size: 13px; font-weight: 600; color: var(--ink); }
+    .lcart small { font-size: 12.5px; color: #6b7280; }
+    .lcart strong { font-family: var(--font); font-size: 14px; font-weight: 600; color: var(--ink); }
+    .lcart__f { display: flex; align-items: center; justify-content: space-between; font-family: var(--font); font-size: 12.5px; color: #4b5563; }
+    .lcart__f span { display: inline-flex; align-items: center; gap: 6px; }
+    .lcart__f svg { width: 14px; height: 14px; color: #16a34a; }
+    .lcart__f em { padding: 7px 14px; border-radius: 99px; background: var(--blue); color: #fff; font-style: normal; font-weight: 500; }
+    .ltotal { display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; border-radius: 8px; background: #fff; box-shadow: 0 0 0 1px #eceef3; }
+    .lcoupon { display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: 99px; background: #dcfce7; color: #15803d; font-family: var(--font); font-size: 12px; font-weight: 600; }
+    .lcoupon svg { width: 13px; height: 13px; }
+    .ltotal__p s { margin-right: 8px; font-size: 13px; color: #9ca3af; }
+    .ltotal__p b { font-family: var(--font); font-size: 18px; font-weight: 600; color: var(--ink); }
+    .ltrack { list-style: none; display: grid; gap: 10px; padding: 12px 14px; border-radius: 8px; background: #fff; box-shadow: 0 0 0 1px #eceef3; font-family: var(--font); font-size: 13px; color: #6b7280; }
+    .ltrack li { display: flex; align-items: center; gap: 10px; }
+    .ltrack svg, .ltrack i { width: 20px; height: 20px; flex: none; border-radius: 50%; }
+    .ltrack svg { padding: 4px; background: var(--blue); color: #fff; }
+    .ltrack i { box-shadow: inset 0 0 0 2px #cbd5e1; }
+    .ltrack .is-done { color: var(--ink); font-weight: 500; }
+    .lwid__in { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; border-top: 1px solid #eceef3; font-size: 13px; color: #9ca3af; }
+    .lwid__in i { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; background: var(--blue); color: #fff; }
+    .lwid__in svg { width: 14px; height: 14px; }
+    .lshow__cap { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px 20px; margin-top: 24px; font-size: 16px; color: #374151; }
+    .lshow__cap span:first-child { display: inline-flex; align-items: center; gap: 8px; color: var(--ink); }
     .lshow__cap span:first-child::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: #4ade80; box-shadow: 0 0 0 4px rgb(74 222 128 / .18); }
-
+    /* under 1100px the chips leave the orbit: a centred row above the widget */
+    @media (max-width: 1100px) {
+      .lhub { height: auto; display: flex; flex-direction: column; align-items: center; gap: 28px; }
+      .lhub__chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; max-width: 760px; }
+      .lhub__chips li { position: static; translate: none; }
+      .lwid { position: relative; left: auto; top: auto; translate: none; width: min(400px, 100%); }
+    }
     /* Plans */
-    .lplans { position: relative; z-index: 1; display: flow-root; background: #f4f4f5; padding-bottom: var(--section); }   /* flow-root: the grid's negative margin must not drag the grey band up */
-    .lplans__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; align-items: stretch; margin-top: calc(-1 * var(--lift)); }
-    .lplan { position: relative; display: flex; flex-direction: column; padding: 40px; border-radius: 10px; background: #fff; border: 1px solid #e9e9e9; box-shadow: 0 30px 60px -40px rgb(15 23 42 / .45); }
+    .lplans { position: relative; margin-top: 64px; scroll-margin-top: 24px; }
+    .lplans__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; align-items: stretch; }
+    .lplan { position: relative; display: flex; flex-direction: column; padding: 40px; border-radius: 10px; background: #fff; border: 1px solid #e9e9e9; box-shadow: 0 40px 80px -40px rgb(0 0 0 / .6); }
     .lplan--pick { border: 1.5px solid transparent; background: linear-gradient(#fff, #fff) padding-box, var(--life) border-box; box-shadow: 0 30px 60px -36px rgb(123 60 255 / .55); }
     .lplan__head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
     .lplan__head h3 { font-size: var(--fs-h6); line-height: 1.3; }
@@ -241,21 +312,19 @@ const faq = {
     .lplan__feats li { display: flex; align-items: flex-start; gap: 10px; font-size: 16px; line-height: 1.5; color: #4b5563; }
     .lplan__feats li:first-child { color: var(--ink); font-weight: 700; }
     .lplan__feats svg { width: 20px; height: 20px; flex: none; margin-top: 2px; padding: 4px; border-radius: 50%; background: #dcfce7; color: #16a34a; }
-    .lplans__guard { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 32px; font-family: var(--font); font-size: 16px; font-weight: 500; color: var(--ink); }
-    .lplans__guard svg { width: 22px; height: 22px; color: #16a34a; }
-    .lnote { display: flex; align-items: center; gap: 20px; width: fit-content; max-width: 860px; margin: 32px auto 0; padding: 28px 36px 28px 28px;
-      border-radius: 10px; background: rgb(0 84 255 / .1); font-size: 16px; line-height: 1.55; color: #4b5563; text-align: left; }
-    .lnote__ico { width: 48px; height: 48px; flex: none; border-radius: 50%; display: grid; place-items: center; background: #fff; color: var(--blue);
-      box-shadow: 0 0 0 1px #e3e9f8, 0 6px 14px -8px rgb(0 84 255 / .5); }
+    .lplans__guard { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 32px; font-family: var(--font); font-size: 16px; font-weight: 500; color: #fff; }
+    .lplans__guard svg { width: 22px; height: 22px; color: #4ade80; }
+    .lnote { display: flex; align-items: center; gap: 20px; width: fit-content; max-width: 860px; margin: 32px auto 0; padding: 24px 36px 24px 24px;
+      border-radius: 10px; background: rgb(255 255 255 / .06); border: 1px solid rgb(255 255 255 / .12); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+      font-size: 16px; line-height: 1.55; color: rgb(255 255 255 / .72); text-align: left; }
+    .lnote__ico { width: 48px; height: 48px; flex: none; border-radius: 50%; display: grid; place-items: center; background: rgb(255 255 255 / .1); color: #c4b0ff; }
     .lnote__ico svg { width: 22px; height: 22px; }
-    .lnote strong { font-weight: 700; color: var(--ink); }
+    .lnote strong { font-weight: 700; color: #fff; }
 
     @media (max-width: 1024px) {
       .laud__grid { grid-template-columns: 1fr; }
       .lcard { min-height: 0; flex-direction: row; align-items: center; gap: 24px; padding: 28px; }
       .lplans__grid { grid-template-columns: 1fr; max-width: 560px; margin-inline: auto; }
-      .lshow__grid { grid-template-columns: 1fr; }
-      .lshow__grid > div { order: -1; }   /* art above the list once they stack */
     }
     @media (max-width: 781px) {
       .lsteps__path { display: none; }
@@ -264,10 +333,17 @@ const faq = {
       .lfeat__grid, .lvs__grid { grid-template-columns: 1fr; }
     }
     @media (max-width: 640px) {
-      .lifetime-page { --lift: 120px; }
-      .lhero { padding: calc(88px + 48px) 0 calc(var(--lift) + 40px); }
+      .lhero { padding: calc(88px + 48px) 0 64px; }
+      .lplans { margin-top: 40px; }
       .lhead p { margin-top: 14px; }
-      .laud__grid, .lfeat__grid, .lvs__grid, .lshow__grid { margin-top: 36px; }
+      .laud__grid, .lfeat__grid, .lvs__grid { margin-top: 36px; }
+      .lhub { margin-top: 32px; gap: 20px; }
+      .lhub__chips { display: grid; grid-template-columns: 1fr 1fr; width: 100%; gap: 8px; }
+      .lchip { width: 100%; padding: 8px 12px 8px 8px; gap: 8px; font-size: 14px; text-align: left; }
+      .lchip__ico { width: 30px; height: 30px; }
+      .lchip__ico svg { width: 15px; height: 15px; }
+      .lwid__b { height: 330px; }
+      .lshow__cap { justify-content: center; text-align: center; font-size: 15px; }
       .lcard { flex-direction: column; align-items: flex-start; padding: 28px 22px; gap: 24px; }
       .lcard__ico { width: 60px; height: 60px; }
       .lcard__ico svg { width: 26px; height: 26px; }
@@ -283,8 +359,6 @@ const faq = {
       .lfi__t { font-size: 16px; }
       .lvs__card { padding: 28px 22px; }
       .lvs__card .btn { width: 100%; }
-      .lshow__btn { padding: 12px; gap: 12px; }
-      .lshow__btn b { font-size: 16px; }
       .lplan { padding: 28px 22px; }
       .lplan__desc { min-height: 0; }
       .lnote { margin-top: 24px; align-items: flex-start; gap: 14px; padding: 16px 18px 16px 14px; }
@@ -304,11 +378,9 @@ const faq = {
       <p class="lhero__lead">Get CartPilot for your WooCommerce store for life. Connect your own AI provider key and pay them directly for usage.</p>
       <p class="lhero__note">On Shopify? Lifetime plans are for WooCommerce stores. <a href="/shopify/">Start free on Shopify →</a></p>
     </div>
-  </section>
 
-  <!-- Plans: the cards ride up over the bottom of the hero -->
-  <section class="lplans" id="plans" aria-label="Lifetime plans">
-    <div class="container lwrap">
+    <!-- Plans: inside the hero, on the same violet background -->
+    <div class="container lwrap lplans" id="plans" role="region" aria-label="Lifetime plans">
       <div class="lplans__grid">
         {plans.map((p) => (
           <article class={p.pick ? "lplan lplan--pick" : "lplan"} data-reveal>
@@ -407,31 +479,31 @@ const faq = {
     </div>
   </section>
 
-  <!-- What you're getting -->
+  <!-- What you're getting: chat widget on a photo, the six actions float around it -->
   <section class="section lshow">
+    <div class="lshow__bg" aria-hidden="true"></div>
     <div class="container lwrap">
       <div class="lhead" data-reveal>
         <h2 class="h3">A Salesperson That Gets Things Done.</h2>
         <p>See what you’re getting: real products, real actions, one conversation.</p>
       </div>
-      <div class="lshow__grid" data-show>
-        <ul class="lshow__list">
+      <div class="lhub" data-show>
+        <ul class="lhub__chips">
           {actions.map((a, i) => (
-            <li><button class={i === 0 ? "lshow__btn is-on" : "lshow__btn"} type="button" aria-pressed={i === 0 ? "true" : "false"} data-show-i={i}>
-              <span class="lshow__ico"><Fragment set:html={svg(a.ico)} /></span>
-              <span><b>{a.t}</b><small><span>{a.p}</span></small></span>
-            </button></li>
+            <li><button class={i === 0 ? "lchip is-on" : "lchip"} type="button" aria-pressed={i === 0 ? "true" : "false"} data-show-i={i}><span class="lchip__ico"><Fragment set:html={svg(a.ico)} /></span>{a.t}</button></li>
           ))}
         </ul>
-        <div>
-          <div class="lshow__stage">
+        <div class="lwid">
+          <div class="lwid__h"><img src="/assets/img/favicon.png" alt="" width="34" height="34"><span><b>CartPilot</b><small>Your personal AI agent</small></span></div>
+          <div class="lwid__b" aria-live="polite">
             {actions.map((a, i) => (
-              <img class={i === 0 ? "is-on" : undefined} src={`/assets/img/journey/${a.img}.jpg`} alt={i === 0 ? a.t : ""} width="960" height="594" loading="lazy" decoding="async">
+              <div class={i === 0 ? "lwid__pane is-on" : "lwid__pane"} aria-hidden={i === 0 ? "false" : "true"} set:html={a.chat} />
             ))}
           </div>
-          <p class="lshow__cap"><span>Connected to your catalog</span><span>Real products. Real actions. One conversation.</span></p>
+          <div class="lwid__in" aria-hidden="true"><span>Ask anything here…</span><i><Fragment set:html={svg(I.send, "2")} /></i></div>
         </div>
       </div>
+      <p class="lshow__cap"><span>Connected to your catalog</span><span>Real products. Real actions. One conversation.</span></p>
     </div>
   </section>
 
@@ -446,18 +518,18 @@ const faq = {
 <Fragment slot="scripts">
 <script is:inline src="/assets/js/hero-gradient.js?v=2" defer></script>
 <script is:inline>
-  /* "A salesperson that gets things done": pick an action to show its art. While the section is on screen it steps
-     through the actions on its own until the visitor picks one; reduced motion keeps it still. */
+  /* "A salesperson that gets things done": each chip plays its own conversation in the widget. While the section is on
+     screen it steps through the chips on its own until the visitor picks one; reduced motion keeps it still. */
   (() => {
     const box = document.querySelector("[data-show]");
     if (!box) return;
     const btns = [...box.querySelectorAll("[data-show-i]")];
-    const imgs = [...box.querySelectorAll(".lshow__stage img")];
+    const panes = [...box.querySelectorAll(".lwid__pane")];
     let cur = 0, timer = 0, auto = !matchMedia("(prefers-reduced-motion: reduce)").matches;
     const show = (i) => {
       cur = i;
       btns.forEach((b, k) => { b.classList.toggle("is-on", k === i); b.setAttribute("aria-pressed", String(k === i)); });
-      imgs.forEach((im, k) => { im.classList.toggle("is-on", k === i); im.alt = k === i ? btns[k].querySelector("b").textContent : ""; });
+      panes.forEach((p, k) => { p.classList.toggle("is-on", k === i); p.setAttribute("aria-hidden", String(k !== i)); });
     };
     const stop = () => { auto = false; clearInterval(timer); };
     btns.forEach((b, i) => b.addEventListener("click", () => { stop(); show(i); }));
