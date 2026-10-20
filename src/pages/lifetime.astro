@@ -117,31 +117,30 @@ const faq = {
   ],
 };
 ---
-<Base title={title} description={description} bodyClass="lifetime-page theme-dark-hero" fontWeights="400;500;600;700">
+<Base title={title} description={description} bodyClass="lifetime-page header-page" fontWeights="400;500;600;700">
 <Fragment slot="head">
   <style is:inline>
     /* ---------- Lifetime deal ---------- */
     .lifetime-page { --life: linear-gradient(90deg, #0054ff, #7b3cff 55%, #e2489c); --life-v: #7b3cff; }
-    .lgrad { background: linear-gradient(90deg, #6f9bff, #a07bff 50%, #ff7cc0); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .lgrad { background: linear-gradient(90deg, #0054ff, #7b3cff 55%, #e2489c); -webkit-background-clip: text; background-clip: text; color: transparent; }
     .lhead { max-width: 900px; margin-inline: auto; text-align: center; }
     .lhead h2 { text-wrap: balance; }
     .lhead p { margin-top: 20px; font-size: var(--fs-lead); line-height: 1.5; color: #6b7280; text-wrap: pretty; }
     .lwrap { max-width: 1180px; margin-inline: auto; }
 
     /* Hero: dark, violet "mist" behind the floating header, with a lifetime licence card */
-    .lhero { position: relative; isolation: isolate; overflow: hidden; background: #000; color: #fff; padding: calc(109px + 100px) 0 120px; }
-    .lhero__bg { position: absolute; inset: 0; z-index: -1; background: #000; }
-    .lhero__bg canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+    body.header-page { --header-bg: #f6f6f6; }   /* header shares the off-white hero band (no white strip), same as /pricing/ */
+    .lhero { position: relative; background: #f6f6f6; padding: clamp(56px, 6.67vw, 80px) 0 var(--section); }
     .lhero__in { display: flex; flex-direction: column; align-items: center; text-align: center; }
-    .lhero .pill { background: rgb(255 255 255 / .08); border: 1px solid rgb(255 255 255 / .16); color: #e4e4e7; -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+    .lhero .pill { background: #fff; border: 1px solid #ececef; color: var(--ink); }
     .lhero .pill img { width: auto; height: 12px; margin-right: 2px; }
     .lhero .pill svg { width: 22px; height: 22px; margin-left: 2px; }
-    .lhero h1 { margin-top: 20px; max-width: 1040px; color: #fff; text-wrap: balance; }
+    .lhero h1 { margin-top: 20px; max-width: 1040px; text-wrap: balance; }
     .lhero h1 .lgrad { display: block; }
-    .lhero__lead { margin-top: 28px; max-width: 760px; font-size: var(--fs-lead); line-height: 1.5; color: rgb(255 255 255 / .74); }
-    .lhero__note { margin-top: 26px; font-size: 16px; color: rgb(255 255 255 / .5); }
-    .lhero__note a { color: #fff; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgb(255 255 255 / .35); transition: text-decoration-color .2s; }
-    .lhero__note a:hover { text-decoration-color: #fff; }
+    .lhero__lead { margin-top: 28px; max-width: 760px; font-size: var(--fs-lead); line-height: 1.5; color: #4b5563; }
+    .lhero__note { margin-top: 26px; font-size: 16px; color: #6b7280; }
+    .lhero__note a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgb(15 23 42 / .3); transition: text-decoration-color .2s; }
+    .lhero__note a:hover { text-decoration-color: var(--ink); }
 
 
     /* Who it's for */
@@ -295,7 +294,7 @@ const faq = {
     /* Plans */
     .lplans { position: relative; margin-top: 64px; scroll-margin-top: 24px; }
     .lplans__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; align-items: stretch; }
-    .lplan { position: relative; display: flex; flex-direction: column; padding: 40px; border-radius: 10px; background: #fff; border: 1px solid #e9e9e9; box-shadow: 0 40px 80px -40px rgb(0 0 0 / .6); }
+    .lplan { position: relative; display: flex; flex-direction: column; padding: 40px; border-radius: 10px; background: #fff; border: 1px solid #e9e9e9; box-shadow: 0 30px 60px -40px rgb(15 23 42 / .45); }
     .lplan--pick { border: 1.5px solid transparent; background: linear-gradient(#fff, #fff) padding-box, var(--life) border-box; box-shadow: 0 30px 60px -36px rgb(123 60 255 / .55); }
     .lplan__head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
     .lplan__head h3 { font-size: var(--fs-h6); line-height: 1.3; }
@@ -312,14 +311,14 @@ const faq = {
     .lplan__feats li { display: flex; align-items: flex-start; gap: 10px; font-size: 16px; line-height: 1.5; color: #4b5563; }
     .lplan__feats li:first-child { color: var(--ink); font-weight: 700; }
     .lplan__feats svg { width: 20px; height: 20px; flex: none; margin-top: 2px; padding: 4px; border-radius: 50%; background: #dcfce7; color: #16a34a; }
-    .lplans__guard { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 32px; font-family: var(--font); font-size: 16px; font-weight: 500; color: #fff; }
-    .lplans__guard svg { width: 22px; height: 22px; color: #4ade80; }
-    .lnote { display: flex; align-items: center; gap: 20px; width: fit-content; max-width: 860px; margin: 32px auto 0; padding: 24px 36px 24px 24px;
-      border-radius: 10px; background: rgb(255 255 255 / .06); border: 1px solid rgb(255 255 255 / .12); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
-      font-size: 16px; line-height: 1.55; color: rgb(255 255 255 / .72); text-align: left; }
-    .lnote__ico { width: 48px; height: 48px; flex: none; border-radius: 50%; display: grid; place-items: center; background: rgb(255 255 255 / .1); color: #c4b0ff; }
+    .lplans__guard { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 32px; font-family: var(--font); font-size: 16px; font-weight: 500; color: var(--ink); }
+    .lplans__guard svg { width: 22px; height: 22px; color: #16a34a; }
+    .lnote { display: flex; align-items: center; gap: 20px; width: fit-content; max-width: 860px; margin: 32px auto 0; padding: 28px 36px 28px 28px;
+      border-radius: 10px; background: rgb(0 84 255 / .1); font-size: 16px; line-height: 1.55; color: #4b5563; text-align: left; }
+    .lnote__ico { width: 48px; height: 48px; flex: none; border-radius: 50%; display: grid; place-items: center; background: #fff; color: var(--blue);
+      box-shadow: 0 0 0 1px #e3e9f8, 0 6px 14px -8px rgb(0 84 255 / .5); }
     .lnote__ico svg { width: 22px; height: 22px; }
-    .lnote strong { font-weight: 700; color: #fff; }
+    .lnote strong { font-weight: 700; color: var(--ink); }
 
     @media (max-width: 1024px) {
       .laud__grid { grid-template-columns: 1fr; }
@@ -333,7 +332,7 @@ const faq = {
       .lfeat__grid, .lvs__grid { grid-template-columns: 1fr; }
     }
     @media (max-width: 640px) {
-      .lhero { padding: calc(88px + 48px) 0 64px; }
+      .lhero { padding: 56px 0 64px; }
       .lplans { margin-top: 40px; }
       .lhead p { margin-top: 14px; }
       .laud__grid, .lfeat__grid, .lvs__grid { margin-top: 36px; }
@@ -371,7 +370,6 @@ const faq = {
 <main id="main">
   <!-- Hero -->
   <section class="lhero">
-    <div class="lhero__bg" data-mist data-speed="0.55" data-opacity="0.85" data-color="#5b2bd9" data-highlight="#8f6bff" data-glow="#ff86c8" aria-hidden="true"><canvas></canvas></div>
     <div class="container lhero__in">
       <p class="pill"><img src="/assets/img/woo-logo.png" alt="WooCommerce" width="48" height="12"> Lifetime Deal <Fragment set:html={INF("inf-pill")} /></p>
       <h1 class="h1">Pay Once. <span class="lgrad">Bring Your Own AI Key.</span></h1>
@@ -516,7 +514,6 @@ const faq = {
 </main>
 
 <Fragment slot="scripts">
-<script is:inline src="/assets/js/hero-gradient.js?v=2" defer></script>
 <script is:inline>
   /* "A salesperson that gets things done": each chip plays its own conversation in the widget. While the section is on
      screen it steps through the chips on its own until the visitor picks one; reduced motion keeps it still. */
