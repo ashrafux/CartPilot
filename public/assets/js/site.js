@@ -178,9 +178,12 @@
     // Whole components (animated as one piece, children stay put)
     const UNITS = [".cap", ".pcard", ".dc-card", ".jrow", ".faq-cards .faq", ".plan", ".pack", ".promise", ".refund", ".fx", ".plat",
       ".fcard", ".pcap", ".pstep", ".post-card", ".feat", ".help-card", ".tab", ".hero__media", ".phero__stage", ".hero__orb",
-      ".phero__orb", ".orb", ".footer-word", ".contrib", ".need-help", ".doc-foot", ".share", ".fca__tabs", ".pick__card"].join(",");
+      ".phero__orb", ".orb", ".footer-word", ".contrib", ".need-help", ".doc-foot", ".share", ".fca__tabs", ".pick__card",
+      ".billing-row", ".contact__card", ".qs", ".cta-sky__icon", ".psteps__path",
+      // lifetime page
+      ".lplan", ".lcard", ".lbill", ".lvs__card", ".lwid", ".lfi", ".lstep", ".lchip", ".lsteps__path"].join(",");
     // Plain blocks, used when they are not part of a unit above
-    const BLOCKS = "h1, h2, h3, h4, h5, h6, p, ul, ol, table, form, figure, blockquote, img, video, .btn-row, .pill, .works";
+    const BLOCKS = "h1, h2, h3, h4, h5, h6, p, li, table, form, figure, blockquote, img, video, .btn-row, .pill, .works";
     // Never animated: chrome, dialogs, and sections that run their own scroll motion
     const SKIP = ".site-header, .drawer, .chat-panel, .chat-launch, .modal, .phow__steps, .phow__note, nav, .sr-only";
     const scopes = [...$$("main"), ...$$(".site-footer")];
@@ -202,8 +205,10 @@
     let first = true;
     const play = (el, delay) => {
       const big = el.offsetHeight > 420 || el.offsetWidth > 900;
+      const t = getComputedStyle(el).translate;
+      const [tx = "0px", ty = "0px"] = t && t !== "none" ? t.split(" ") : [];
       el.animate(
-        [{ opacity: 0, translate: "0 26px", filter: `blur(${big ? 6 : 12}px)` }, { opacity: 1, translate: "0 0", filter: "blur(0px)" }],
+        [{ opacity: 0, translate: `${tx} calc(${ty} + 26px)`, filter: `blur(${big ? 6 : 12}px)` }, { opacity: 1, translate: `${tx} ${ty}`, filter: "blur(0px)" }],
         { duration: 760, delay, easing: EASE, fill: "backwards" }
       );
       el.classList.remove("anim-pre");
