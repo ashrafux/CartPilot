@@ -143,8 +143,7 @@ const faq = {
     .lhero h1 { margin-top: 20px; max-width: 1040px; text-wrap: balance; }
     .lhero h1 .lhero__l2 { display: block; }   /* second line, same ink as the first (no gradient) */
     .lhero__lead { margin-top: 28px; max-width: 860px; font-size: var(--fs-lead); line-height: 1.5; color: #4b5563; }
-    .lhero .btn-row { margin-top: 40px; justify-content: center; }
-    .loffer { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px 14px; margin-top: 24px; font-size: 16px; color: #4b5563; }
+    .loffer { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px 14px; margin-top: 32px; font-size: 16px; color: #4b5563; }
     .loffer__deal { padding: 6px 12px; border-radius: 99px; background: #16a34a; font-family: var(--font); font-size: 13px; font-weight: 600; line-height: 1; color: #fff; }
     .loffer i { width: 4px; height: 4px; border-radius: 50%; background: #cbd5e1; }
 
@@ -318,8 +317,7 @@ const faq = {
       .lwid { position: relative; left: auto; top: auto; translate: none; width: min(400px, 100%); }
     }
     /* Plans */
-    .lplans { position: relative; margin-top: 96px; scroll-margin-top: 24px; }
-    .lplans__head { margin-bottom: 48px; }
+    .lplans { position: relative; margin-top: 72px; scroll-margin-top: 24px; }
     .lplans__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; align-items: stretch; }
     .lplan { position: relative; display: flex; flex-direction: column; padding: 40px; border-radius: 10px; background: #fff; border: 1px solid #e9e9e9; }
     .lplan--pick { border: 1.5px solid transparent; background: linear-gradient(#fff, #fff) padding-box, var(--life) border-box; }
@@ -334,6 +332,8 @@ const faq = {
     .lplan__amt { font-family: var(--font); font-size: var(--fs-h2); font-weight: 500; line-height: 1.1; color: var(--ink); }
     .lplan__per { padding-bottom: 8px; font-size: 16px; color: var(--text); }
     .lplan .btn { width: 100%; min-height: 61px; margin-top: 32px; }
+    .lplan .btn:not(.btn--secondary) { padding-right: 5.5px; }   /* 61px button + 48px badge: 6.5px clear on every side (incl. the 1px border) */
+    .lplan .btn:not(.btn--secondary) .btn__ico { width: 48px; height: 48px; }
     .lplan__flab { margin-top: 32px; padding-top: 28px; border-top: 1px solid #f0f0f2; font-family: var(--font); font-size: 16px; font-weight: 600; color: var(--ink); }
     .lplan__feats { list-style: none; display: grid; gap: 12px; margin-top: 18px; }
     .lplan__feats li { display: flex; align-items: flex-start; gap: 10px; font-size: 16px; line-height: 1.5; color: #4b5563; }
@@ -365,9 +365,7 @@ const faq = {
     }
     @media (max-width: 640px) {
       .lhero { padding: 56px 0 64px; }
-      .lplans { margin-top: 64px; }
-      .lplans__head { margin-bottom: 32px; }
-      .lhero .btn-row { margin-top: 32px; }
+      .lplans { margin-top: 48px; }
       .loffer i { display: none; }   /* the separator dot would dangle at a line end */
       .lplans__guard { align-items: flex-start; }
       .lhead p { margin-top: 14px; }
@@ -411,16 +409,11 @@ const faq = {
       <p class="pill"><img src="/assets/img/woo-logo.png" alt="" width="48" height="12"> Lifetime Deal · <b class="lhero__woo">WooCommerce</b></p>
       <h1 class="h1">Pay Once. Bring <span class="lhero__l2">Your Own AI Key.</span></h1>
       <p class="lhero__lead">Get CartPilot for your WooCommerce store with a single payment. Connect your own AI provider key, pay the provider directly for what you use, and never pay CartPilot a monthly fee.</p>
-      <div class="btn-row"><a class="btn btn--lg" href="#plans">See Lifetime Plans</a></div>
       <p class="loffer"><span class="loffer__deal">October Deals</span><span>30% off every Lifetime plan</span><i aria-hidden="true"></i><span>7-day money-back guarantee</span></p>
     </div>
 
     <!-- Plans: inside the hero, on the same violet background -->
     <div class="container lwrap lplans" id="plans" role="region" aria-label="Lifetime plans">
-      <div class="lhead lplans__head" data-reveal>
-        <h2 class="h3">Choose Your Lifetime Plan</h2>
-        <p>One payment, no renewals. Pick the plan that covers the number of stores you run.</p>
-      </div>
       <div class="lplans__grid">
         {plans.map((p) => (
           <article class={p.pick ? "lplan lplan--pick" : "lplan"} data-reveal>

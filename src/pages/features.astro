@@ -218,6 +218,7 @@ const cta = {
       .f-hero .btn-row .btn { flex: 1 1 0; padding-inline: 12px; }
       .f-hero__notes { gap: 8px 20px; }
       .fx-cta .btn { flex: 1 1 0; padding-inline: 12px; }
+      :is(.f-hero .btn-row, .fx-cta) .btn:not(.btn--secondary) { padding-right: 5px; }   /* keep the badge's clearance even */
     }
     @media (max-width: 360px) {
       .plat__title { font-size: 20px; }
