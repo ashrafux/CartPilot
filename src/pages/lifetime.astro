@@ -325,6 +325,7 @@ const faq = {
       box-shadow: 0 0 0 1px #e3e9f8, 0 6px 14px -8px rgb(0 84 255 / .5); }
     .lnote__ico svg { width: 22px; height: 22px; }
     .lnote strong { font-weight: 700; color: var(--ink); }
+    .lnote__br { display: block; }   /* "so check your…" starts the second line */
 
     @media (max-width: 1024px) {
       .laud__grid { grid-template-columns: 1fr; }
@@ -369,6 +370,7 @@ const faq = {
       .lnote { margin-top: 24px; align-items: flex-start; gap: 14px; padding: 16px 18px 16px 14px; }
       .lnote__ico { width: 40px; height: 40px; }
       .lnote__ico svg { width: 19px; height: 19px; }
+      .lnote__br { display: none; }
     }
   </style>
 </Fragment>
@@ -398,7 +400,7 @@ const faq = {
         ))}
       </div>
       <p class="lplans__guard"><Fragment set:html={svg(I.shield)} />7-day money-back guarantee</p>
-      <p class="lnote"><span class="lnote__ico" aria-hidden="true"><Fragment set:html={svg(I.info)} /></span><span><strong>A quick note on AI costs.</strong> AI provider costs depend on your provider and volume, so check your provider’s pricing before you choose.</span></p>
+      <p class="lnote"><span class="lnote__ico" aria-hidden="true"><Fragment set:html={svg(I.info)} /></span><span><strong>A quick note on AI costs.</strong> AI provider costs depend on your provider and volume,<br class="lnote__br"> so check your provider’s pricing before you choose.</span></p>
     </div>
   </section>
 
