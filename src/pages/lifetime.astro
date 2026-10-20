@@ -214,7 +214,7 @@ const faq = {
     /* Lifetime or subscription */
     .lvs { background: #f4f4f5; }
     .lvs__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 56px; }
-    .lvs__card { position: relative; isolation: isolate; overflow: hidden; display: flex; flex-direction: column; align-items: flex-start; padding: 48px; border-radius: 10px; background: #fff; }
+    .lvs__card { position: relative; isolation: isolate; overflow: hidden; display: flex; flex-direction: column; align-items: flex-start; padding: 48px 32px; border-radius: 10px; background: #fff; }   /* 32px sides: the longest list line stays on one line */
     .lvs__card--life { background: radial-gradient(90% 70% at 100% 0%, rgb(123 60 255 / .38), transparent 62%), radial-gradient(70% 60% at 0% 100%, rgb(0 84 255 / .28), transparent 60%), #0c0b14; color: #fff; }
     .lvs__tag { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: 99px; background: #f4f4f5; font-family: var(--font); font-size: 14px; font-weight: 500; color: #3f3f46; }
     .lvs__card--life .lvs__tag { background: rgb(255 255 255 / .08); border: 1px solid rgb(255 255 255 / .14); color: #fff; }
@@ -310,7 +310,13 @@ const faq = {
     .lwid__in { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; border-top: 1px solid #eceef3; font-size: 13px; color: #9ca3af; }
     .lwid__in i { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; background: var(--blue); color: #fff; }
     .lwid__in svg { width: 14px; height: 14px; }
-    .lshow__cap { margin-top: 24px; text-align: center; font-size: 16px; color: #374151; }
+    /* caption as a frosted pill under the widget: three beats with small icons */
+    .lshow__cap { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px 16px; width: fit-content; max-width: 100%; margin: 36px auto 0; padding: 12px 24px;
+      border-radius: 99px; background: rgb(255 255 255 / .78); border: 1px solid rgb(255 255 255 / .9); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+      box-shadow: 0 18px 40px -22px rgb(15 23 42 / .45); font-family: var(--font); font-size: 15px; font-weight: 500; color: var(--ink); }
+    .lshow__cap span { display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; }
+    .lshow__cap svg { width: 26px; height: 26px; flex: none; padding: 6px; border-radius: 50%; background: #eef3ff; color: var(--blue); }
+    .lshow__cap i { width: 4px; height: 4px; border-radius: 50%; background: #c7d2e5; }
     /* under 1100px the chips leave the orbit: a centred row above the widget */
     @media (max-width: 1100px) {
       .lhub { height: auto; display: flex; flex-direction: column; align-items: center; gap: 28px; }
@@ -374,7 +380,8 @@ const faq = {
       .lchip__ico { width: 30px; height: 30px; }
       .lchip__ico svg { width: 15px; height: 15px; }
       .lwid__b { height: 330px; }
-      .lshow__cap { font-size: 15px; }
+      .lshow__cap { flex-direction: column; gap: 10px; padding: 16px 22px; border-radius: 10px; font-size: 14px; }
+      .lshow__cap i { display: none; }
       .lcard { flex-direction: column; align-items: flex-start; padding: 28px 22px; gap: 24px; }
       .lcard__ico { width: 60px; height: 60px; }
       .lcard__ico svg { width: 26px; height: 26px; }
@@ -539,7 +546,7 @@ const faq = {
           <div class="lwid__in" aria-hidden="true"><span>Ask anything here…</span><i><Fragment set:html={svg(I.send, "2")} /></i></div>
         </div>
       </div>
-      <p class="lshow__cap">Real products. Real actions. One conversation.</p>
+      <p class="lshow__cap"><span><Fragment set:html={svg(I.bag, "2")} />Real products.</span><i aria-hidden="true"></i><span><Fragment set:html={svg(I.zap, "2")} />Real actions.</span><i aria-hidden="true"></i><span><Fragment set:html={svg(I.chat, "2")} />One conversation.</span></p>
     </div>
   </section>
 
