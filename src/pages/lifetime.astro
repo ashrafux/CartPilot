@@ -122,7 +122,6 @@ const faq = {
   <style is:inline>
     /* ---------- Lifetime deal ---------- */
     .lifetime-page { --life: linear-gradient(90deg, #0054ff, #7b3cff 55%, #e2489c); --life-v: #7b3cff; }
-    .lgrad { background: linear-gradient(90deg, #0054ff, #7b3cff 55%, #e2489c); -webkit-background-clip: text; background-clip: text; color: transparent; }
     .lhead { max-width: 900px; margin-inline: auto; text-align: center; }
     .lhead h2 { text-wrap: balance; }
     .lhead p { margin-top: 20px; font-size: var(--fs-lead); line-height: 1.5; color: #6b7280; text-wrap: pretty; }
@@ -136,7 +135,7 @@ const faq = {
     .lhero .pill img { width: auto; height: 12px; margin-right: 2px; }
     .lhero .pill svg { width: 22px; height: 22px; margin-left: 2px; }
     .lhero h1 { margin-top: 20px; max-width: 1040px; text-wrap: balance; }
-    .lhero h1 .lgrad { display: block; }
+    .lhero h1 .lhero__l2 { display: block; }   /* second line, same ink as the first (no gradient) */
     .lhero__lead { margin-top: 28px; max-width: 760px; font-size: var(--fs-lead); line-height: 1.5; color: #4b5563; }
     .lhero__note { margin-top: 26px; font-size: 16px; color: #6b7280; }
     .lhero__note a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgb(15 23 42 / .3); transition: text-decoration-color .2s; }
@@ -185,18 +184,21 @@ const faq = {
     .lbill__plus { font-size: 22px; font-weight: 500; color: #6b7280; }
 
     /* Everything included */
-    /* dark band: violet glow at the top, glass rows */
-    .lfeat { background: radial-gradient(55% 45% at 50% 0%, rgb(123 60 255 / .26), transparent 70%), radial-gradient(40% 40% at 100% 100%, rgb(0 84 255 / .16), transparent 70%), #07070b; }
+    /* dark band: solid background; rows fill with the primary blue on hover */
+    .lfeat { background: #07070b; }
     .lfeat .lhead h2 { color: #fff; }
     .lfeat .lhead p { color: rgb(255 255 255 / .6); }
     .lfeat__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 56px; list-style: none; }
-    .lfi { display: flex; align-items: center; gap: 16px; min-height: 80px; padding: 16px 22px 16px 16px; border-radius: 10px; border: 1px solid rgb(255 255 255 / .1); background: rgb(255 255 255 / .04); transition: border-color .25s var(--ease), background-color .25s var(--ease), box-shadow .25s var(--ease); }
-    .lfi:hover { border-color: rgb(160 123 255 / .45); background: rgb(255 255 255 / .07); box-shadow: 0 18px 40px -24px rgb(123 60 255 / .55); }
-    .lfi__ico { width: 48px; height: 48px; flex: none; border-radius: 50%; display: grid; place-items: center; background: rgb(0 84 255 / .18); color: #8fb0ff; }
+    .lfi { display: flex; align-items: center; gap: 16px; min-height: 80px; padding: 16px 22px 16px 16px; border-radius: 10px; border: 1px solid #222228; background: #121217; transition: border-color .3s var(--ease), background-color .3s var(--ease), box-shadow .3s var(--ease); }
+    .lfi:hover { border-color: var(--blue); background: var(--blue); box-shadow: 0 20px 40px -22px rgb(0 84 255 / .7); }
+    .lfi:hover .lfi__ico { background: rgb(255 255 255 / .18); color: #fff; }
+    .lfi:hover .lfi__t small { color: rgb(255 255 255 / .78); }
+    .lfi:hover .lfi__ok { background: #fff; color: var(--blue); }
+    .lfi__ico { width: 48px; height: 48px; flex: none; border-radius: 50%; display: grid; place-items: center; background: rgb(0 84 255 / .18); color: #8fb0ff; transition: background-color .3s var(--ease), color .3s var(--ease); }
     .lfi__ico svg { width: 22px; height: 22px; }
     .lfi__t { flex: 1; min-width: 0; font-family: var(--font); font-size: 18px; font-weight: 500; line-height: 1.35; color: #fff; }
-    .lfi__t small { display: block; margin-top: 2px; font-family: var(--font-text); font-size: 15px; font-weight: 400; color: rgb(255 255 255 / .5); }
-    .lfi__ok { width: 28px; height: 28px; flex: none; border-radius: 50%; display: grid; place-items: center; background: rgb(74 222 128 / .14); color: #4ade80; }
+    .lfi__t small { display: block; margin-top: 2px; font-family: var(--font-text); font-size: 15px; font-weight: 400; color: rgb(255 255 255 / .5); transition: color .3s var(--ease); }
+    .lfi__ok { width: 28px; height: 28px; flex: none; border-radius: 50%; display: grid; place-items: center; background: rgb(74 222 128 / .14); color: #4ade80; transition: background-color .3s var(--ease), color .3s var(--ease); }
     .lfi__ok svg { width: 14px; height: 14px; }
 
     /* Lifetime or subscription */
@@ -298,8 +300,8 @@ const faq = {
     /* Plans */
     .lplans { position: relative; margin-top: 64px; scroll-margin-top: 24px; }
     .lplans__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; align-items: stretch; }
-    .lplan { position: relative; display: flex; flex-direction: column; padding: 40px; border-radius: 10px; background: #fff; border: 1px solid #e9e9e9; box-shadow: 0 30px 60px -40px rgb(15 23 42 / .45); }
-    .lplan--pick { border: 1.5px solid transparent; background: linear-gradient(#fff, #fff) padding-box, var(--life) border-box; box-shadow: 0 30px 60px -36px rgb(123 60 255 / .55); }
+    .lplan { position: relative; display: flex; flex-direction: column; padding: 40px; border-radius: 10px; background: #fff; border: 1px solid #e9e9e9; }
+    .lplan--pick { border: 1.5px solid transparent; background: linear-gradient(#fff, #fff) padding-box, var(--life) border-box; }
     .lplan__head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
     .lplan__head h3 { font-size: var(--fs-h6); line-height: 1.3; }
     .lplan__tag { padding: 6px 12px; border-radius: 99px; background: var(--life); font-family: var(--font); font-size: 14px; font-weight: 500; line-height: 1.3; color: #fff; }
@@ -376,7 +378,7 @@ const faq = {
   <section class="lhero">
     <div class="container lhero__in">
       <p class="pill"><img src="/assets/img/woo-logo.png" alt="WooCommerce" width="48" height="12"> Lifetime Deal <Fragment set:html={INF("inf-pill")} /></p>
-      <h1 class="h1">Pay Once. <span class="lgrad">Bring Your Own AI Key.</span></h1>
+      <h1 class="h1">Pay Once. <span class="lhero__l2">Bring Your Own AI Key.</span></h1>
       <p class="lhero__lead">Get CartPilot for your WooCommerce store for life. Connect your own AI provider key and pay them directly for usage.</p>
       <p class="lhero__note">On Shopify? Lifetime plans are for WooCommerce stores. <a href="/shopify/">Start free on Shopify →</a></p>
     </div>
