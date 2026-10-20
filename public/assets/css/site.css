@@ -107,6 +107,9 @@ ul, ol { margin: 0; padding: 0; }
 .h5 { font-size: var(--fs-h5); line-height: 1.3; }
 .h6 { font-size: var(--fs-h6); line-height: 1.3; }
 .lead { font-size: var(--fs-lead); line-height: 1.5; color: var(--text); }
+/* Intro copy under headings: browsers even out the lines (no long first line over a short last one) */
+.lead, .hero__lead, .phero__lead, .f-hero__lead, .lhero__lead, .caps__lead, .problem__lead, .dc__lead, .fca__lead, .faqx__lead, .cta-sky__text, .rules__sub,
+:is(.section-head, .lhead, .pfeat__head, .psteps__head, .phow__head, .contact__head, .aff-head, .related__head, .jlist-head) > p { text-wrap: balance; }
 /* every section's H2 description is Body XL (20px) */
 .section-head .lead, .h2 + p, .h2 + .lead , .h1 + p:not([class*="note"]), .h1 + .lead { font-size: var(--fs-lead); line-height: 1.5; }
 .small { font-size: var(--fs-xs); line-height: 1.5; }
