@@ -241,6 +241,7 @@ export const platforms: Record<string, Platform> = {
       "toggle",
       "chart"
     ],
+    "how_ui": [["shop-ui-1.png", 63], ["shop-ui-2.png", 82], ["shop-ui-3.png", 82], ["shop-ui-4.png", 82], ["shop-ui-5.png", 82]],
     "how_note": "Your CartPilot plan is billed through your Shopify account.",
     "steps_h2": "Live on Your Shopify Store <span>in Three Steps</span>",
     "steps_p": "No developer and no code. Most of it happens inside your Shopify admin.",
