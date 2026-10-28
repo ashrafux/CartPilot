@@ -505,7 +505,7 @@ export const platforms: Record<string, Platform> = {
       "sync",
       "layers"
     ],
-    "how_ui": [["woo-ui-1.png?v=3", 63], ["woo-ui-2.png", 82], ["woo-ui-4.png", 80], ["woo-ui-3.png", 80], null],
+    "how_ui": [["woo-ui-1.png?v=4", 63], ["woo-ui-2.png", 82], ["woo-ui-4.png", 80], ["woo-ui-3.png", 80], null],
     "how_note": "Lifetime plans, with the option to use your own AI provider key, are available for WooCommerce stores. <a href=\"/pricing/\">See Plans &amp; Pricing →</a>",
     "steps_h2": "Live on Your WooCommerce Store <span>in Three Steps</span>",
     "steps_p": "No developer and no code. Everything starts from your WordPress admin.",
