@@ -31,7 +31,7 @@ const faq = {
 ---
 <Base title={d.title} description={d.desc} bodyClass={`theme-dark-hero ${d.body}`} fontWeights="400;500;600;700">
 <Fragment slot="head">
-  <link rel="stylesheet" href="/assets/css/platform.css?v=21">
+  <link rel="stylesheet" href="/assets/css/platform.css?v=22">
 </Fragment>
 
 <main id="main">
@@ -125,7 +125,9 @@ const faq = {
         {d.how.map(([t, p], k) => (
           <li class="phow__step">
             <div class="phow__text"><span class="phow__ico"><Fragment set:html={ico(I[d.how_icons[k]], "1.8")} /></span><h3 set:html={t} /><p set:html={p} /></div>
-            <figure class="phow__shot"><img class="phow__bg" src={`/assets/img/how/how-${k + 1}.jpg`} alt="" width="1822" height="1158" loading="lazy" decoding="async"><div class="sx" aria-hidden="true" set:html={shots[k]} /></figure>
+            <figure class="phow__shot"><img class="phow__bg" src={`/assets/img/how/how-${k + 1}.jpg`} alt="" width="1822" height="1158" loading="lazy" decoding="async">{d.how_ui?.[k]
+              ? <img class="phow__ui" src={`/assets/img/how/${d.how_ui[k]![0]}`} alt="" style={`width:${d.how_ui[k]![1]}%`} loading="lazy" decoding="async">
+              : <div class="sx" aria-hidden="true" set:html={shots[k]} />}</figure>
           </li>
         ))}
       </ol>
