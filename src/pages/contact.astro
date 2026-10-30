@@ -26,7 +26,7 @@ const ARROW = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke
     /* ---------- Contact band ---------- */
     .ct { background: #f6f6f6; padding-block: clamp(56px, 6.67vw, 80px) clamp(72px, 8.33vw, 120px); }
     .ct__head { max-width: 1100px; margin-inline: auto; text-align: center; }
-    .ct__head .h1 { margin-top: 20px; text-wrap: balance; }
+    .ct__l2 { display: block; }   /* fixed two-line break in the heading and the lead */
     .ct__lead { max-width: 760px; margin: 24px auto 0; font-size: var(--fs-lead); line-height: 1.6; color: var(--slate); text-wrap: balance; }
     .ct__grid { display: grid; gap: 192px; max-width: 960px; margin: var(--sp-50) auto 0; }   /* message form first, help routes under it */
 
@@ -100,6 +100,7 @@ const ARROW = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke
       .ct__grid { gap: 96px; }
     }
     @media (max-width: 600px) {
+      .ct__lead .ct__l2 { display: inline; }   /* too narrow for the fixed break: let balance wrap it */
       .cform__row { grid-template-columns: 1fr; gap: 0; }
       .route { grid-template-columns: auto 1fr; align-items: start; padding: 18px; }
       .route__go { display: none; }
@@ -111,9 +112,8 @@ const ARROW = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke
   <section class="ct">
     <div class="container">
       <div class="ct__head">
-        <p class="pill">Contact Us</p>
-        <h1 class="h1">We’d Love to Hear From You</h1>
-        <p class="ct__lead">Whether you have a question, feedback, or a partnership idea, our team is here to help.</p>
+        <h1 class="h1">We’d Love to <span class="ct__l2">Hear From You</span></h1>
+        <p class="ct__lead">Whether you have a question, feedback, <span class="ct__l2">or a partnership idea, our team is here to help.</span></p>
       </div>
 
       <div class="ct__grid">
