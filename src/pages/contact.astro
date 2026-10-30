@@ -31,14 +31,15 @@ const ARROW = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke
     /* ---------- Contact band ---------- */
     .ct { background: #f6f6f6; padding-block: clamp(56px, 6.67vw, 80px) clamp(72px, 8.33vw, 120px); }
     .ct__head { max-width: 1100px; margin-inline: auto; text-align: center; }
-    .ct__head .h1 { margin-top: 20px; }
+    .ct__head .h1 { margin-top: 20px; text-wrap: balance; }
     .ct__lead { max-width: 760px; margin: 24px auto 0; font-size: var(--fs-lead); line-height: 1.6; color: var(--slate); text-wrap: balance; }
-    .ct__grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); gap: clamp(20px, 2.2vw, 32px); align-items: start; margin-top: var(--sp-50); }
+    .ct__grid { display: grid; gap: clamp(48px, 5vw, 72px); max-width: 960px; margin: var(--sp-50) auto 0; }   /* message form first, help routes under it */
 
     /* left: other ways to get an answer */
+    .ct__aside { text-align: center; }
     .ct__aside h2 { font-size: var(--fs-h6); font-weight: var(--fw-heading); color: var(--ink); }
     .ct__aside > p { margin-top: 8px; font-size: 16px; line-height: 1.6; color: var(--muted); }
-    .routes { list-style: none; display: grid; gap: 12px; margin-top: 24px; padding: 0; }
+    .routes { list-style: none; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 28px; padding: 0; text-align: left; }
     .route { position: relative; display: grid; grid-template-columns: auto 1fr auto; gap: 16px; align-items: center; padding: 20px 22px; border-radius: 16px; background: #fff;
       transition: box-shadow .3s var(--ease), transform .3s var(--ease); }
     .route:hover { transform: translateY(-2px); box-shadow: 0 18px 40px -26px rgb(15 23 42 / .35); }
@@ -98,8 +99,7 @@ const ARROW = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke
     .cform__again { margin-top: 12px; padding: 0; border: 0; background: none; font: 500 15px/1.5 var(--font); color: var(--blue); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
 
     @media (max-width: 1024px) {
-      .ct__grid { grid-template-columns: 1fr; }
-      .ct__card { order: -1; }   /* form first on tablet/phone */
+      .routes { grid-template-columns: 1fr; }
     }
     @media (max-width: 600px) {
       .cform__row { grid-template-columns: 1fr; gap: 0; }
@@ -119,24 +119,6 @@ const ARROW = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke
       </div>
 
       <div class="ct__grid">
-        <div class="ct__aside">
-          <h2>Looking for something specific?</h2>
-          <p>These are often the fastest way to an answer.</p>
-          <ul class="routes" role="list">
-            {routes.map(([tone, path, h, t, label, href]) => (
-              <li class="route" style={`--tone:${tone}`}>
-                <span class="route__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" set:html={path} /></span>
-                <div>
-                  <h3>{h}</h3>
-                  <p>{t}</p>
-                  <a href={href}>{label}</a>
-                </div>
-                <span class="route__go" aria-hidden="true" set:html={ARROW} />
-              </li>
-            ))}
-          </ul>
-        </div>
-
         <div class="ct__card">
           <h2>Send us a message</h2>
           <p>Tell us a little about what you need and we’ll reply by email.</p>
@@ -183,6 +165,23 @@ const ARROW = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke
               <button class="cform__again" type="button">Send another message</button>
             </div>
           </div>
+        </div>
+        <div class="ct__aside">
+          <h2>Looking for something specific?</h2>
+          <p>These are often the fastest way to an answer.</p>
+          <ul class="routes" role="list">
+            {routes.map(([tone, path, h, t, label, href]) => (
+              <li class="route" style={`--tone:${tone}`}>
+                <span class="route__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" set:html={path} /></span>
+                <div>
+                  <h3>{h}</h3>
+                  <p>{t}</p>
+                  <a href={href}>{label}</a>
+                </div>
+                <span class="route__go" aria-hidden="true" set:html={ARROW} />
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </div>
