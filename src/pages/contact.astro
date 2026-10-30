@@ -8,123 +8,172 @@ const cta = {
   title: "Give Every Shopper a Smarter Way To Buy.",
   text: "CartPilot is the AI agent that talks, types, and closes – right from the chat window, on any eCommerce platform.",
 };
+
+// Other ways to get an answer: [tone, icon path, title, text, link label, href]
+const routes: [string, string, string, string, string, string][] = [
+  ["#0054ff", '<path d="M3 14v-2a9 9 0 0 1 18 0v2"/><path d="M21 14v3a2 2 0 0 1-2 2h-1v-6h3"/><path d="M3 14v3a2 2 0 0 0 2 2h1v-6H3"/>',
+    "Technical help", "Something not working on your store? Open a ticket and our support team will look into it.", "Submit a Ticket", "/support/"],
+  ["#f97316", '<path d="M2 4h6a4 4 0 0 1 4 4v13a3 3 0 0 0-3-3H2z"/><path d="M22 4h-6a4 4 0 0 0-4 4v13a3 3 0 0 1 3-3h7z"/>',
+    "Documentation", "Setup guides and tutorials for WooCommerce and Shopify stores.", "Read the Docs", "/docs/"],
+  ["#16a34a", '<circle cx="12" cy="12" r="9"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/>',
+    "Quick answers", "Plans, billing, setup and data questions, answered in one place.", "Browse the FAQ", "/faq/"],
+  ["#7c3aed", '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+    "Affiliate program", "Recommend CartPilot to other store owners and earn for every referral.", "Join as an Affiliate", "/affiliate/"],
+];
+const topics = ["General question", "Sales & pricing", "Partnership", "Feedback"];
+const ARROW = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>';
 ---
-<Base title={title} description={description} bodyClass="header-white">
+<Base title={title} description={description} bodyClass="header-page">
 <Fragment slot="head">
   <style is:inline>
-    /* ---------- Contact ---------- */
-    .contact { padding-block: clamp(24px, 4.24vw, 61px) 148px; }
-    .contact__head { text-align: center; }
-    .contact__head p { margin-top: 28px; font-size: var(--fs-body); }
-    .contact__grid { display: grid; grid-template-columns: minmax(0, 920fr) minmax(0, 455fr); gap: 19px; margin-top: var(--sp-50); }
-    .contact__card { background: #fff; border: 1px solid var(--line); border-radius: 6px; padding: clamp(24px, 2.78vw, 40px); }
-    .contact__side { display: grid; gap: 19px; align-content: start; }
-    .help-card { border: 1px solid var(--line); border-radius: 6px; padding: var(--sp-20); transition: box-shadow .3s var(--ease), transform .3s var(--ease); }
-    .help-card:hover { box-shadow: 0 18px 40px -28px rgb(15 23 42 / .35); }
-    .help-card--violet { background: #f5effc; }
-    .help-card--peach { background: #fcf3ef; }
-    .help-card p { margin-top: 12px; font-size: 16px; line-height: 1.5; color: var(--muted); }
-    .help-card .btn-line { margin-top: clamp(24px, 2.1vw, 30px); }
-    .btn-line {
-      display: inline-flex; align-items: center; justify-content: center; padding: 14px var(--sp-10);
-      border: 2px solid var(--blue); border-radius: var(--radius); background: #fff; color: var(--blue);
-      font-size: var(--fs-body); line-height: 1.5; white-space: nowrap;
-      transition: background-color .25s var(--ease), color .25s var(--ease), box-shadow .25s var(--ease);
-    }
-    .btn-line:hover { background: var(--blue); color: #fff; box-shadow: 0 8px 22px -10px rgb(0 84 255 / .65); }
+    body.header-page { --header-bg: #f6f6f6; }   /* header shares the band colour (no white strip) */
 
-    /* ---------- Contact form (front-end only) ---------- */
-    .cform__row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+    /* ---------- Contact band ---------- */
+    .ct { background: #f6f6f6; padding-block: clamp(56px, 6.67vw, 80px) clamp(72px, 8.33vw, 120px); }
+    .ct__head { max-width: 1100px; margin-inline: auto; text-align: center; }
+    .ct__head .h1 { margin-top: 20px; }
+    .ct__lead { max-width: 760px; margin: 24px auto 0; font-size: var(--fs-lead); line-height: 1.6; color: var(--slate); text-wrap: balance; }
+    .ct__grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); gap: clamp(20px, 2.2vw, 32px); align-items: start; margin-top: var(--sp-50); }
+
+    /* left: other ways to get an answer */
+    .ct__aside h2 { font-size: var(--fs-h6); font-weight: var(--fw-heading); color: var(--ink); }
+    .ct__aside > p { margin-top: 8px; font-size: 16px; line-height: 1.6; color: var(--muted); }
+    .routes { list-style: none; display: grid; gap: 12px; margin-top: 24px; padding: 0; }
+    .route { position: relative; display: grid; grid-template-columns: auto 1fr auto; gap: 16px; align-items: center; padding: 20px 22px; border-radius: 16px; background: #fff;
+      transition: box-shadow .3s var(--ease), transform .3s var(--ease); }
+    .route:hover { transform: translateY(-2px); box-shadow: 0 18px 40px -26px rgb(15 23 42 / .35); }
+    .route__ico { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; background: var(--tone); color: #fff; }
+    .route__ico svg { width: 21px; height: 21px; }
+    .route h3 { font-size: 17px; line-height: 1.4; font-weight: 600; color: var(--ink); }
+    .route p { margin-top: 2px; font-size: 14px; line-height: 1.55; color: var(--muted); }
+    .route a { position: static; display: inline-block; margin-top: 6px; font-size: 14px; font-weight: 500; color: var(--ink); }
+    .route a::after { content: ""; position: absolute; inset: 0; border-radius: inherit; }   /* whole card is the link */
+    .route__go { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; background: #f4f4f5; color: var(--ink);
+      transition: background-color .25s var(--ease), color .25s var(--ease); }
+    .route__go svg { width: 16px; height: 16px; }
+    .route:hover .route__go { background: var(--blue); color: #fff; }
+    .route a:focus-visible { outline: none; }
+    .route:has(a:focus-visible) { box-shadow: 0 0 0 3px rgb(0 84 255 / .35); }
+
+    /* right: the form card */
+    .ct__card { padding: clamp(24px, 2.78vw, 40px); border-radius: 20px; background: #fff; }
+    .ct__card h2 { font-size: var(--fs-h6); font-weight: var(--fw-heading); color: var(--ink); }
+    .ct__card > p { margin-top: 8px; font-size: 16px; line-height: 1.6; color: var(--muted); }
+    .cform { margin-top: 28px; }
+    .cform__row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
     .field { margin-bottom: 20px; }
-    .field label { display: inline-block; margin-bottom: 5px; font-size: var(--fs-body); line-height: 1.5; font-weight: 500; color: #000; }
-    .field label.is-req::after { content: " *"; margin-left: 3px; color: #f56c6c; }
+    .field > label, .topics legend { display: block; margin-bottom: 8px; padding: 0; font-size: 15px; line-height: 1.5; font-weight: 500; color: var(--ink); }
+    .field > label.is-req::after { content: " *"; color: #ef4444; }
     .field input, .field textarea {
-      display: block; width: 100%; height: 45px; padding: 11px 15px;
-      border: 1px solid #dadbdd; border-radius: 7px; background: #f8fafc; color: #606266;
-      font: 18px/1 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-      transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out, background-color .15s;
+      display: block; width: 100%; height: 52px; padding: 0 16px; border: 1px solid #e4e4e7; border-radius: 12px; background: #fafafa; color: var(--ink);
+      font: 16px/1.5 var(--font); transition: border-color .2s, box-shadow .2s, background-color .2s;
     }
-    .field textarea { height: 96px; min-height: 96px; line-height: 1.4; resize: vertical; }
-    .field input::placeholder, .field textarea::placeholder { color: #868e96; opacity: 1; }
-    .field input:hover, .field textarea:hover { border-color: #c4c6ca; }
-    .field input:focus, .field textarea:focus { outline: none; background: #fff; border-color: #1a7efb; box-shadow: 0 0 0 3px rgb(26 126 251 / .14); }
-    .field.is-error input, .field.is-error textarea { border-color: #f56c6c; }
-    .field.is-error input:focus, .field.is-error textarea:focus { box-shadow: 0 0 0 3px rgb(245 108 108 / .16); }
+    .field textarea { height: 140px; min-height: 120px; padding: 14px 16px; resize: vertical; }
+    .field input::placeholder, .field textarea::placeholder { color: #a1a1aa; opacity: 1; }
+    .field input:hover, .field textarea:hover { border-color: #d4d4d8; }
+    .field input:focus, .field textarea:focus { outline: none; background: #fff; border-color: var(--blue); box-shadow: 0 0 0 4px rgb(0 84 255 / .12); }
+    .field.is-error input, .field.is-error textarea { border-color: #ef4444; }
+    .field.is-error input:focus, .field.is-error textarea:focus { box-shadow: 0 0 0 4px rgb(239 68 68 / .14); }
     .field__err { margin-top: 6px; font-size: 14px; line-height: 1.4; color: #dc2626; }
     .field__err:empty { display: none; }
-    .cform__submit {
-      display: inline-flex; align-items: center; justify-content: center; height: 42px; padding: 8px 20px;
-      border: 1px solid transparent; border-radius: 7px; background: var(--blue); color: #fff;
-      font-family: "Lato", var(--font); font-size: 16px; line-height: 24px; font-weight: 500;
-      transition: background-color .2s, box-shadow .2s, transform .2s var(--ease);
-    }
-    .cform__submit:hover { background: #0046d4; box-shadow: 0 8px 20px -10px rgb(0 84 255 / .7); }
-    .cform__submit:active { transform: translateY(1px); }
-    .cform__done {
-      display: flex; gap: 16px; align-items: flex-start; padding: 24px 26px;
-      border: 1px solid #bbf7d0; border-radius: 10px; background: #f0fdf4; color: #14532d;
-    }
+
+    .topics { margin: 0 0 20px; padding: 0; border: 0; }
+    .topics__list { display: flex; flex-wrap: wrap; gap: 8px; }
+    .topic input { position: absolute; opacity: 0; pointer-events: none; }
+    .topic span { display: inline-flex; align-items: center; padding: 8px 16px; border-radius: 999px; background: #f4f4f5; font-size: 14px; line-height: 1.5; color: var(--slate); cursor: pointer;
+      box-shadow: inset 0 0 0 1px transparent; transition: background-color .2s, color .2s, box-shadow .2s; }
+    .topic span:hover { background: #ececef; }
+    .topic input:checked + span { background: #eef4ff; color: var(--blue); box-shadow: inset 0 0 0 1.5px var(--blue); }
+    .topic input:focus-visible + span { box-shadow: inset 0 0 0 1.5px var(--blue), 0 0 0 4px rgb(0 84 255 / .14); }
+
+    .cform__foot { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 24px; margin-top: 8px; }
+    .cform__note { font-size: 14px; line-height: 1.5; color: var(--muted); }
+    .cform__done { display: flex; gap: 16px; align-items: flex-start; margin-top: 28px; padding: 24px 26px; border-radius: 14px; background: #f0fdf4; color: #14532d; }
     .cform__done[hidden] { display: none; }
     .cform__done:focus { outline: none; }
     .cform__done-icon { flex: none; width: 40px; height: 40px; border-radius: 50%; background: #16a34a; display: grid; place-items: center; }
     .cform__done-icon svg { width: 20px; height: 20px; }
-    .cform__done-title { font-size: 20px; line-height: 1.4; font-weight: 500; color: #14532d; }
-    .cform__done p + p { margin-top: 6px; font-size: 16px; color: #166534; }
-    .cform__done b { font-weight: 600; word-break: break-word; }
-    .cform__again { margin-top: 14px; font-size: 16px; color: var(--blue); text-decoration: underline; text-underline-offset: 3px; }
-    .cform__again:hover { color: #0046d6; }
+    .cform__done-title { font-size: 18px; font-weight: 600; line-height: 1.4; }
+    .cform__done p + p { margin-top: 4px; font-size: 16px; line-height: 1.5; }
+    .cform__again { margin-top: 12px; padding: 0; border: 0; background: none; font: 500 15px/1.5 var(--font); color: var(--blue); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
 
-    @media (max-width: 781px) {
-      .contact { padding-bottom: var(--sp-50); }
-      .contact__grid { grid-template-columns: 1fr; }
-    }
-    @media (max-width: 768px) {
-      .cform__row { grid-template-columns: 1fr; gap: 0; }
+    @media (max-width: 1024px) {
+      .ct__grid { grid-template-columns: 1fr; }
+      .ct__card { order: -1; }   /* form first on tablet/phone */
     }
     @media (max-width: 600px) {
-      .field input, .field textarea { font-size: 16px; }
+      .cform__row { grid-template-columns: 1fr; gap: 0; }
+      .route { grid-template-columns: auto 1fr; align-items: start; padding: 18px; }
+      .route__go { display: none; }
     }
-      .card-title { font-size: var(--fs-card); }
   </style>
 </Fragment>
 
 <main id="main">
-  <section class="contact">
+  <section class="ct">
     <div class="container">
-      <div class="contact__head">
+      <div class="ct__head">
+        <p class="pill">Contact Us</p>
         <h1 class="h1">We’d Love to Hear From You</h1>
-        <p>Whether you have a question, feedback, or a partnership idea, our team is here to help.</p>
+        <p class="ct__lead">Whether you have a question, feedback, or a partnership idea, our team is here to help.</p>
       </div>
 
-      <div class="contact__grid">
-        <div class="contact__card">
+      <div class="ct__grid">
+        <div class="ct__aside">
+          <h2>Looking for something specific?</h2>
+          <p>These are often the fastest way to an answer.</p>
+          <ul class="routes" role="list">
+            {routes.map(([tone, path, h, t, label, href]) => (
+              <li class="route" style={`--tone:${tone}`}>
+                <span class="route__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" set:html={path} /></span>
+                <div>
+                  <h3>{h}</h3>
+                  <p>{t}</p>
+                  <a href={href}>{label}</a>
+                </div>
+                <span class="route__go" aria-hidden="true" set:html={ARROW} />
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div class="ct__card">
+          <h2>Send us a message</h2>
+          <p>Tell us a little about what you need and we’ll reply by email.</p>
           <!-- Front-end only: validates and shows a success message, no request is sent. Wire to the real contact endpoint before launch. -->
           <form class="cform" data-cform novalidate aria-label="Contact CartPilot">
+            <fieldset class="topics">
+              <legend>What’s it about?</legend>
+              <div class="topics__list">
+                {topics.map((t, i) => (
+                  <label class="topic"><input type="radio" name="topic" value={t} checked={i === 0}><span>{t}</span></label>
+                ))}
+              </div>
+            </fieldset>
             <div class="cform__row">
               <div class="field">
                 <label for="ct-first">First Name</label>
-                <input id="ct-first" name="first_name" type="text" placeholder="First Name" autocomplete="given-name">
+                <input id="ct-first" name="first_name" type="text" placeholder="Jane" autocomplete="given-name">
               </div>
               <div class="field">
                 <label for="ct-last">Last Name</label>
-                <input id="ct-last" name="last_name" type="text" placeholder="Last Name" autocomplete="family-name">
+                <input id="ct-last" name="last_name" type="text" placeholder="Smith" autocomplete="family-name">
               </div>
             </div>
             <div class="field">
               <label class="is-req" for="ct-email">Email</label>
-              <input id="ct-email" name="email" type="email" placeholder="Email Address" autocomplete="email" required aria-describedby="ct-email-err">
+              <input id="ct-email" name="email" type="email" placeholder="you@yourstore.com" autocomplete="email" required aria-describedby="ct-email-err">
               <p class="field__err" id="ct-email-err" aria-live="polite"></p>
             </div>
             <div class="field">
-              <label for="ct-subject">Subject</label>
-              <input id="ct-subject" name="subject" type="text" placeholder="Subject">
-            </div>
-            <div class="field">
               <label class="is-req" for="ct-message">Your Message</label>
-              <textarea id="ct-message" name="message" rows="4" placeholder="Your Message" required aria-describedby="ct-message-err"></textarea>
+              <textarea id="ct-message" name="message" rows="5" placeholder="How can we help?" required aria-describedby="ct-message-err"></textarea>
               <p class="field__err" id="ct-message-err" aria-live="polite"></p>
             </div>
-            <button class="cform__submit" type="submit">Submit Form</button>
+            <div class="cform__foot">
+              <button class="btn" type="submit">Send Message</button>
+              <p class="cform__note">We only use your details to reply to you.</p>
+            </div>
           </form>
           <div class="cform__done" role="status" tabindex="-1" hidden>
             <span class="cform__done-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
@@ -133,19 +182,6 @@ const cta = {
               <p>We’ve got your message and will reply to <b data-done-email>your inbox</b> soon.</p>
               <button class="cform__again" type="button">Send another message</button>
             </div>
-          </div>
-        </div>
-
-        <div class="contact__side">
-          <div class="help-card help-card--violet">
-            <h2 class="h5 card-title">I have a technical question?</h2>
-            <p>Find solutions to all technical problems that you are facing.</p>
-            <a class="btn-line" href="/support/">Submit a Ticket</a>
-          </div>
-          <div class="help-card help-card--peach">
-            <h2 class="h5 card-title">Explore Our Knowledgebase</h2>
-            <p>Find detailed setup guides, tutorials, and technical information for every plugin in our suite.</p>
-            <a class="btn-line" href="/docs/">Read the Docs</a>
           </div>
         </div>
       </div>
@@ -161,7 +197,7 @@ const cta = {
 
 <Fragment slot="scripts">
 <script is:inline>
-  /* Contact/support form — front-end validation + inline success, no network request. */
+  /* Contact form — front-end validation + inline success, no network request. */
   document.querySelectorAll("[data-cform]").forEach((form) => {
     const done = form.nextElementSibling;
     const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -184,8 +220,7 @@ const cta = {
       e.preventDefault();
       const bad = [...form.querySelectorAll("[required]")].filter((el) => !check(el));
       if (bad.length) { bad[0].focus(); return; }
-      const email = form.querySelector('[type="email"]').value.trim();
-      done.querySelector("[data-done-email]").textContent = email;
+      done.querySelector("[data-done-email]").textContent = form.querySelector('[type="email"]').value.trim();
       form.hidden = true;
       done.hidden = false;
       done.focus({ preventScroll: true });
@@ -194,7 +229,7 @@ const cta = {
     done.querySelector(".cform__again").addEventListener("click", () => {
       done.hidden = true;
       form.hidden = false;
-      form.querySelector("input").focus();
+      form.querySelector("#ct-first").focus();
     });
   });
 </script>
