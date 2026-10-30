@@ -1,13 +1,8 @@
 ---
 import Base from "../layouts/Base.astro";
-import CtaSky from "../components/CtaSky.astro";
 const title = "CartPilot Contact: Get Help or Share Feedback";
 const description = "Contact the CartPilot team for questions, feedback, partnership ideas, technical help, or guidance on setting up your AI sales agent.";
 
-const cta = {
-  title: "Give Every Shopper a Smarter Way To Buy.",
-  text: "CartPilot is the AI agent that talks, types, and closes – right from the chat window, on any eCommerce platform.",
-};
 
 // Other ways to get an answer: [tone, icon path, title, text, link label, href]
 const routes: [string, string, string, string, string, string][] = [
@@ -33,7 +28,7 @@ const ARROW = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke
     .ct__head { max-width: 1100px; margin-inline: auto; text-align: center; }
     .ct__head .h1 { margin-top: 20px; text-wrap: balance; }
     .ct__lead { max-width: 760px; margin: 24px auto 0; font-size: var(--fs-lead); line-height: 1.6; color: var(--slate); text-wrap: balance; }
-    .ct__grid { display: grid; gap: clamp(48px, 5vw, 72px); max-width: 960px; margin: var(--sp-50) auto 0; }   /* message form first, help routes under it */
+    .ct__grid { display: grid; gap: 192px; max-width: 960px; margin: var(--sp-50) auto 0; }   /* message form first, help routes under it */
 
     /* left: other ways to get an answer */
     .ct__aside { text-align: center; }
@@ -100,6 +95,9 @@ const ARROW = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke
 
     @media (max-width: 1024px) {
       .routes { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+      .ct__grid { gap: 96px; }
     }
     @media (max-width: 600px) {
       .cform__row { grid-template-columns: 1fr; gap: 0; }
@@ -187,11 +185,6 @@ const ARROW = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke
     </div>
   </section>
 
-  <!-- CTA -->
-  <CtaSky {...cta}>
-    <a class="btn" href="https://app.cartpilot.ai/register">Try CartPilot Free</a>
-    <a class="btn btn--white" href="/pricing/">View Pricing Plans</a>
-  </CtaSky>
 </main>
 
 <Fragment slot="scripts">
